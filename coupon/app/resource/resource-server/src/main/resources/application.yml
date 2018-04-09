@@ -1,0 +1,19 @@
+server:
+  port: 8060
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/zos?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 01Studio
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+zos:
+  security:
+    oauth2:
+      tokenStore: redis

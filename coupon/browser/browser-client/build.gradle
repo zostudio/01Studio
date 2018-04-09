@@ -1,0 +1,4 @@
+
+dependencies {
+    compile project(':coupon:browser:browser-api')
+}

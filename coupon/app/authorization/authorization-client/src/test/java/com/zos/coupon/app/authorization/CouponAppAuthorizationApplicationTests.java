@@ -1,0 +1,5 @@
+package com.zos.coupon.app.authorization;
+
+public class CouponAppAuthorizationApplicationTests {
+
+}

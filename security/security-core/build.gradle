@@ -1,0 +1,15 @@
+
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-oauth2')
+    compile('org.springframework.boot:spring-boot-starter-data-redis')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.springframework.boot:spring-boot-configuration-processor')
+    compile('org.springframework.social:spring-social-config')
+    compile('org.springframework.social:spring-social-core')
+    compile('org.springframework.social:spring-social-security')
+    compile('org.springframework.social:spring-social-web')
+    compile('commons-lang:commons-lang')
+    compile('commons-collections:commons-collections')
+    compile('commons-beanutils:commons-beanutils')
+    runtime('mysql:mysql-connector-java')
+}

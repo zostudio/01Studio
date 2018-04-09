@@ -1,0 +1,17 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/zos?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 01Studio
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+zos:
+  security:
+    browser:
+      signInResponseType: REDIRECT
+      singInSuccessUrl: /manage.html

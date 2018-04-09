@@ -1,0 +1,83 @@
+description = '01Studio'
+
+buildscript {
+	repositories {
+		mavenLocal()
+		maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+		maven { url 'https://plugins.gradle.org/m2/' }
+		maven { url 'http://repo.spring.io/plugins-release' }
+		maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
+		mavenCentral()
+	}
+	dependencies {
+		classpath("net.ltgt.gradle:gradle-apt-plugin:${aptPluginVersion}")
+		classpath "io.franzbecker:gradle-lombok:${gradleLombokVersion}"
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslVersion}")
+	}
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'http://repo.spring.io/plugins-release' }
+        maven { url 'https://oss.sonatype.org/content/repositories/releases/' }
+        mavenCentral()
+    }
+}
+
+subprojects {
+
+    // 依赖子模块
+    if (name.contains('-') && !name.endsWith('server')) {
+        apply from: "$rootDir/gradle/plugins/base.gradle"
+        apply from: "$rootDir/gradle/plugins/lombok.gradle"
+        apply from: "$rootDir/gradle/plugins/springboot.gradle"
+        bootRepackage {
+            enabled = false
+        }
+        findMainClass {
+            enabled = false
+        }
+    }
+
+    // 服务子模块
+    if (name.endsWith('server')) {
+        apply from: "$rootDir/gradle/plugins/base.gradle"
+        apply from: "$rootDir/gradle/plugins/lombok.gradle"
+        apply from: "$rootDir/gradle/plugins/mapstruct.gradle"
+        apply from: "$rootDir/gradle/plugins/querydsl.gradle"
+        apply from: "$rootDir/gradle/plugins/swagger2.gradle"
+        apply from: "$rootDir/gradle/plugins/springboot.gradle"
+    }
+
+	project.beforeEvaluate {
+		if (file(new File("$buildDir/generated/source/apt/main")).exists()) {
+	        file(new File("$buildDir/generated/source/apt/main")).deleteDir()
+	    }
+	}
+}
+
+project('security') {
+	description = '安全工程'
+}
+project('security:security-core') {
+	description = '核心模块'
+}
+project('security:security-session') {
+	description = 'Session模块'
+}
+project('security:security-oauth-core') {
+    description = 'Oauth2核心模块'
+}
+project('security:security-oauth-authorization') {
+    description = 'Oauth2服务模块'
+}
+project('security:security-oauth-resource') {
+    description = 'Oauth2资源模块'
+}
+project('security:security-rbac') {
+    description = '角色权限访问控制模块'
+}

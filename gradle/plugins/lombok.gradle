@@ -1,0 +1,7 @@
+apply plugin: 'net.ltgt.apt'
+apply plugin: 'io.franzbecker.gradle-lombok'
+
+dependencies {
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    compileOnly('org.projectlombok:lombok')
+}

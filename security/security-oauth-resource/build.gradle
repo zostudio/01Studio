@@ -1,0 +1,4 @@
+dependencies {
+    compile project(':security:security-oauth-core')
+}
+

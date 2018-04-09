@@ -1,0 +1,4 @@
+
+dependencies {
+    compile project(':coupon:app:authorization:authorization-api')
+}

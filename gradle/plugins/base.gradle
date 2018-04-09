@@ -1,0 +1,55 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+uploadArchives {
+    repositories {
+        mavenDeployer { mavenLocal() }
+    }
+}
+
+jar { manifest.attributes "Implementation-Version": version }
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    from sourceSets.main.allSource
+    classifier "sources"
+}
+
+tasks.withType(Javadoc) {
+    enabled = true
+    options.encoding = 'UTF-8'
+    options.charSet = 'UTF-8'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+configure(install.repositories.mavenInstaller) {
+    pom.project {
+        groupId project.group
+        artifactId project.name
+        packaging 'jar'
+    }
+}
+
+sourceSets {
+    main {
+        output.resourcesDir = output.classesDir
+    }
+    generated {
+        java {
+            srcDirs = ["$buildDir/generated/source/apt/main"]
+        }
+    }
+}
