@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zos.security.rbac.bo.UserBO;
 import com.zos.security.rbac.bo.UserConditionBO;
-import com.zos.security.rbac.domain.QUser;
 import com.zos.security.rbac.mapper.UserMapper;
 import com.zos.security.rbac.repository.UserRepository;
 import com.zos.security.rbac.service.UserService;
@@ -57,7 +56,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Page<UserBO> query(UserConditionBO userConditionBO, Pageable pageable) {
-		QUser _Q_user = QUser.user;
 //		userRepository.findAll(null, pageable);
 //		List<T> contents = pageData.getContent();
 //		List<I> infos = convert(contents, clazz);
