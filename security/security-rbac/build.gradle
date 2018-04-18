@@ -1,5 +1,8 @@
 
 dependencies {
+    apply from: "$rootDir/gradle/plugins/mapstruct.gradle"
+    apply from: "$rootDir/gradle/plugins/querydsl.gradle"
+    
     compile project (':security:security-core')
 
     compile('joda-time:joda-time')

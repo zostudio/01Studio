@@ -2,6 +2,7 @@ package com.zos.security.oauth.core.authentication;
 
 import com.zos.security.core.authentication.FormAuthenticationConfig;
 import com.zos.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.zos.security.core.properties.SecurityConstants;
 import com.zos.security.core.validate.code.ValidateCodeSecurityConfig;
 import com.zos.security.oauth.core.authentication.openid.OpenIdAuthenticationSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class ZosResourcesAuthenticationConfig {
                 .and()
                 .apply(openIdAuthenticationSecurityConfig)
                 .and()
+    			.authorizeRequests().antMatchers(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL).permitAll().and()
                 .csrf().disable();
     }
 }

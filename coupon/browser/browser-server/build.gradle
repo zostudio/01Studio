@@ -7,4 +7,6 @@ dependencies {
     compile('com.github.tomakehurst:wiremock')
     compile('org.springframework.boot:spring-boot-starter-aop')
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.9'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
 }

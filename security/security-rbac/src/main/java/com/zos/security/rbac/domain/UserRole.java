@@ -28,14 +28,14 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(uniqueConstraints={
-		   @UniqueConstraint(columnNames={"role_id", "resource_id"})
+		   @UniqueConstraint(columnNames={"role_id", "user_id"})
 		})
-public class RoleResource implements Serializable {
+public class UserRole implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -9198225982043090608L;
+	private static final long serialVersionUID = 5105961540190021027L;
 
 	/**
 	 * 数据库表主键
@@ -52,17 +52,16 @@ public class RoleResource implements Serializable {
 	private Date createdDate;
 	
 	/**
+	 * 用户
+	 */
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private User user;
+	
+	/**
 	 * 角色
 	 */
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Role role;
-	
-	/**
-	 * 资源
-	 */
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Resource resource;
-
 }

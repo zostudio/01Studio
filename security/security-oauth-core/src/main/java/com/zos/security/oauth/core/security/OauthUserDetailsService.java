@@ -1,18 +1,17 @@
 package com.zos.security.oauth.core.security;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.social.security.SocialUser;
 import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 
 /**
  * @author 01Studio
@@ -54,9 +53,11 @@ public class OauthUserDetailsService implements UserDetailsService, SocialUserDe
 		String password = passwordEncoder.encode("123456");
 		log.info("数据库密码是: "+password);
 		
-		return new SocialUser(userId, password,
+		MySocialUserInfo socialUser = new MySocialUserInfo(userId, password,
 				true, true, true, true,
 				AuthorityUtils.commaSeparatedStringToAuthorityList("xxx,ROLE_USER"));
+		socialUser.setAgentCode("my007");
+		return socialUser;
 	}
 
 }

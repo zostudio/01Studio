@@ -15,6 +15,11 @@ public class SocialProperties {
 	 * 社交登录功能拦截的 url
 	 */
 	private String filterProcessesUrl = "/auth";
+	
+	/**
+	 * 社交登录注册 url
+	 */
+	private String signUpUrl = SecurityConstants.DEFAULT_SIGN_UP_PAGE_URL;
 
 	/**
 	 * QQ

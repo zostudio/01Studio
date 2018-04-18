@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zos.security.core.properties.SecurityConstants;
 import com.zos.security.core.support.SimpleResponse;
 
 /**
@@ -38,6 +40,12 @@ public class ZosAuthenctiationFailureHandler extends SimpleUrlAuthenticationFail
 			AuthenticationException exception) throws IOException, ServletException {
 		
 		log.info("登录失败");
+		
+		if (exception instanceof BadCredentialsException) {
+			// 认证失败强制跳转到注册服务接口
+			response.sendRedirect(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL); 
+			return;
+		}
 		
 		response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 		response.setContentType("application/json;charset=UTF-8");

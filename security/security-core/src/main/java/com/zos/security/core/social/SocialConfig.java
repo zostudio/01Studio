@@ -15,6 +15,7 @@ import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.security.SpringSocialConfigurer;
 
+import com.zos.security.core.properties.SecurityConstants;
 import com.zos.security.core.properties.SecurityProperties;
 import com.zos.security.core.social.support.ZosSpringSocialConfigurer;
 import com.zos.security.core.social.support.SocialAuthenticationFilterPostProcessor;
@@ -35,6 +36,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	@Autowired
 	private SecurityProperties securityProperties;
 	
+	// 自动注册用户
 	@Autowired(required = false)
 	private ConnectionSignUp connectionSignUp;
 	
@@ -63,7 +65,7 @@ public class SocialConfig extends SocialConfigurerAdapter {
 	public SpringSocialConfigurer zosSocialSecurityConfig() {
 		String filterProcessesUrl = securityProperties.getSocial().getFilterProcessesUrl();
 		ZosSpringSocialConfigurer configurer = new ZosSpringSocialConfigurer(filterProcessesUrl);
-		configurer.signupUrl(securityProperties.getBrowser().getSignUpUrl());
+		configurer.signupUrl(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL);
 		configurer.setSocialAuthenticationFilterPostProcessor(socialAuthenticationFilterPostProcessor);
 		return configurer;
 	}

@@ -7,8 +7,6 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -18,9 +16,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.data.annotation.CreatedDate;
-
-import com.zos.security.rbac.support.RequestMethod;
-import com.zos.security.rbac.support.ResourceType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,12 +29,12 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Resource implements Serializable {
+public class Department implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1132429845275127990L;
+	private static final long serialVersionUID = 91927843638913597L;
 
 	/**
 	 * 数据库表主键
@@ -47,6 +42,11 @@ public class Resource implements Serializable {
 	@Id
 	@GeneratedValue
 	private Long id;
+	
+	/**
+	 * 部门名称
+	 */
+	private String name;
 
 	/**
 	 * 审计日志, 记录条目创建时间, 自动赋值
@@ -54,61 +54,31 @@ public class Resource implements Serializable {
 	@CreatedDate
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
-
-	/**
-	 * 资源名称, 如xx菜单, xx按钮
-	 */
-	private String name;
-
-	/**
-	 * 资源链接
-	 */
-	private String url;
-
-	/**
-	 * 图标
-	 */
-	private String icon;
-
-	/**
-	 * 资源类型
-	 */
-	@Enumerated(EnumType.STRING)
-	private ResourceType type;
-
-    /**
-     * 权限对应请求方式, 适应 Restful 风格  ALL 全部权限  GET get, POST post, PUT put, DELETE delete
-     */
-	@Enumerated(EnumType.STRING)
-	private RequestMethod method;
-
+	
 	/**
 	 * 序号
 	 */
-	private int sort;
+	private Integer sort;
 	
 	/**
-     * 权限描述
-     */
+	 * 描述
+	 */
 	private String description;
-
+	
 	/**
-	 * 父资源
+	 * 上级部门
 	 */
 	@ManyToOne
-	private Resource parent;
+	private Department parent;
 
 	/**
-	 * 子资源
+	 * 下级部门
 	 */
 	@OrderBy("sort ASC")
 	@OneToMany(mappedBy = "parent")
-	private Set<Resource> childs = new HashSet<Resource>();
+	private Set<Department> childs = new HashSet<Department>();
 	
-	/**
-	 * 资源的角色集合
-	 */
-	@OneToMany(mappedBy="resource", cascade = CascadeType.REMOVE)
-	private Set<RoleResource> roleResource = new HashSet<>();
+	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
+	private Set<DepartmentUser> departmentUser = new HashSet<DepartmentUser>();
 	
 }

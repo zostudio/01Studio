@@ -2,9 +2,9 @@ package com.zos.security.rbac.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.zos.security.rbac.domain.Role;
+import com.zos.security.rbac.domain.User;
 
 @Repository
-public interface RoleRepository extends BaseJpaRepository<Role> {
+public interface UserRepository extends BaseJpaRepository<User> {
 
 }

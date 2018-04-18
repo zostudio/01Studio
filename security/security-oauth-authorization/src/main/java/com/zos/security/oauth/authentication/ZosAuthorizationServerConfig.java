@@ -2,6 +2,9 @@ package com.zos.security.oauth.authentication;
 
 import com.zos.security.core.properties.OAuth2ClientProperties;
 import com.zos.security.core.properties.SecurityProperties;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +17,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -31,6 +36,7 @@ import java.util.List;
  * @author 01Studio
  *
  */
+@Slf4j
 @Configuration
 @EnableAuthorizationServer
 public class ZosAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -55,6 +61,9 @@ public class ZosAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
 	@Autowired
 	private SecurityProperties securityProperties;
+	
+	@Autowired
+	private ClientDetailsService oauthClientDetailsService;
 
 	/**
 	 * 认证及 token 配置
@@ -92,6 +101,16 @@ public class ZosAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
 		if (ArrayUtils.isNotEmpty(securityProperties.getOauth2().getClients())) {
 			for (OAuth2ClientProperties client : securityProperties.getOauth2().getClients()) {
+				try {
+					if (oauthClientDetailsService.loadClientByClientId(client.getClientId()) != null) {
+						continue;
+					}
+				} catch (NoSuchClientException e) {
+					log.warn("oauth_client_datails find null ClientId: " + client.getClientId(), e);
+				} catch (Exception e) {
+					log.error("oauth_client_datails find error ClientId: " + client.getClientId(), e);
+					continue;
+				}
 				builder.withClient(client.getClientId())
 						.secret(client.getClientSecret())
 						.authorizedGrantTypes("refresh_token", "authorization_code", "password")
@@ -105,7 +124,7 @@ public class ZosAuthorizationServerConfig extends AuthorizationServerConfigurerA
 	/**
 	 * 记住我功能的 token 存取器配置
 	 *
-	 * @return 住我功能的 token 存取器
+	 * @return 记住我功能的 token 存取器
 	 */
 	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {

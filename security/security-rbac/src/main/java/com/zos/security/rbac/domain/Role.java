@@ -1,5 +1,6 @@
 package com.zos.security.rbac.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,31 +8,33 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.data.annotation.CreatedDate;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-/**
- * 角色信息
- * 
- * @author 01Studio
- *
- */
+@Entity
 @Getter
 @Setter
-@Entity
-public class Role {
-	
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class Role implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -975461664568511798L;
+
 	/**
 	 * 数据库表主键
 	 */
@@ -40,28 +43,28 @@ public class Role {
 	private Long id;
 
 	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值, 不需要程序员手工赋值
+	 * 审计日志, 记录条目创建时间, 自动赋值
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
-	private Date createdTime;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
 
 	/**
 	 * 角色名称
 	 */
-	@Column(length = 20, nullable = false)
+	@Column(nullable = false)
 	private String name;
 
 	/**
 	 * 角色拥有权限的资源集合
 	 */
-	@OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-	private Set<RoleResource> resources  = new HashSet<>();
+	@OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
+	private Set<RoleResource> roleResources  = new HashSet<RoleResource>();
 
 	/**
 	 * 角色的用户集合
 	 */
-	@OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
-	private Set<RoleAdmin> admins = new HashSet<>();
-
+	@OneToMany(mappedBy="role", cascade = CascadeType.REMOVE)
+	private Set<UserRole> userRoles = new HashSet<UserRole>();
+	
 }

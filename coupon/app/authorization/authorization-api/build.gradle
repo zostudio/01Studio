@@ -1,4 +1,5 @@
 
 dependencies {
+    compile project(':security:security-rbac')
     compile project(':security:security-oauth-authorization')
 }

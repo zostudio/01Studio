@@ -44,6 +44,11 @@ public interface SecurityConstants {
 	String DEFAULT_SIGN_UP_PAGE_URL = "/default-signUp.html";
 
 	/**
+	 * 默认注册服务
+	 */
+	String DEFAULT_SIGN_UP_SERVER_URL = "/social/signUp";
+
+	/**
 	 * 验证图片验证码时, http 请求中默认的携带图片验证码信息的参数的名称
 	 */
 	String DEFAULT_PARAMETER_NAME_CODE_IMAGE = "imageCode";
