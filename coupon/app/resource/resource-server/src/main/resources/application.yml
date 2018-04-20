@@ -20,4 +20,4 @@ zos:
     oauth2:
       tokenStore: redis
 logging:
-  file: log/${spring.application.name}
+  file: logs/${spring.application.name}

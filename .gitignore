@@ -35,7 +35,8 @@ nbdist/
 *.log
 /logs/
 logs/
-
+/log/
+log/
 # BlueJ files
 *.ctxt
 
