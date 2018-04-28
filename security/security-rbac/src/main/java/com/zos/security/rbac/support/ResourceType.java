@@ -1,5 +1,11 @@
 package com.zos.security.rbac.support;
 
+/**
+ * 资源类型: MENU, BUTTON, OTHER
+ * 
+ * @author 01Studio
+ *
+ */
 public enum ResourceType {
 	
 	/**

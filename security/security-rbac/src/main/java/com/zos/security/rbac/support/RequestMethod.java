@@ -1,5 +1,11 @@
 package com.zos.security.rbac.support;
 
+/**
+ * 请求方式: GET, POST, PUT, DELETE, ALL
+ * 
+ * @author 01Studio
+ *
+ */
 public enum RequestMethod {
 
 	/**

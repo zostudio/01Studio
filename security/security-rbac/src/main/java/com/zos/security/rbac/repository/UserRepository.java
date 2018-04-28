@@ -6,5 +6,7 @@ import com.zos.security.rbac.domain.User;
 
 @Repository
 public interface UserRepository extends BaseJpaRepository<User> {
-
+	
+	User findByUsername(String username);
+	
 }

@@ -13,6 +13,10 @@ import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zos.security.rbac.domain.User;
+import com.zos.security.rbac.mapper.UserMapper;
+import com.zos.security.rbac.service.UserService;
+
 /**
  * @author 01Studio
  *
@@ -24,6 +28,9 @@ public class OauthUserDetailsService implements UserDetailsService, SocialUserDe
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	UserService userService;
 	
 
 	/*
@@ -53,11 +60,16 @@ public class OauthUserDetailsService implements UserDetailsService, SocialUserDe
 		String password = passwordEncoder.encode("123456");
 		log.info("数据库密码是: "+password);
 		
-		MySocialUserInfo socialUser = new MySocialUserInfo(userId, password,
+		MySocialUserInfoBak socialUser = new MySocialUserInfoBak(userId, password,
 				true, true, true, true,
 				AuthorityUtils.commaSeparatedStringToAuthorityList("xxx,ROLE_USER"));
 		socialUser.setAgentCode("my007");
-		return socialUser;
+		
+		
+		
+		User user = UserMapper.INSTANCE.boToDomain(userService.findByUsername(userId));
+		
+		return user;
 	}
 
 }

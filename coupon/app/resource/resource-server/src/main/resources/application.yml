@@ -13,8 +13,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        enable_lazy_load_no_trans: true
   application:
     name: resource
+  redis:
+    pool:
+      max-active: 1024
+      max-idle: 200
+      max-wait: 1000
+    timeout: 5000
+    host: localhost
+    port: 6379
 zos:
   security:
     oauth2:

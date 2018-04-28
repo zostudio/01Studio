@@ -14,8 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -26,14 +28,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(uniqueConstraints={
+		   @UniqueConstraint(columnNames={"url", "method"})
+		})
 public class Resource implements Serializable {
 	
 	/**
@@ -106,7 +109,7 @@ public class Resource implements Serializable {
 	private Set<Resource> childs = new HashSet<Resource>();
 	
 	/**
-	 * 资源的角色集合
+	 * 资源的所有角色
 	 */
 	@OneToMany(mappedBy="resource", cascade = CascadeType.REMOVE)
 	private Set<RoleResource> roleResource = new HashSet<>();

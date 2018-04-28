@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class MySocialUserInfo extends SocialUser {
+public class MySocialUserInfoBak extends SocialUser {
 
 	/**
 	 * 
@@ -19,7 +19,7 @@ public class MySocialUserInfo extends SocialUser {
 
 	private String agentCode;
 	
-	public MySocialUserInfo(String username, String password, boolean enabled, boolean accountNonExpired,
+	public MySocialUserInfoBak(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);

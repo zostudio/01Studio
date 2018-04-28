@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurityExpressionHandler;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /**
@@ -24,6 +25,9 @@ public class ZosResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Autowired
 	ZosResourceAuthorizeConfig zosResourceAuthorizeConfig;
+	
+	@Autowired
+	OAuth2WebSecurityExpressionHandler oAuth2WebSecurityExpressionHandler;
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -34,7 +38,7 @@ public class ZosResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
-		resources.resourceId("oauth2-resource").tokenStore(tokenStore);
+		resources.resourceId("oauth2-resource").tokenStore(tokenStore).expressionHandler(oAuth2WebSecurityExpressionHandler);
 	}
 
 }

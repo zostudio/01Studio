@@ -1,5 +1,11 @@
 package com.zos.security.rbac.bo;
 
-public class UserConditionBO {
+import lombok.Data;
 
+@Data
+public class UserConditionBO {
+	
+	private Long id;
+	
+    private String username;
 }

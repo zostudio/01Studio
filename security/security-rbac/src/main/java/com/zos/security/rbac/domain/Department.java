@@ -21,12 +21,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Department implements Serializable {
@@ -78,7 +76,22 @@ public class Department implements Serializable {
 	@OneToMany(mappedBy = "parent")
 	private Set<Department> childs = new HashSet<Department>();
 	
+	/**
+	 * 部门的所有用户
+	 */
 	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
-	private Set<DepartmentUser> departmentUser = new HashSet<DepartmentUser>();
+	private Set<DepartmentUser> departmentUsers = new HashSet<DepartmentUser>();
+	
+	/**
+	 * 部门的所有角色
+	 */
+	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
+	private Set<DepartmentRole> departmentRoles = new HashSet<DepartmentRole>();
+	
+	/**
+	 * 部门的所有角色组
+	 */
+	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
+	private Set<DepartmentRoleGroup> departmentRoleGroups = new HashSet<DepartmentRoleGroup>();
 	
 }
