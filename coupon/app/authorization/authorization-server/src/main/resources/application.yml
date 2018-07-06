@@ -5,17 +5,13 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/zos?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
     username: root
-    password: root
+    password: 01Studio
 zos:
   security:
     oauth2:
-      clients[0]:
-        clientId: xxx
-        clientSecret: xxx
-      clients[1]:
-        clientId: zos
-        clientSecret: zos
-      clients[2]:
-        clientId: 01Studio
-        clientSecret: 01Studio
+      clients: [
+        {clientId: xxx, clientSecret: xxx},
+        {clientId: zos, clientSecret: zos},
+        {clientId: 01Studio, clientSecret: 01Studio}
+      ]
       tokenStore: redis

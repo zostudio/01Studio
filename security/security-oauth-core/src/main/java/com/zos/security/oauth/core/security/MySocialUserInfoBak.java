@@ -23,7 +23,6 @@ public class MySocialUserInfoBak extends SocialUser {
 			boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -37,16 +37,52 @@ public interface RedisCommonDAO<V, HK, HV> {
 	
 	public ZosHashOperations<HK, HV> opsForHash(ZosHashOperations<HK, HV> opsForHash);
 	
+	/**
+	 * 设置数据生存时长
+	 * 
+	 * @param key 键
+	 * @param timeout 时长
+	 * @param unit 时间单位
+	 * @return boolean
+	 */
 	public Boolean expire(String key, final Long timeout, final TimeUnit unit);
 	
+	/**
+	 * 设置数据过期时间
+	 * 
+	 * @param key 键
+	 * @param date 过期时间
+	 * @return boolean
+	 */
 	public Boolean expireAt(String key, Date date);
 	
+	/**
+	 * 移除指定的键值
+	 * 
+	 * @param key 键
+	 * @return boolean
+	 */
 	public Boolean persist(String key);
-	
+
+	/**
+	 * 清空选中的数据库
+	 * 
+	 * @return boolean
+	 */
 	public Boolean flushDB();
-	
+
+	/**
+	 * 数据库大小
+	 * 
+	 * @return long
+	 */
 	public Long dbSize();
 	
+	/**
+	 * 检测是否联通
+	 * 
+	 * @return string
+	 */
 	public String ping();
 	
 	public String valueKey(String correct, V value);

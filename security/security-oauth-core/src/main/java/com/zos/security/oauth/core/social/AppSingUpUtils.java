@@ -68,9 +68,9 @@ public class AppSingUpUtils {
 	 * @return Redis 缓存主键
 	 */
 	private String getKey(WebRequest request) {
-		String deviceId = request.getHeader("deviceId");
+		String deviceId = request.getHeader("device_id");
 		if (StringUtils.isBlank(deviceId)) {
-			throw new AppSecretException("deviceId 参数不能为空");
+			throw new AppSecretException("device_id 参数不能为空");
 		}
 		return "zos:security:social.connect." + deviceId;
 	}

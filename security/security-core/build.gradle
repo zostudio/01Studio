@@ -8,6 +8,16 @@ dependencies {
     compile('org.springframework.social:spring-social-core')
     compile('org.springframework.social:spring-social-security')
     compile('org.springframework.social:spring-social-web')
+    compile('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
+    compile('com.fasterxml.jackson.core:jackson-databind') {
+        exclude module: 'jackson-core'
+        exclude module: 'jackson-annotations'
+    }
+    compile('com.fasterxml.jackson.core:jackson-core')
+    compile('com.fasterxml.jackson.core:jackson-annotations')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jdk8')
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    compile('com.fasterxml.jackson.module:jackson-module-parameter-names')
     compile('commons-lang:commons-lang')
     compile('commons-collections:commons-collections')
     compile('commons-beanutils:commons-beanutils')

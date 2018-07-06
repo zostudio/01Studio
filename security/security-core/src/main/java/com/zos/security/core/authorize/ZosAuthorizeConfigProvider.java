@@ -36,6 +36,7 @@ public class ZosAuthorizeConfigProvider implements AuthorizeConfigProvider {
 				SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_MOBILE,
 				SecurityConstants.DEFAULT_SIGN_IN_PROCESSING_URL_OPENID,
 				SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
+				SecurityConstants.DEFAULT_VALIDATE_EXISTS_URL_PREFIX + "/*",
 				securityProperties.getBrowser().getSignInPage(), 
 				securityProperties.getBrowser().getSignUpUrl(),
 				securityProperties.getBrowser().getSession().getSessionInvalidUrl()).permitAll();

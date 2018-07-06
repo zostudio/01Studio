@@ -24,6 +24,7 @@ public class OAuth2ClientProperties {
 	/**
 	 * 针对此应用发出的 token 的有效时间(默认两个小时)
 	 */
-	private int accessTokenValidateSeconds = 7200;
+	//TODO Token 有效时长
+	private int accessTokenValidateSeconds = Integer.MAX_VALUE;
 	
 }

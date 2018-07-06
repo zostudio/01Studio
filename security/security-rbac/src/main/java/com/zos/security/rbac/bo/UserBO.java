@@ -28,6 +28,16 @@ public class UserBO {
 	private String password;
 	
 	/**
+	 * 手机
+	 */
+	private String phone;
+	
+	/**
+	 * 邮箱
+	 */
+	private String email;
+	
+	/**
 	 * 是否过期
 	 */
 	private Boolean accountNonExpired = true;

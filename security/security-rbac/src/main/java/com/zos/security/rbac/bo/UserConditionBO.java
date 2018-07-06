@@ -8,4 +8,8 @@ public class UserConditionBO {
 	private Long id;
 	
     private String username;
+    
+    private String oldPassword;
+    
+    private String newPassword;
 }

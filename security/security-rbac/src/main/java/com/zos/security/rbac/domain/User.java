@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -16,7 +17,11 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.social.security.SocialUserDetails;
 
@@ -33,6 +38,7 @@ import java.util.function.Consumer;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class User implements SocialUserDetails {
 	
 	/**
@@ -46,13 +52,6 @@ public class User implements SocialUserDetails {
 	@Id
 	@GeneratedValue
 	private Long id;
-
-	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值
-	 */
-	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
 
 	/**
 	 * 用户名
@@ -85,6 +84,46 @@ public class User implements SocialUserDetails {
 	 * 是否删除
 	 */
 	private Boolean enabled = true;
+	
+	/**
+	 * 手机
+	 */
+	private String phone;
+	
+	/**
+	 * 邮箱
+	 */
+	private String email;
+
+	/**
+	 * 审计日志, 记录条目创建时间, 自动赋值
+	 */
+	@CreatedDate
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+	
+	/**
+     * 创建人
+     */
+    @CreatedBy
+	@Column(nullable = false)
+    private Long createdBy;
+    
+    /**
+     * 修改时间
+     */
+    @LastModifiedDate
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
+    
+    /**
+     * 修改人
+     */
+    @LastModifiedBy
+	@Column(nullable = false)
+    private Long lastModifiedBy;
 	
 	/**
 	 * 用户有权访问的所有接口, 不持久化到 MySQL, 缓存到　Redis　中

@@ -75,9 +75,9 @@ public class RedisValidateCodeRepository implements ValidateCodeRepository {
 	 * @return
 	 */
 	private String buildKey(ServletWebRequest request, ValidateCodeType type) {
-		String deviceId = request.getHeader("deviceId");
+		String deviceId = request.getHeader("device_id");
 		if (StringUtils.isBlank(deviceId)) {
-			throw new ValidateCodeException("请在请求头中携带 deviceId 参数");
+			throw new ValidateCodeException("请在请求头中携带 device_id 参数");
 		}
 		return "code:" + type.toString().toLowerCase() + ":" + deviceId;
 	}

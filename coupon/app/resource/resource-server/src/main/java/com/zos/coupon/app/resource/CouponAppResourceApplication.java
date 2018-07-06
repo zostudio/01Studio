@@ -5,13 +5,21 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.zos.security.rbac.domain.QUser;
+import com.zos.security.rbac.domain.User;
 
 //import java.io.UnsupportedEncodingException;
 
 @RestController
+@EnableJpaAuditing
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.zos"})
 @EntityScan(basePackages = {"com.zos.security.rbac.domain"})
@@ -433,5 +441,21 @@ public class CouponAppResourceApplication {
 //    		entityManager.remove(action);
 //    	});
 	}*/
+	
+
+
+    // JPA查询工厂
+    private JPAQueryFactory queryFactory;
+	
+	@GetMapping(value = "/detail/{id}")
+    public User detail(@PathVariable("id") Long id) {
+        //使用querydsl查询
+        QUser _Q_user = QUser.user;
+        //查询并返回结果集
+        return queryFactory
+                .selectFrom(_Q_user)//查询源
+                .where(_Q_user.id.eq(id))//指定查询具体id的数据
+                .fetchOne();//执行查询并返回单个结果
+    }
     
 }

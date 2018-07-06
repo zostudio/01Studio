@@ -9,4 +9,8 @@ public interface UserRepository extends BaseJpaRepository<User> {
 	
 	User findByUsername(String username);
 	
+	User findByEmail(String email);
+	
+	User findByPhone(String phone);
+	
 }

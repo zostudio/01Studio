@@ -7,8 +7,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
@@ -27,12 +29,14 @@ import com.zos.security.rbac.domain.UserRole;
 import com.zos.security.rbac.mapper.RoleMapper;
 import com.zos.security.rbac.mapper.UserMapper;
 import com.zos.security.rbac.mapper.UserRoleMapper;
+import com.zos.security.rbac.redis.dao.RedisCommonDAO;
 import com.zos.security.rbac.repository.UserRepository;
 import com.zos.security.rbac.repository.UserRoleRepository;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
 import com.zos.security.rbac.service.UserService;
 
 @Service
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 	
 	/**
@@ -52,18 +56,27 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRoleRepository userRoleRepository;
+	
+	@Autowired
+	RedisCommonDAO<User.RoleCache, Long, String> userRoleCacheRedisDAO;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	private QUserRole _Q_UserRole = QUserRole.userRole;
+	
+	private QUser _Q_User = QUser.user;
 
 	@Override
+	@Transactional
 	public UserBO create(UserBO userBO) {
 		userBO.setPassword(passwordEncoder.encode(userBO.getPassword()));
 		return UserMapper.INSTANCE.domainToBO(userRepository.save(UserMapper.INSTANCE.boToDomain(userBO)));
 	}
 
 	@Override
-	public UserBO update(UserBO userBO) {
+	@Transactional
+	public UserBO update(Long id, UserBO userBO) {
 		return UserMapper.INSTANCE.domainToBO(userRepository.save(UserMapper.INSTANCE.boToDomain(userBO)));
 	}
 
@@ -79,7 +92,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Page<UserBO> query(UserConditionBO userConditionBO, Pageable pageable) {
-		QUser _Q_User = QUser.user;
 		Predicate predicate = null;
 		if (!StringUtils.isBlank(userConditionBO.getUsername())) {
 			predicate = _Q_User.username.like("%"+userConditionBO.getUsername()+"%");
@@ -118,8 +130,27 @@ public class UserServiceImpl implements UserService {
 		userRoleRelationBO.getRoleBOs().forEach(roleBO -> {
 			ids.add(roleBO.getId());
 		});
-		QUserRole _Q_UserRole = QUserRole.userRole;
 		jpaQueryFactory.delete(_Q_UserRole).where(_Q_UserRole.user.id.eq(id).and(_Q_UserRole.role.id.in(ids))).execute();
+	}
+
+	@Override
+	@Transactional
+	public Long updatePwd(Long id, UserConditionBO userConditionBO) {
+		User user = jpaQueryFactory.selectFrom(_Q_User).where(_Q_User.id.eq(id)).fetchOne();
+		if (!passwordEncoder.matches(userConditionBO.getOldPassword(), user.getPassword())) {
+			throw new BadCredentialsException("原密码错误");
+		}
+		return jpaQueryFactory.update(_Q_User).set(_Q_User.password, passwordEncoder.encode(userConditionBO.getNewPassword())).where(_Q_User.id.eq(id)).execute();
+	}
+
+	@Override
+	public UserBO findByEmail(String email) {
+		return UserMapper.INSTANCE.domainToBO(userRepository.findByEmail(email));
+	}
+
+	@Override
+	public UserBO findByPhone(String phone) {
+		return UserMapper.INSTANCE.domainToBO(userRepository.findByPhone(phone));
 	}
 
 }

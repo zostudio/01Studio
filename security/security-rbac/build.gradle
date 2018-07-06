@@ -2,6 +2,7 @@
 dependencies {
     apply from: "$rootDir/gradle/plugins/mapstruct.gradle"
     apply from: "$rootDir/gradle/plugins/querydsl.gradle"
+    apply from: "$rootDir/gradle/plugins/swagger2.gradle"
     
     compile project (':security:security-core')
 

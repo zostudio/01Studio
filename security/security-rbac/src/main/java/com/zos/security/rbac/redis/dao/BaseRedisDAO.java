@@ -118,6 +118,7 @@ public abstract class BaseRedisDAO<V, HK, HV> implements RedisCommonDAO<V, HK, H
 	 * @param unit 时间单位
 	 * @return boolean
 	 */
+	@Override
 	public Boolean expire(String key, final Long timeout, final TimeUnit unit) {
 		return redisTemplate.expire(key, timeout, unit);
 	}
@@ -129,6 +130,7 @@ public abstract class BaseRedisDAO<V, HK, HV> implements RedisCommonDAO<V, HK, H
 	 * @param date 过期时间
 	 * @return boolean
 	 */
+	@Override
 	public Boolean expireAt(String key, Date date) {
 		return redisTemplate.expireAt(key, date);
 	}
@@ -139,6 +141,7 @@ public abstract class BaseRedisDAO<V, HK, HV> implements RedisCommonDAO<V, HK, H
 	 * @param key 键
 	 * @return boolean
 	 */
+	@Override
 	public Boolean persist(String key) {
 		return redisTemplate.persist(key);
 	}

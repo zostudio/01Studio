@@ -14,7 +14,7 @@ public interface UserService {
 
 	public UserBO create(UserBO userBO);
 	
-	public UserBO update(UserBO userBO);
+	public UserBO update(Long id, UserBO userBO);
 	
 	public void delete(Long id);
 	
@@ -22,9 +22,15 @@ public interface UserService {
 	
 	public UserBO findByUsername(String username);
 	
+	public UserBO findByEmail(String email);
+	
+	public UserBO findByPhone(String phone);
+	
 	public Page<UserBO> query(UserConditionBO userConditionBO, Pageable pageable);
 	
 	public List<UserRoleBO> addRoles(UserRoleRelationBO userRoleRelationBO);
 	
 	public void delRoles(Long id, UserRoleRelationBO userRoleRelationBO);
+	
+	public Long updatePwd(Long id, UserConditionBO userConditionBO);
 }
