@@ -49,6 +49,31 @@ public class UserDTO {
 	private String email;
 	
 	/**
+	 * 头像
+	 */
+	private String avatar;
+	
+	/**
+	 * 生日
+	 */
+	private String dateOfBirth;
+	
+	/**
+	 * 地址
+	 */
+	private String address;
+	
+	/**
+	 * 身份
+	 */
+	private String identity;
+	
+	/**
+	 * 性别
+	 */
+	private String gender;
+	
+	/**
 	 * 是否过期
 	 */
 	private Boolean accountNonExpired = true;
@@ -116,5 +141,30 @@ public class UserDTO {
     @JsonView(SimpleView.class)
 	public String getEmail() {
 		return email;
+	}
+
+    @JsonView(SimpleView.class)
+    public String getAvatar() {
+		return avatar;
+	}
+
+    @JsonView(SimpleView.class)
+    public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+    @JsonView(SimpleView.class)
+    public String getAddress() {
+		return address;
+	}
+
+    @JsonView(SimpleView.class)
+    public String getIdentity() {
+		return identity;
+	}
+
+    @JsonView(SimpleView.class)
+    public String getGender() {
+		return gender;
 	}
 }

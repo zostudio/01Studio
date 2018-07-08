@@ -94,6 +94,31 @@ public class User implements SocialUserDetails {
 	 * 邮箱
 	 */
 	private String email;
+	
+	/**
+	 * 头像
+	 */
+	private String avatar;
+	
+	/**
+	 * 生日
+	 */
+	private String dateOfBirth;
+	
+	/**
+	 * 地址
+	 */
+	private String address;
+	
+	/**
+	 * 身份
+	 */
+	private String identity;
+	
+	/**
+	 * 性别
+	 */
+	private String gender;
 
 	/**
 	 * 审计日志, 记录条目创建时间, 自动赋值

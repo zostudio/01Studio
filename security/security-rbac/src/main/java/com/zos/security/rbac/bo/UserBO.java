@@ -38,6 +38,31 @@ public class UserBO {
 	private String email;
 	
 	/**
+	 * 头像
+	 */
+	private String avatar;
+	
+	/**
+	 * 生日
+	 */
+	private String dateOfBirth;
+	
+	/**
+	 * 地址
+	 */
+	private String address;
+	
+	/**
+	 * 身份
+	 */
+	private String identity;
+	
+	/**
+	 * 性别
+	 */
+	private String gender;
+	
+	/**
 	 * 是否过期
 	 */
 	private Boolean accountNonExpired = true;
