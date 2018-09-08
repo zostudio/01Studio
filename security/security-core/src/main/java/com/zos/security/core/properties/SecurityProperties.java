@@ -32,6 +32,10 @@ public class SecurityProperties {
 	 * OAuth2 认证服务器配置
 	 */
 	private OAuth2Properties oauth2 = new OAuth2Properties();
-	
+
+	/**
+	 * Swagger2 配置
+	 */
+	private Swagger2Properties swagger = new Swagger2Properties();
 }
 

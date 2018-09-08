@@ -1,29 +1,20 @@
 package com.zos.coupon.app.resource;
 
-import org.springframework.boot.SpringApplication;
-//import com.zos.security.core.properties.SecurityProperties;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zos.security.rbac.domain.QUser;
 import com.zos.security.rbac.domain.User;
-
-//import java.io.UnsupportedEncodingException;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @EnableJpaAuditing
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.zos"})
-@EntityScan(basePackages = {"com.zos.security.rbac.domain"})
-@EnableJpaRepositories(basePackages ={"com.zos.security.rbac.repository"})
 public class CouponAppResourceApplication {
 
 	/*//@Autowired

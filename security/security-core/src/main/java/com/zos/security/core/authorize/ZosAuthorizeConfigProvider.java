@@ -1,5 +1,7 @@
 package com.zos.security.core.authorize;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -16,6 +18,7 @@ import com.zos.security.core.properties.SecurityProperties;
  * @author 01Studio
  *
  */
+@Slf4j
 @Component
 @Order(Integer.MIN_VALUE)
 public class ZosAuthorizeConfigProvider implements AuthorizeConfigProvider {
@@ -39,7 +42,16 @@ public class ZosAuthorizeConfigProvider implements AuthorizeConfigProvider {
 				SecurityConstants.DEFAULT_VALIDATE_EXISTS_URL_PREFIX + "/*",
 				securityProperties.getBrowser().getSignInPage(), 
 				securityProperties.getBrowser().getSignUpUrl(),
-				securityProperties.getBrowser().getSession().getSessionInvalidUrl()).permitAll();
+				securityProperties.getBrowser().getSession().getSessionInvalidUrl())
+				.permitAll();
+
+		log.info("swagger.enable: {}", securityProperties.getSwagger().isEnable());
+		log.info("swagger.uris: {}", securityProperties.getSwagger().getUris());
+		if (securityProperties.getSwagger().isEnable() && CollectionUtils.isNotEmpty(securityProperties.getSwagger().getUris())) {
+			for (String uri : securityProperties.getSwagger().getUris()) {
+				config.antMatchers(uri).permitAll();
+			}
+		}
 
 		if (StringUtils.isNotBlank(securityProperties.getBrowser().getSignOutUrl())) {
 			config.antMatchers(securityProperties.getBrowser().getSignOutUrl()).permitAll();

@@ -1,5 +1,9 @@
 package com.zos.security.core.properties;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 核心模块系统常量
  *
@@ -92,4 +96,14 @@ public interface SecurityConstants {
 	 * 获取第三方用户信息的 url
 	 */
 	String DEFAULT_SOCIAL_USER_INFO_URL = "/social/user";
+
+	/**
+	 * 默认不开放 swagger2 接口测试
+	 */
+	Boolean DEFAULT_SWAGGER2_ENABLE = false;
+
+	/**
+	 * 默认 swagger2 访问地址
+ 	 */
+	List<String> DEFAULT_SWAGGER2_URI = Arrays.asList("/swagger-ui.html", "/v2/api-docs", "/swagger-resources/**", "/webjars/**");
 }
