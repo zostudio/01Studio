@@ -40,7 +40,8 @@ public class ZosResourcesAuthenticationConfig {
                 .and()
                 .apply(openIdAuthenticationSecurityConfig)
                 .and()
-    			.authorizeRequests().antMatchers(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL).permitAll().and()
+    			.authorizeRequests().antMatchers(SecurityConstants.DEFAULT_SOCIAL_USER_INFO_URL).permitAll()
+                .and()
                 .csrf().disable();
     }
 }
