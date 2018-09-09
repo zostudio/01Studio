@@ -1,7 +1,6 @@
 package com.zos.security.rbac.bo;
 
-import java.util.Date;
-
+import com.zos.security.rbac.support.RoleType;
 import lombok.Data;
 
 @Data
@@ -13,13 +12,18 @@ public class RoleBO {
 	private Long id;
 
 	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值
-	 */
-	private Date createdDate;
-
-	/**
 	 * 角色名称
 	 */
 	private String name;
+
+	/**
+	 * 角色类型
+	 */
+	private RoleType roleType;
+
+	/**
+	 * 角色描述
+	 */
+	private String description;
 	
 }

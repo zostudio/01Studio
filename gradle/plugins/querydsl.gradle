@@ -7,14 +7,6 @@ querydsl {
   jpa = true
 }
 
-sourceSets {
-    main {
-        java {
-            srcDir "$buildDir/generated/source/querydsl/main"
-        }
-    }
-}
-
 dependencies {
     compile('com.querydsl:querydsl-apt')
     compile('com.querydsl:querydsl-jpa')

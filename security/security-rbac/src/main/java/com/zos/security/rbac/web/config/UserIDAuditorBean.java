@@ -1,5 +1,6 @@
 package com.zos.security.rbac.web.config;
 
+import com.zos.security.rbac.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -24,10 +25,14 @@ public class UserIDAuditorBean implements AuditorAware<Long> {
         if (ctx.getAuthentication().getPrincipal() == null) {
             return -1L;
         }
-        Object principal = ctx.getAuthentication().getPrincipal();
-        if (principal.getClass().isAssignableFrom(Long.class)) {
-            log.info("operator: {}", ToStringBuilder.reflectionToString(principal, ToStringStyle.MULTI_LINE_STYLE));
-            return (Long) principal;
+        if (ctx.getAuthentication().getPrincipal() instanceof User) {
+            User principal = (User)ctx.getAuthentication().getPrincipal();
+            if (principal.getId() != null && principal.getId().getClass().isAssignableFrom(Long.class)) {
+                log.info("operator: {}", ToStringBuilder.reflectionToString(principal, ToStringStyle.MULTI_LINE_STYLE));
+                return principal.getId();
+            } else {
+                return -1L;
+            }
         } else {
             return -1L;
         }

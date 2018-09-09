@@ -10,7 +10,7 @@ public interface RoleService {
 	
 	public RoleBO create(RoleBO roleBO);
 	
-	public RoleBO update(RoleBO roleBO);
+	public RoleBO update(Long id, RoleBO roleBO);
 	
 	public void delete(Long id);
 	

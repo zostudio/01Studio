@@ -46,6 +46,9 @@ configure(install.repositories.mavenInstaller) {
 sourceSets {
     main {
         output.resourcesDir = output.classesDir
+        java {
+            srcDir "$buildDir/generated/source/querydsl/main"
+        }
     }
     generated {
         java {

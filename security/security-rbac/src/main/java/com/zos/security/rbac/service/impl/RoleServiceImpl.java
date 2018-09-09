@@ -1,10 +1,5 @@
 package com.zos.security.rbac.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -18,7 +13,14 @@ import com.zos.security.rbac.mapper.RoleMapper;
 import com.zos.security.rbac.repository.RoleRepository;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
 import com.zos.security.rbac.service.RoleService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class RoleServiceImpl implements RoleService {
 	
@@ -43,8 +45,12 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public RoleBO update(RoleBO roleBO) {
-		return RoleMapper.INSTANCE.domainToBO(roleRepository.save(RoleMapper.INSTANCE.boToDomain(roleBO)));
+	public RoleBO update(Long id, RoleBO roleBO) {
+		Role role = roleRepository.findOne(id);
+		role.setName(roleBO.getName());
+		role.setRoleType(roleBO.getRoleType());
+		role.setDescription(roleBO.getDescription());
+		return RoleMapper.INSTANCE.domainToBO(roleRepository.save(role));
 	}
 
 	@Override
@@ -60,8 +66,9 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Page<RoleBO> query(RoleConditionBO roleConditionBO, Pageable pageable) {
 		QRole _Q_Role = QRole.role;
-		JPAQuery<Role> roles = jpaQueryFactory.selectFrom(_Q_Role)
-        .orderBy(new OrderSpecifier<Long>(Order.DESC, _Q_Role.id))
+		Sort sort = pageable.getSort();
+		JPAQuery<Role> roles = jpaQueryFactory.selectFrom(_Q_Role);
+		roles.orderBy(new OrderSpecifier<Long>(Order.DESC, _Q_Role.id))
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize());
 		QueryResults<Role> result = roles.fetchResults();

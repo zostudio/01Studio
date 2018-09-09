@@ -1,32 +1,17 @@
 package com.zos.security.rbac.domain;
 
+import com.zos.security.rbac.support.BaseEntity;
+import com.zos.security.rbac.support.RoleType;
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.data.annotation.CreatedDate;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+@Data
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Role implements Serializable {
+public class Role extends BaseEntity implements Serializable {
 
 	/**
 	 * 
@@ -34,24 +19,22 @@ public class Role implements Serializable {
 	private static final long serialVersionUID = -975461664568511798L;
 
 	/**
-	 * 数据库表主键
-	 */
-	@Id
-	@GeneratedValue
-	private Long id;
-
-	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值
-	 */
-	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-
-	/**
 	 * 角色名称
 	 */
 	@Column(nullable = false)
 	private String name;
+
+	/**
+	 * 角色类型
+	 */
+	@Column(nullable = false)
+	private RoleType roleType;
+
+	/**
+	 * 角色描述
+	 */
+	@Column(nullable = true)
+	private String description;
 
 	/**
 	 * 角色的所有资源

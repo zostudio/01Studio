@@ -1,50 +1,35 @@
 package com.zos.security.rbac.dto;
 
-import java.util.Date;
+import com.zos.security.rbac.support.RoleType;
+import com.zos.security.rbac.validator.constraints.NotAllowValue;
+import lombok.Data;
+import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@Setter
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class RoleDTO {
-	
-	public interface SimpleView {};
-	public interface DetailView extends SimpleView {};
 
 	/**
 	 * 数据库表主键
 	 */
+	@NotAllowValue(message = "主键必须为空")
 	private Long id;
-
-	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值
-	 */
-	private Date createdDate;
 
 	/**
 	 * 角色名称
 	 */
+	@NotBlank(message = "角色名称不能为空")
 	private String name;
-	
-	@JsonView(SimpleView.class)
-	public Long getId() {
-		return id;
-	}
-	
-	@JsonView(DetailView.class)
-	public Date getCreatedDate() {
-		return createdDate;
-	}
-	
-	@JsonView(SimpleView.class)
-	public String getName() {
-		return name;
-	}
+
+	/**
+	 * 角色类型
+	 */
+	@NotNull(message = "角色类型不能为空")
+	private RoleType roleType;
+
+	/**
+	 * 角色描述
+	 */
+	private String description;
 }
