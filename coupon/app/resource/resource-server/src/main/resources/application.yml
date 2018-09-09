@@ -24,6 +24,11 @@ spring:
     timeout: 5000
     host: localhost
     port: 6379
+  data:
+    rest:
+      page-param-name: page
+      sort-param-name: sort
+      enable-enum-translation: true
 zos:
   security:
     oauth2:

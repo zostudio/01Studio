@@ -603,12 +603,12 @@ define("tinymce/spellcheckerplugin/DomTextMatcher", [], function() {
 define("tinymce/spellcheckerplugin/Plugin", [
 	"tinymce/spellcheckerplugin/DomTextMatcher",
 	"tinymce/PluginManager",
-	"tinymce/util/Tools",
+	"tinymce/utils/Tools",
 	"tinymce/ui/Menu",
 	"tinymce/dom/DOMUtils",
-	"tinymce/util/XHR",
-	"tinymce/util/URI",
-	"tinymce/util/JSON"
+	"tinymce/utils/XHR",
+	"tinymce/utils/URI",
+	"tinymce/utils/JSON"
 ], function(DomTextMatcher, PluginManager, Tools, Menu, DOMUtils, XHR, URI, JSON) {
 	PluginManager.add('spellchecker', function(editor, url) {
 		var languageMenuItems, self = this, lastSuggestions, started, suggestionsMenu, settings = editor.settings;

@@ -20,7 +20,7 @@ public class ZosConnectView extends AbstractView {
 	 * 
 	 * @see
 	 * org.springframework.web.servlet.view.AbstractView#renderMergedOutputModel
-	 * (java.util.Map, javax.servlet.http.HttpServletRequest,
+	 * (java.utils.Map, javax.servlet.http.HttpServletRequest,
 	 * javax.servlet.http.HttpServletResponse)
 	 */
 	@Override

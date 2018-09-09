@@ -81,7 +81,7 @@ var defineGlobal = function (id, ref) {
   define(id, [], function () { return ref; });
 };
 /*jsc
-["tinymce/imagetoolsplugin/Plugin","global!tinymce.PluginManager","global!tinymce.Env","global!tinymce.util.Promise","global!tinymce.util.URI","global!tinymce.util.Tools","global!tinymce.util.Delay","ephox/imagetools/api/ImageTransformations","ephox/imagetools/api/BlobConversions","tinymce/imagetoolsplugin/Dialog","ephox/imagetools/transformations/Filters","ephox/imagetools/transformations/ImageTools","ephox/imagetools/util/Conversions","global!tinymce.dom.DOMUtils","global!tinymce.ui.Factory","global!tinymce.ui.Form","global!tinymce.ui.Container","tinymce/imagetoolsplugin/ImagePanel","tinymce/imagetoolsplugin/UndoStack","ephox/imagetools/util/Canvas","ephox/imagetools/util/ImageSize","ephox/imagetools/util/Promise","ephox/imagetools/util/Mime","ephox/imagetools/transformations/ColorMatrix","global!tinymce.ui.Control","global!tinymce.ui.DragHelper","global!tinymce.geom.Rect","tinymce/imagetoolsplugin/CropRect","global!tinymce.dom.DomQuery","global!tinymce.util.Observable","global!tinymce.util.VK"]
+["tinymce/imagetoolsplugin/Plugin","global!tinymce.PluginManager","global!tinymce.Env","global!tinymce.utils.Promise","global!tinymce.utils.URI","global!tinymce.utils.Tools","global!tinymce.utils.Delay","ephox/imagetools/api/ImageTransformations","ephox/imagetools/api/BlobConversions","tinymce/imagetoolsplugin/Dialog","ephox/imagetools/transformations/Filters","ephox/imagetools/transformations/ImageTools","ephox/imagetools/utils/Conversions","global!tinymce.dom.DOMUtils","global!tinymce.ui.Factory","global!tinymce.ui.Form","global!tinymce.ui.Container","tinymce/imagetoolsplugin/ImagePanel","tinymce/imagetoolsplugin/UndoStack","ephox/imagetools/utils/Canvas","ephox/imagetools/utils/ImageSize","ephox/imagetools/utils/Promise","ephox/imagetools/utils/Mime","ephox/imagetools/transformations/ColorMatrix","global!tinymce.ui.Control","global!tinymce.ui.DragHelper","global!tinymce.geom.Rect","tinymce/imagetoolsplugin/CropRect","global!tinymce.dom.DomQuery","global!tinymce.utils.Observable","global!tinymce.utils.VK"]
 jsc*/
 defineGlobal("global!tinymce.PluginManager", tinymce.PluginManager);
 defineGlobal("global!tinymce.Env", tinymce.Env);
@@ -407,10 +407,10 @@ define("ephox/imagetools/util/Mime", [], function() {
  * Converts blob/uris/images back and forth.
  */
 define("ephox/imagetools/util/Conversions", [
-  "ephox/imagetools/util/Promise",
-  "ephox/imagetools/util/Canvas",
-  "ephox/imagetools/util/Mime",
-  "ephox/imagetools/util/ImageSize"
+  "ephox/imagetools/utils/Promise",
+  "ephox/imagetools/utils/Canvas",
+  "ephox/imagetools/utils/Mime",
+  "ephox/imagetools/utils/ImageSize"
 ], function(Promise, Canvas, Mime, ImageSize) {
   function loadImage(image) {
     return new Promise(function(resolve) {
@@ -828,9 +828,9 @@ define("ephox/imagetools/transformations/ColorMatrix", [], function() {
  * Applies various filters to blobs.
  */
 define("ephox/imagetools/transformations/Filters", [
-  "ephox/imagetools/util/Canvas",
-  "ephox/imagetools/util/ImageSize",
-  "ephox/imagetools/util/Conversions",
+  "ephox/imagetools/utils/Canvas",
+  "ephox/imagetools/utils/ImageSize",
+  "ephox/imagetools/utils/Conversions",
   "ephox/imagetools/transformations/ColorMatrix"
 ], function(Canvas, ImageSize, Conversions, ColorMatrix) {
   var revokeImageUrl = Conversions.revokeImageUrl;
@@ -1049,9 +1049,9 @@ define("ephox/imagetools/transformations/Filters", [
  * Modifies image blobs.
  */
 define("ephox/imagetools/transformations/ImageTools", [
-  "ephox/imagetools/util/Conversions",
-  "ephox/imagetools/util/Canvas",
-  "ephox/imagetools/util/ImageSize"
+  "ephox/imagetools/utils/Conversions",
+  "ephox/imagetools/utils/Canvas",
+  "ephox/imagetools/utils/ImageSize"
 ], function(Conversions, Canvas, ImageSize) {
   var revokeImageUrl = Conversions.revokeImageUrl;
 
@@ -1233,7 +1233,7 @@ define(
   'ephox/imagetools/api/BlobConversions',
 
   [
-    'ephox/imagetools/util/Conversions'
+    'ephox/imagetools/utils/Conversions'
   ],
 
   function (Conversions) {
@@ -1292,9 +1292,9 @@ define("tinymce/imagetoolsplugin/CropRect", [
 	"global!tinymce.dom.DomQuery",
 	"global!tinymce.ui.DragHelper",
 	"global!tinymce.geom.Rect",
-	"global!tinymce.util.Tools",
-	"global!tinymce.util.Observable",
-	"global!tinymce.util.VK"
+	"global!tinymce.utils.Tools",
+	"global!tinymce.utils.Observable",
+	"global!tinymce.utils.VK"
 ], function($, DragHelper, Rect, Tools, Observable, VK) {
 	var count = 0;
 
@@ -1565,8 +1565,8 @@ define("tinymce/imagetoolsplugin/ImagePanel", [
 	"global!tinymce.ui.Control",
 	"global!tinymce.ui.DragHelper",
 	"global!tinymce.geom.Rect",
-	"global!tinymce.util.Tools",
-	"global!tinymce.util.Promise",
+	"global!tinymce.utils.Tools",
+	"global!tinymce.utils.Promise",
 	"tinymce/imagetoolsplugin/CropRect"
 ], function(Control, DragHelper, Rect, Tools, Promise, CropRect) {
 	function loadImage(image) {
@@ -1841,8 +1841,8 @@ define("tinymce/imagetoolsplugin/UndoStack", [
  */
 define("tinymce/imagetoolsplugin/Dialog", [
 	"global!tinymce.dom.DOMUtils",
-	"global!tinymce.util.Tools",
-	"global!tinymce.util.Promise",
+	"global!tinymce.utils.Tools",
+	"global!tinymce.utils.Promise",
 	"global!tinymce.ui.Factory",
 	"global!tinymce.ui.Form",
 	"global!tinymce.ui.Container",
@@ -2335,10 +2335,10 @@ define("tinymce/imagetoolsplugin/Dialog", [
 define("tinymce/imagetoolsplugin/Plugin", [
 	"global!tinymce.PluginManager",
 	"global!tinymce.Env",
-	"global!tinymce.util.Promise",
-	"global!tinymce.util.URI",
-	"global!tinymce.util.Tools",
-	"global!tinymce.util.Delay",
+	"global!tinymce.utils.Promise",
+	"global!tinymce.utils.URI",
+	"global!tinymce.utils.Tools",
+	"global!tinymce.utils.Delay",
 	"ephox/imagetools/api/ImageTransformations",
 	"ephox/imagetools/api/BlobConversions",
 	"tinymce/imagetoolsplugin/Dialog"

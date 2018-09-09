@@ -1,7 +1,9 @@
 package com.zos.security.rbac.bo;
 
 import com.zos.security.rbac.support.RoleType;
+import lombok.Data;
 
+@Data
 public class RoleConditionBO {
 
     /**

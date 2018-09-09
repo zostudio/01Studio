@@ -157,7 +157,7 @@ define("tinymce/tableplugin/Utils", [
  * @private
  */
 define("tinymce/tableplugin/TableGrid", [
-	"tinymce/util/Tools",
+	"tinymce/utils/Tools",
 	"tinymce/Env",
 	"tinymce/tableplugin/Utils"
 ], function(Tools, Env, Utils) {
@@ -1099,10 +1099,10 @@ define("tinymce/tableplugin/TableGrid", [
  * @private
  */
 define("tinymce/tableplugin/Quirks", [
-	"tinymce/util/VK",
-	"tinymce/util/Delay",
+	"tinymce/utils/VK",
+	"tinymce/utils/Delay",
 	"tinymce/Env",
-	"tinymce/util/Tools",
+	"tinymce/utils/Tools",
 	"tinymce/tableplugin/Utils"
 ], function(VK, Delay, Env, Tools, Utils) {
 	var each = Tools.each, getSpanVal = Utils.getSpanVal;
@@ -1505,7 +1505,7 @@ define("tinymce/tableplugin/Quirks", [
 define("tinymce/tableplugin/CellSelection", [
 	"tinymce/tableplugin/TableGrid",
 	"tinymce/dom/TreeWalker",
-	"tinymce/util/Tools"
+	"tinymce/utils/Tools"
 ], function(TableGrid, TreeWalker, Tools) {
 	return function(editor) {
 		var dom = editor.dom, tableGrid, startCell, startTable, lastMouseOverTarget, hasCellSelection = true, resizing;
@@ -1709,7 +1709,7 @@ define("tinymce/tableplugin/CellSelection", [
  * @private
  */
 define("tinymce/tableplugin/Dialogs", [
-	"tinymce/util/Tools",
+	"tinymce/utils/Tools",
 	"tinymce/Env"
 ], function(Tools, Env) {
 	var each = Tools.each;
@@ -2535,8 +2535,8 @@ define("tinymce/tableplugin/Dialogs", [
  * @private
  */
 define("tinymce/tableplugin/ResizeBars", [
-	"tinymce/util/Tools",
-	"tinymce/util/VK"
+	"tinymce/utils/Tools",
+	"tinymce/utils/VK"
 ], function(Tools, VK) {
 	var hoverTable;
 
@@ -3526,7 +3526,7 @@ define("tinymce/tableplugin/Plugin", [
 	"tinymce/tableplugin/CellSelection",
 	"tinymce/tableplugin/Dialogs",
 	"tinymce/tableplugin/ResizeBars",
-	"tinymce/util/Tools",
+	"tinymce/utils/Tools",
 	"tinymce/dom/TreeWalker",
 	"tinymce/Env",
 	"tinymce/PluginManager"

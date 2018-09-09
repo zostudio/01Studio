@@ -28,7 +28,7 @@ public class ZosConnectionStatusView extends AbstractView {
 	private ObjectMapper objectMapper;
 	
 	/* (non-Javadoc)
-	 * @see org.springframework.web.servlet.view.AbstractView#renderMergedOutputModel(java.util.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 * @see org.springframework.web.servlet.view.AbstractView#renderMergedOutputModel(java.utils.Map, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

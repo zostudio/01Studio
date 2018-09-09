@@ -115,7 +115,7 @@
  * @class tinymce.pasteplugin.Utils
  */
 define("tinymce/pasteplugin/Utils", [
-	"tinymce/util/Tools",
+	"tinymce/utils/Tools",
 	"tinymce/html/DomParser",
 	"tinymce/html/Schema"
 ], function(Tools, DomParser, Schema) {
@@ -274,9 +274,9 @@ define("tinymce/pasteplugin/Utils", [
 define("tinymce/pasteplugin/Clipboard", [
 	"tinymce/Env",
 	"tinymce/dom/RangeUtils",
-	"tinymce/util/VK",
+	"tinymce/utils/VK",
 	"tinymce/pasteplugin/Utils",
-	"tinymce/util/Delay"
+	"tinymce/utils/Delay"
 ], function(Env, RangeUtils, VK, Utils, Delay) {
 	return function(editor) {
 		var self = this, pasteBinElm, lastRng, keyboardPasteTimeStamp = 0, draggingInternally = false;
@@ -941,7 +941,7 @@ define("tinymce/pasteplugin/Clipboard", [
  * @private
  */
 define("tinymce/pasteplugin/WordFilter", [
-	"tinymce/util/Tools",
+	"tinymce/utils/Tools",
 	"tinymce/html/DomParser",
 	"tinymce/html/Schema",
 	"tinymce/html/Serializer",
@@ -1447,7 +1447,7 @@ define("tinymce/pasteplugin/WordFilter", [
  */
 define("tinymce/pasteplugin/Quirks", [
 	"tinymce/Env",
-	"tinymce/util/Tools",
+	"tinymce/utils/Tools",
 	"tinymce/pasteplugin/WordFilter",
 	"tinymce/pasteplugin/Utils"
 ], function(Env, Tools, WordFilter, Utils) {
