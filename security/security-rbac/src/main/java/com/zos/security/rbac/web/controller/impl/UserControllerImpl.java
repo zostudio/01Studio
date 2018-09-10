@@ -1,8 +1,17 @@
 package com.zos.security.rbac.web.controller.impl;
 
-import java.util.List;
-import java.util.Set;
-
+import com.zos.security.rbac.bo.UserBO;
+import com.zos.security.rbac.domain.User;
+import com.zos.security.rbac.dto.UserDTO;
+import com.zos.security.rbac.dto.UserRoleDTO;
+import com.zos.security.rbac.dto.condition.UserConditionDTO;
+import com.zos.security.rbac.dto.condition.UserRoleRelationDTO;
+import com.zos.security.rbac.mapper.UserMapper;
+import com.zos.security.rbac.mapper.UserRoleMapper;
+import com.zos.security.rbac.repository.support.QueryResultConverter;
+import com.zos.security.rbac.service.RbacService;
+import com.zos.security.rbac.service.UserService;
+import com.zos.security.rbac.web.controller.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,19 +23,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.zos.security.rbac.bo.UserBO;
-import com.zos.security.rbac.domain.User;
-import com.zos.security.rbac.dto.UserConditionDTO;
-import com.zos.security.rbac.dto.UserDTO;
-import com.zos.security.rbac.dto.UserRoleDTO;
-import com.zos.security.rbac.dto.UserRoleRelationDTO;
-import com.zos.security.rbac.mapper.UserMapper;
-import com.zos.security.rbac.mapper.UserRoleMapper;
-import com.zos.security.rbac.repository.support.QueryResultConverter;
-import com.zos.security.rbac.service.RbacService;
-import com.zos.security.rbac.service.UserService;
-import com.zos.security.rbac.web.controller.UserController;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/user")
@@ -39,13 +37,11 @@ public class UserControllerImpl implements UserController {
 	RbacService rbacService;
 
 	@Override
-	@JsonView(UserDTO.SimpleView.class)
 	public UserDTO create(@RequestBody UserDTO userDTO) {
 		return UserMapper.INSTANCE.boToDTO(userService.create(UserMapper.INSTANCE.dtoToBO(userDTO)));
 	}
 
 	@Override
-	@JsonView(UserDTO.SimpleView.class)
 	public UserDTO update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
 		return UserMapper.INSTANCE.boToDTO(userService.update(id, UserMapper.INSTANCE.dtoToBO(userDTO)));
 	}
@@ -56,7 +52,6 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	@JsonView(UserDTO.DetailView.class)
 	public UserDTO getInfo(@PathVariable Long id) {
 		return UserMapper.INSTANCE.boToDTO(userService.getInfo(id));
 	}

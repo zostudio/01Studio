@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zos.security.rbac.dto.DepartmentDTO;
-import com.zos.security.rbac.dto.DepartmentConditionDTO;
+import com.zos.security.rbac.dto.condition.DepartmentConditionDTO;
 
 @RestController
 @RequestMapping("/department")

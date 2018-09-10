@@ -1,22 +1,21 @@
 package com.zos.security.rbac.mapper;
 
-import java.util.List;
-
+import com.zos.security.rbac.bo.RoleBO;
+import com.zos.security.rbac.bo.UserBO;
+import com.zos.security.rbac.bo.UserRoleBO;
+import com.zos.security.rbac.bo.UserRoleRelationBO;
+import com.zos.security.rbac.domain.UserRoleRelation;
+import com.zos.security.rbac.dto.RoleDTO;
+import com.zos.security.rbac.dto.UserDTO;
+import com.zos.security.rbac.dto.UserRoleDTO;
+import com.zos.security.rbac.dto.condition.UserRoleRelationDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import com.zos.security.rbac.bo.RoleBO;
-import com.zos.security.rbac.bo.UserBO;
-import com.zos.security.rbac.bo.UserRoleBO;
-import com.zos.security.rbac.bo.UserRoleRelationBO;
-import com.zos.security.rbac.domain.UserRole;
-import com.zos.security.rbac.dto.RoleDTO;
-import com.zos.security.rbac.dto.UserDTO;
-import com.zos.security.rbac.dto.UserRoleDTO;
-import com.zos.security.rbac.dto.UserRoleRelationDTO;
+import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserRoleMapper {
@@ -39,11 +38,11 @@ public interface UserRoleMapper {
 	})
 	UserRoleRelationBO dtoToBO(UserRoleRelationDTO userRoleRelationDTO);
 	
-	UserRoleBO domainToBO(UserRole userRole);
+	UserRoleBO domainToBO(UserRoleRelation userRole);
 	
 	UserRoleDTO boToDTO(UserRoleBO userRoleBO);
 	
 	List<UserRoleDTO> boToDTO(List<UserRoleBO> userRoleBOs);
 	
-	List<UserRoleBO> domainToBO(List<UserRole> userRoles);
+	List<UserRoleBO> domainToBO(List<UserRoleRelation> userRoles);
 }

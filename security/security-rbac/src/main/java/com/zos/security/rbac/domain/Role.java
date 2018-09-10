@@ -2,15 +2,21 @@ package com.zos.security.rbac.domain;
 
 import com.zos.security.rbac.support.BaseEntity;
 import com.zos.security.rbac.support.RoleType;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(uniqueConstraints={
+		@UniqueConstraint(columnNames={"name", "type"})
+})
 public class Role extends BaseEntity implements Serializable {
 
 	/**
@@ -28,7 +34,8 @@ public class Role extends BaseEntity implements Serializable {
 	 * 角色类型
 	 */
 	@Column(nullable = false)
-	private RoleType roleType;
+	@Enumerated(EnumType.STRING)
+	private RoleType type;
 
 	/**
 	 * 角色描述
@@ -40,24 +47,24 @@ public class Role extends BaseEntity implements Serializable {
 	 * 角色的所有资源
 	 */
 	@OneToMany(mappedBy = "role", cascade = CascadeType.REMOVE)
-	private Set<RoleResource> roleResources  = new HashSet<RoleResource>();
+	private Set<RoleResourceRelation> roleResourceRelations  = new HashSet<RoleResourceRelation>();
 
 	/**
 	 * 角色的所有用户
 	 */
 	@OneToMany(mappedBy="role", cascade = CascadeType.REMOVE)
-	private Set<UserRole> userRoles = new HashSet<UserRole>();
+	private Set<UserRoleRelation> userRoleRelations = new HashSet<UserRoleRelation>();
 
 	/**
 	 * 角色的所有部门
 	 */
 	@OneToMany(mappedBy="role", cascade = CascadeType.REMOVE)
-	private Set<DepartmentRole> departmentRoles = new HashSet<DepartmentRole>();
+	private Set<DepartmentRoleRelation> departmentRoleRelations = new HashSet<DepartmentRoleRelation>();
 
 	/**
 	 * 角色的所有角色组
 	 */
 	@OneToMany(mappedBy="role", cascade = CascadeType.REMOVE)
-	private Set<RoleGroupRole> roleGroupRoles = new HashSet<RoleGroupRole>();
+	private Set<RoleGroupRoleRelation> roleGroupRoleRelations = new HashSet<RoleGroupRoleRelation>();
 	
 }

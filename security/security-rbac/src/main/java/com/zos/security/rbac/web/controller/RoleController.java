@@ -6,7 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.zos.security.rbac.dto.RoleDTO;
-import com.zos.security.rbac.dto.RoleConditionDTO;
+import com.zos.security.rbac.dto.condition.RoleConditionDTO;
 
 import javax.validation.Valid;
 

@@ -1,25 +1,43 @@
 package com.zos.security.rbac.support;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.io.Serializable;
+
 /**
- * 资源类型: MENU, BUTTON, OTHER
+ * 资源类型: INTERFACE, MENU, BUTTON, OTHER
  * 
  * @author 01Studio
  *
  */
-public enum ResourceType {
-	
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public enum ResourceType implements Serializable {
+
+	/**
+	 * 接口
+	 */
+	INTERFACE("Interface"),
+
 	/**
 	 * 菜单
 	 */
-	MENU,
+	MENU("Menu"),
 	
 	/**
 	 * 按钮
 	 */
-	BUTTON,
+	BUTTON("Button"),
 	
 	/**
 	 * 其他
 	 */
-	OTHER
+	OTHER("Other");
+
+	private String resourcesType;
 }

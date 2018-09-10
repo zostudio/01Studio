@@ -1,34 +1,18 @@
 package com.zos.security.rbac.domain;
 
+import com.zos.security.rbac.support.BaseEntity;
+import com.zos.security.rbac.support.Gender;
+import com.zos.security.rbac.support.RequestMethod;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.social.security.SocialUserDetails;
 
-import com.zos.security.rbac.support.RequestMethod;
-
+import javax.persistence.*;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -38,8 +22,13 @@ import java.util.function.Consumer;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class User implements SocialUserDetails {
+@Table(uniqueConstraints={
+		@UniqueConstraint(columnNames={"username"}),
+		@UniqueConstraint(columnNames={"phone"}),
+		@UniqueConstraint(columnNames={"email"}),
+		@UniqueConstraint(columnNames={"identity"})
+})
+public class User extends BaseEntity implements SocialUserDetails {
 	
 	/**
 	 * 
@@ -47,14 +36,7 @@ public class User implements SocialUserDetails {
 	private static final long serialVersionUID = 1115874811024755525L;
 
 	/**
-	 * 数据库主键
-	 */
-	@Id
-	@GeneratedValue
-	private Long id;
-
-	/**
-	 * 用户名
+	 * 账号
 	 */
 	@Column(nullable = false)
 	private String username;
@@ -68,90 +50,78 @@ public class User implements SocialUserDetails {
 	/**
 	 * 是否过期
 	 */
+	@Column(nullable = false)
 	private Boolean accountNonExpired = true;
 	
 	/**
 	 * 是否冻结
 	 */
+	@Column(nullable = false)
 	private Boolean accountNonLocked = true;
 	
 	/**
 	 * 密码是否过期
 	 */
+	@Column(nullable = false)
 	private Boolean credentialsNonExpired = true;
 	
 	/**
 	 * 是否删除
 	 */
+	@Column(nullable = false)
 	private Boolean enabled = true;
-	
+
+	/**
+	 * 姓名
+	 */
+	@Column(nullable = false)
+	private String nickName;
+
 	/**
 	 * 手机
 	 */
+	@Column(nullable = false)
 	private String phone;
 	
 	/**
 	 * 邮箱
 	 */
+	@Column(nullable = false)
 	private String email;
 	
 	/**
 	 * 头像
 	 */
+	@Column(nullable = true)
 	private String avatar;
 	
 	/**
 	 * 生日
 	 */
+	@Column(nullable = false)
 	private String dateOfBirth;
 	
 	/**
 	 * 地址
 	 */
+	@Column(nullable = false)
 	private String address;
 	
 	/**
 	 * 身份
 	 */
+	@Column(nullable = false)
 	private String identity;
 	
 	/**
 	 * 性别
 	 */
-	private String gender;
-
-	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值
-	 */
-	@CreatedDate
 	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
 	
 	/**
-     * 创建人
-     */
-    @CreatedBy
-	@Column(nullable = false)
-    private Long createdBy;
-    
-    /**
-     * 修改时间
-     */
-    @LastModifiedDate
-	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-    
-    /**
-     * 修改人
-     */
-    @LastModifiedBy
-	@Column(nullable = false)
-    private Long lastModifiedBy;
-	
-	/**
-	 * 用户有权访问的所有接口, 不持久化到 MySQL, 缓存到　Redis　中
+	 * 用户有权访问的所有接口, 不持久化到 MySQL, 缓存到 Redis 中
 	 */
 	@Transient
 	private Set<UrlCache> urlCaches = new HashSet<UrlCache>();
@@ -161,27 +131,24 @@ public class User implements SocialUserDetails {
 	 */
 	@Transient
 	private Set<RoleCache> roleCaches = new HashSet<RoleCache>();
-	
-	@Transient
-	private String userId;
 
 	/**
 	 * 用户的所有角色
 	 */
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private Set<UserRole> userRoles = new HashSet<UserRole>();
+	private Set<UserRoleRelation> userRoleRelations = new HashSet<UserRoleRelation>();
 
 	/**
 	 * 用户的所有部门
 	 */
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private Set<DepartmentUser> departmentUsers = new HashSet<DepartmentUser>();
+	private Set<DepartmentUserRelation> departmentUserRelations = new HashSet<DepartmentUserRelation>();
 
 	/**
 	 * 用户的所有角色组
 	 */
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private Set<UserRoleGroup> userRoleGroups = new HashSet<UserRoleGroup>();
+	private Set<UserRoleGroupRelation> userRoleGroupRelations = new HashSet<UserRoleGroupRelation>();
 	
 	@Getter
 	@Setter
@@ -230,16 +197,16 @@ public class User implements SocialUserDetails {
 	}
 
 	private void forEachResource(Consumer<Resource> consumer) {
-		for (UserRole userRole : getUserRoles()) {
-			for (RoleResource roleResource : userRole.getRole().getRoleResources()) {
-				consumer.accept(roleResource.getResource());
+		for (UserRoleRelation userRoleRelation : getUserRoleRelations()) {
+			for (RoleResourceRelation roleResourceRelation : userRoleRelation.getRole().getRoleResourceRelations()) {
+				consumer.accept(roleResourceRelation.getResource());
 			}
 		}
 	}
 
 	private void forEachRole(Consumer<Role> consumer) {
-		for (UserRole userRole : getUserRoles()) {
-			consumer.accept(userRole.getRole());
+		for (UserRoleRelation userRoleRelation : getUserRoleRelations()) {
+			consumer.accept(userRoleRelation.getRole());
 		}
 	}
 

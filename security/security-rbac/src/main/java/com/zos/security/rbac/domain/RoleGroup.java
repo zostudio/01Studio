@@ -1,51 +1,31 @@
 package com.zos.security.rbac.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.data.annotation.CreatedDate;
-
+import com.zos.security.rbac.support.BaseEntity;
+import com.zos.security.rbac.support.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoleGroup implements Serializable {
+@Table(uniqueConstraints={
+		@UniqueConstraint(columnNames={"name", "type"})
+})
+public class RoleGroup extends BaseEntity implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4847483082166122608L;
-
-	/**
-	 * 数据库表主键
-	 */
-	@Id
-	@GeneratedValue
-	private Long id;
-
-	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值
-	 */
-	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
 
 	/**
 	 * 角色组名称
@@ -54,20 +34,45 @@ public class RoleGroup implements Serializable {
 	private String name;
 
 	/**
+	 * 角色类型
+	 */
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private RoleType type;
+
+	/**
+	 * 角色组描述
+	 */
+	@Column(nullable = true)
+	private String description;
+
+	/**
+	 * 父角色组
+	 */
+	@ManyToOne
+	private RoleGroup parent;
+
+	/**
+	 * 子角色组
+	 */
+	@OneToMany(mappedBy = "parent")
+	private Set<RoleGroup> children = new HashSet<RoleGroup>();
+
+	/**
 	 * 角色组的所有角色
 	 */
 	@OneToMany(mappedBy="roleGroup", cascade = CascadeType.REMOVE)
-	private Set<RoleGroupRole> roleGroupRoles = new HashSet<RoleGroupRole>();
+	private Set<RoleGroupRoleRelation> roleGroupRoleRelations = new HashSet<RoleGroupRoleRelation>();
 
 	/**
 	 * 角色组的所有部门
 	 */
 	@OneToMany(mappedBy="roleGroup", cascade = CascadeType.REMOVE)
-	private Set<DepartmentRoleGroup> departmentRoleGroups = new HashSet<DepartmentRoleGroup>();
+	private Set<DepartmentRoleGroupRelation> departmentRoleGroupRelations = new HashSet<DepartmentRoleGroupRelation>();
 
 	/**
 	 * 角色组的所有用户
 	 */
 	@OneToMany(mappedBy="roleGroup", cascade = CascadeType.REMOVE)
-	private Set<UserRoleGroup> userRoleGroups = new HashSet<UserRoleGroup>();
+	private Set<UserRoleGroupRelation> userRoleGroupRelations = new HashSet<UserRoleGroupRelation>();
 }

@@ -26,7 +26,7 @@ public class RoleDTO {
 	 * 角色类型
 	 */
 	@NotNull(message = "角色类型不能为空")
-	private RoleType roleType;
+	private RoleType type;
 
 	/**
 	 * 角色描述

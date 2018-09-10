@@ -1,32 +1,22 @@
 package com.zos.security.rbac.web.controller;
 
-import java.util.List;
-import java.util.Set;
-
+import com.zos.security.rbac.domain.User;
+import com.zos.security.rbac.dto.condition.UserConditionDTO;
+import com.zos.security.rbac.dto.UserDTO;
+import com.zos.security.rbac.dto.UserRoleDTO;
+import com.zos.security.rbac.dto.condition.UserRoleRelationDTO;
+import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.zos.security.rbac.dto.UserDTO;
-import com.zos.security.rbac.dto.UserRoleDTO;
-import com.zos.security.rbac.dto.UserRoleRelationDTO;
-
-import io.swagger.annotations.Api;
-
-import com.zos.security.rbac.domain.User;
-import com.zos.security.rbac.dto.UserConditionDTO;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/user")
-@Api(value="用户微服务接口")
+@Api(value="用户接口")
 public interface UserController {
 
 	@PostMapping

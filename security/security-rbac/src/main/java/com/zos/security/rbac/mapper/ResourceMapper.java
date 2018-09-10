@@ -1,16 +1,15 @@
 package com.zos.security.rbac.mapper;
 
-import java.util.List;
-
+import com.zos.security.rbac.bo.ResourceBO;
+import com.zos.security.rbac.bo.ResourceConditionBO;
+import com.zos.security.rbac.domain.Resource;
+import com.zos.security.rbac.dto.ResourceDTO;
+import com.zos.security.rbac.dto.condition.ResourceConditionDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import com.zos.security.rbac.bo.ResourceBO;
-import com.zos.security.rbac.bo.ResourceConditionBO;
-import com.zos.security.rbac.domain.Resource;
-import com.zos.security.rbac.dto.ResourceConditionDTO;
-import com.zos.security.rbac.dto.ResourceDTO;
+import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ResourceMapper {

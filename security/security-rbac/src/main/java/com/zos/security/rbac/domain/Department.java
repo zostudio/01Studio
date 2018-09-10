@@ -1,66 +1,38 @@
 package com.zos.security.rbac.domain;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.data.annotation.CreatedDate;
-
+import com.zos.security.rbac.support.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Department implements Serializable {
+public class Department extends BaseEntity implements Serializable {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 91927843638913597L;
-
-	/**
-	 * 数据库表主键
-	 */
-	@Id
-	@GeneratedValue
-	private Long id;
 	
 	/**
 	 * 部门名称
 	 */
+	@Column(nullable = false)
 	private String name;
-
-	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值
-	 */
-	@CreatedDate
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createdDate;
-	
-	/**
-	 * 序号
-	 */
-	private Integer sort;
 	
 	/**
 	 * 描述
 	 */
+	@Column(nullable = true)
 	private String description;
 	
 	/**
@@ -72,26 +44,25 @@ public class Department implements Serializable {
 	/**
 	 * 下级部门
 	 */
-	@OrderBy("sort ASC")
 	@OneToMany(mappedBy = "parent")
-	private Set<Department> childs = new HashSet<Department>();
+	private Set<Department> children = new HashSet<Department>();
 	
 	/**
 	 * 部门的所有用户
 	 */
 	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
-	private Set<DepartmentUser> departmentUsers = new HashSet<DepartmentUser>();
+	private Set<DepartmentUserRelation> departmentUserRelations = new HashSet<DepartmentUserRelation>();
 	
 	/**
 	 * 部门的所有角色
 	 */
 	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
-	private Set<DepartmentRole> departmentRoles = new HashSet<DepartmentRole>();
+	private Set<DepartmentRoleRelation> departmentRoleRelations = new HashSet<DepartmentRoleRelation>();
 	
 	/**
 	 * 部门的所有角色组
 	 */
 	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
-	private Set<DepartmentRoleGroup> departmentRoleGroups = new HashSet<DepartmentRoleGroup>();
+	private Set<DepartmentRoleGroupRelation> departmentRoleGroupRelations = new HashSet<DepartmentRoleGroupRelation>();
 	
 }

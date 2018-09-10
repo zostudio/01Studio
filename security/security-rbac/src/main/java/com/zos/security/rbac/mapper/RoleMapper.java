@@ -1,16 +1,15 @@
 package com.zos.security.rbac.mapper;
 
-import java.util.List;
-
+import com.zos.security.rbac.bo.RoleBO;
+import com.zos.security.rbac.bo.RoleConditionBO;
+import com.zos.security.rbac.domain.Role;
+import com.zos.security.rbac.dto.RoleDTO;
+import com.zos.security.rbac.dto.condition.RoleConditionDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import com.zos.security.rbac.bo.RoleBO;
-import com.zos.security.rbac.bo.RoleConditionBO;
-import com.zos.security.rbac.domain.Role;
-import com.zos.security.rbac.dto.RoleConditionDTO;
-import com.zos.security.rbac.dto.RoleDTO;
+import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RoleMapper {

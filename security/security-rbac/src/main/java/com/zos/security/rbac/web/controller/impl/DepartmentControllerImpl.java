@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zos.security.rbac.bo.DepartmentBO;
-import com.zos.security.rbac.dto.DepartmentConditionDTO;
+import com.zos.security.rbac.dto.condition.DepartmentConditionDTO;
 import com.zos.security.rbac.dto.DepartmentDTO;
 import com.zos.security.rbac.mapper.DepartmentMapper;
 import com.zos.security.rbac.repository.support.QueryResultConverter;

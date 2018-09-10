@@ -19,7 +19,7 @@ public class RoleBO {
 	/**
 	 * 角色类型
 	 */
-	private RoleType roleType;
+	private RoleType type;
 
 	/**
 	 * 角色描述

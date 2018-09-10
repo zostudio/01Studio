@@ -1,20 +1,33 @@
 package com.zos.security.rbac.support;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.io.Serializable;
+
 /**
  * 角色类型
  *
  * @author 01Studio
  */
-public enum RoleType {
+@Getter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public enum RoleType implements Serializable {
 
     /**
-     * 接口
+     * 资源
      */
-    INTERFACE,
+    RESOURCE("Resource"),
 
     /**
      * 流程
      */
-    PROCESS
+    PROCESS("Process");
+
+    private String roleType;
 
 }

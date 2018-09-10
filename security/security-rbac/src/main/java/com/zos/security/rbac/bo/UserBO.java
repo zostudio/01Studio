@@ -1,7 +1,6 @@
 package com.zos.security.rbac.bo;
 
-import java.util.Date;
-
+import com.zos.security.rbac.support.Gender;
 import lombok.Data;
 
 @Data
@@ -13,14 +12,14 @@ public class UserBO {
 	private Long id;
 
 	/**
-	 * 审计日志, 记录条目创建时间, 自动赋值
-	 */
-	private Date createdDate;
-
-	/**
 	 * 用户名
 	 */
 	private String username;
+
+	/**
+	 * 姓名
+	 */
+	private String nickName;
 
 	/**
 	 * 密码
@@ -60,7 +59,7 @@ public class UserBO {
 	/**
 	 * 性别
 	 */
-	private String gender;
+	private Gender gender;
 	
 	/**
 	 * 是否过期

@@ -64,9 +64,7 @@ public class OauthUserDetailsService implements UserDetailsService, SocialUserDe
 				true, true, true, true,
 				AuthorityUtils.commaSeparatedStringToAuthorityList("xxx,ROLE_USER"));
 		socialUser.setAgentCode("my007");
-		
-		
-		
+
 		User user = UserMapper.INSTANCE.boToDomain(userService.findByUsername(userId));
 		
 		return user;

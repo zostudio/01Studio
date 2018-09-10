@@ -1,17 +1,5 @@
 package com.zos.security.rbac.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
@@ -23,17 +11,28 @@ import com.zos.security.rbac.bo.UserConditionBO;
 import com.zos.security.rbac.bo.UserRoleBO;
 import com.zos.security.rbac.bo.UserRoleRelationBO;
 import com.zos.security.rbac.domain.QUser;
-import com.zos.security.rbac.domain.QUserRole;
+import com.zos.security.rbac.domain.QUserRoleRelation;
 import com.zos.security.rbac.domain.User;
-import com.zos.security.rbac.domain.UserRole;
+import com.zos.security.rbac.domain.UserRoleRelation;
 import com.zos.security.rbac.mapper.RoleMapper;
 import com.zos.security.rbac.mapper.UserMapper;
 import com.zos.security.rbac.mapper.UserRoleMapper;
 import com.zos.security.rbac.redis.dao.RedisCommonDAO;
 import com.zos.security.rbac.repository.UserRepository;
-import com.zos.security.rbac.repository.UserRoleRepository;
+import com.zos.security.rbac.repository.UserRoleRelationRepository;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
 import com.zos.security.rbac.service.UserService;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private UserRoleRepository userRoleRepository;
+	private UserRoleRelationRepository userRoleRelationRepository;
 	
 	@Autowired
 	RedisCommonDAO<User.RoleCache, Long, String> userRoleCacheRedisDAO;
@@ -63,7 +62,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	private QUserRole _Q_UserRole = QUserRole.userRole;
+	private QUserRoleRelation _Q_UserRoleRelation = QUserRoleRelation.userRoleRelation;
 	
 	private QUser _Q_User = QUser.user;
 
@@ -108,19 +107,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserBO findByUsername(String username) {
-		return UserMapper.INSTANCE.domainToBO(userRepository.findByUsername(username));
+		User user = userRepository.findByUsername(username);
+		return UserMapper.INSTANCE.domainToBO(user);
 	}
 
 	@Override
 	public List<UserRoleBO> addRoles(UserRoleRelationBO userRoleRelationBO) {
-		List<UserRole> entities = new ArrayList<UserRole>();
+		List<UserRoleRelation> entities = new ArrayList<UserRoleRelation>();
 		userRoleRelationBO.getRoleBOs().forEach(roleBO -> {
-			UserRole userRole = new UserRole();
-			userRole.setUser(UserMapper.INSTANCE.boToDomain(userRoleRelationBO.getUserBO()));
-			userRole.setRole(RoleMapper.INSTANCE.boToDomain(roleBO));
-			entities.add(userRole);
+			UserRoleRelation userRoleRelation = new UserRoleRelation();
+			userRoleRelation.setUser(UserMapper.INSTANCE.boToDomain(userRoleRelationBO.getUserBO()));
+			userRoleRelation.setRole(RoleMapper.INSTANCE.boToDomain(roleBO));
+			entities.add(userRoleRelation);
 		});
-		List<UserRole> userRoles = userRoleRepository.save(entities);
+		List<UserRoleRelation> userRoles = userRoleRelationRepository.save(entities);
 		return UserRoleMapper.INSTANCE.domainToBO(userRoles);
 	}
 
@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
 		userRoleRelationBO.getRoleBOs().forEach(roleBO -> {
 			ids.add(roleBO.getId());
 		});
-		jpaQueryFactory.delete(_Q_UserRole).where(_Q_UserRole.user.id.eq(id).and(_Q_UserRole.role.id.in(ids))).execute();
+		jpaQueryFactory.delete(_Q_UserRoleRelation).where(_Q_UserRoleRelation.user.id.eq(id).and(_Q_UserRoleRelation.role.id.in(ids))).execute();
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zos.security.rbac.dto.ResourceDTO;
-import com.zos.security.rbac.dto.ResourceConditionDTO;
+import com.zos.security.rbac.dto.condition.ResourceConditionDTO;
 
 @RestController
 @RequestMapping("/resource")

@@ -1,16 +1,15 @@
 package com.zos.security.rbac.mapper;
 
-import java.util.List;
-
+import com.zos.security.rbac.bo.UserBO;
+import com.zos.security.rbac.bo.UserConditionBO;
+import com.zos.security.rbac.domain.User;
+import com.zos.security.rbac.dto.UserDTO;
+import com.zos.security.rbac.dto.condition.UserConditionDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-import com.zos.security.rbac.bo.UserBO;
-import com.zos.security.rbac.bo.UserConditionBO;
-import com.zos.security.rbac.domain.User;
-import com.zos.security.rbac.dto.UserConditionDTO;
-import com.zos.security.rbac.dto.UserDTO;
+import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {

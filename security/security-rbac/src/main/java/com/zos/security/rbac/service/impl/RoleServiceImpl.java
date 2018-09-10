@@ -45,7 +45,7 @@ public class RoleServiceImpl implements RoleService {
 	public RoleBO update(Long id, RoleBO roleBO) {
 		Role role = roleRepository.findOne(id);
 		role.setName(roleBO.getName());
-		role.setRoleType(roleBO.getRoleType());
+		role.setType(roleBO.getType());
 		role.setDescription(roleBO.getDescription());
 		return RoleMapper.INSTANCE.domainToBO(roleRepository.save(role));
 	}
@@ -75,7 +75,7 @@ public class RoleServiceImpl implements RoleService {
 			QueryDslTools.andBooleanExpression(predicate, _Q_Role.id.eq(roleConditionBO.getId()));
 		}
 		if (ConstantValidator.isNotNull(roleConditionBO.getRoleType())) {
-			QueryDslTools.andBooleanExpression(predicate, _Q_Role.roleType.eq(roleConditionBO.getRoleType()));
+			QueryDslTools.andBooleanExpression(predicate, _Q_Role.type.eq(roleConditionBO.getRoleType()));
 		}
 		if (pageable.getSort() != null) {
 			pageable.getSort().forEach(order -> {
@@ -88,7 +88,7 @@ public class RoleServiceImpl implements RoleService {
 							roles.orderBy(new OrderSpecifier<String>(QueryDslTools.getOrder(order), _Q_Role.name, QueryDslTools.getNullHandling(order)));
 							break;
 						case "orderType":
-							roles.orderBy(new OrderSpecifier<RoleType>(QueryDslTools.getOrder(order), _Q_Role.roleType, QueryDslTools.getNullHandling(order)));
+							roles.orderBy(new OrderSpecifier<RoleType>(QueryDslTools.getOrder(order), _Q_Role.type, QueryDslTools.getNullHandling(order)));
 							break;
 						case "description":
 							roles.orderBy(new OrderSpecifier<String>(QueryDslTools.getOrder(order), _Q_Role.description, QueryDslTools.getNullHandling(order)));

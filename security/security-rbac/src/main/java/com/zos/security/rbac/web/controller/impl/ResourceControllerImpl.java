@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zos.security.rbac.bo.ResourceBO;
-import com.zos.security.rbac.dto.ResourceConditionDTO;
+import com.zos.security.rbac.dto.condition.ResourceConditionDTO;
 import com.zos.security.rbac.dto.ResourceDTO;
 import com.zos.security.rbac.mapper.ResourceMapper;
 import com.zos.security.rbac.repository.support.QueryResultConverter;

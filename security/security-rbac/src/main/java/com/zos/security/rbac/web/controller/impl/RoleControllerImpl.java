@@ -1,7 +1,7 @@
 package com.zos.security.rbac.web.controller.impl;
 
 import com.zos.security.rbac.bo.RoleBO;
-import com.zos.security.rbac.dto.RoleConditionDTO;
+import com.zos.security.rbac.dto.condition.RoleConditionDTO;
 import com.zos.security.rbac.dto.RoleDTO;
 import com.zos.security.rbac.mapper.RoleMapper;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
