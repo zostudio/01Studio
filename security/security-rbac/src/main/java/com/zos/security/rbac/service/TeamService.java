@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 public interface TeamService {
 	
-	public TeamSimpleBO create(TeamSimpleBO teamSimpleBO);
+	TeamSimpleBO create(TeamSimpleBO teamSimpleBO);
 	
-	public TeamSimpleBO update(Long id, TeamSimpleBO teamSimpleBO);
+	TeamSimpleBO update(Long id, TeamSimpleBO teamSimpleBO);
 	
-	public void delete(Long id);
+	void delete(Long id);
 	
-	public TeamDetailBO getInfo(Long id);
+	TeamDetailBO getInfo(Long id);
 
-	public Page<TeamSimpleBO> querySimple(TeamParamSimpleBO teamParamSimpleBO, Pageable pageable);
+	Page<TeamSimpleBO> querySimple(TeamParamSimpleBO teamParamSimpleBO, Pageable pageable);
 
-	public Page<TeamDetailBO> queryDetail(TeamParamDetailBO teamParamDetailBO, Pageable pageable);@PutMapping("/parent/{parentId:\\d+}/{id:\\d+}")
+	Page<TeamDetailBO> queryDetail(TeamParamDetailBO teamParamDetailBO, Pageable pageable);@PutMapping("/parent/{parentId:\\d+}/{id:\\d+}")
 
-	public void changeParent(Long parentId, Long id) throws Exception;
+	void changeParent(Long parentId, Long id) throws Exception;
 
-	public Page<TeamSimpleBO> queryByParentId(Long parentId, Pageable pageable) throws Exception;
+	Page<TeamSimpleBO> queryByParentId(Long parentId, Pageable pageable) throws Exception;
 
-	public TeamSimpleBO queryParentById(Long id) throws Exception;
+	TeamSimpleBO queryParentById(Long id) throws Exception;
 
-	public void deleteByParentId(Long parentId) throws Exception;
+	void deleteByParentId(Long parentId) throws Exception;
 }
