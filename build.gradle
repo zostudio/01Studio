@@ -32,7 +32,7 @@ allprojects {
 
 subprojects {
 
-    // 依赖子模块
+    // 依赖模块
     if (name.contains('-') && !name.endsWith('server')) {
         apply from: "$rootDir/gradle/plugins/base.gradle"
         apply from: "$rootDir/gradle/plugins/lombok.gradle"
@@ -45,7 +45,7 @@ subprojects {
         }
     }
 
-    // 服务子模块
+    // 服务模块
     if (name.endsWith('server')) {
         apply from: "$rootDir/gradle/plugins/base.gradle"
         apply from: "$rootDir/gradle/plugins/lombok.gradle"
