@@ -6,7 +6,6 @@ import com.zos.security.rbac.bo.resopnse.detail.TeamDetailBO;
 import com.zos.security.rbac.bo.resopnse.simple.TeamSimpleBO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 public interface TeamService {
 	
@@ -20,7 +19,7 @@ public interface TeamService {
 
 	Page<TeamSimpleBO> querySimple(TeamParamSimpleBO teamParamSimpleBO, Pageable pageable);
 
-	Page<TeamDetailBO> queryDetail(TeamParamDetailBO teamParamDetailBO, Pageable pageable);@PutMapping("/parent/{parentId:\\d+}/{id:\\d+}")
+	Page<TeamDetailBO> queryDetail(TeamParamDetailBO teamParamDetailBO, Pageable pageable);
 
 	void changeParent(Long parentId, Long id) throws Exception;
 
