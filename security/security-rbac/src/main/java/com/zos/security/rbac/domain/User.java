@@ -1,8 +1,8 @@
 package com.zos.security.rbac.domain;
 
-import com.zos.security.rbac.support.BaseEntity;
-import com.zos.security.rbac.support.Gender;
-import com.zos.security.rbac.support.RequestMethod;
+import com.zos.security.rbac.support.jpa.BaseEntity;
+import com.zos.security.rbac.support.enums.Gender;
+import com.zos.security.rbac.support.enums.RequestMethod;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -139,10 +139,10 @@ public class User extends BaseEntity implements SocialUserDetails {
 	private Set<UserRoleRelation> userRoleRelations = new HashSet<UserRoleRelation>();
 
 	/**
-	 * 用户的所有部门
+	 * 用户的所有团队
 	 */
 	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private Set<DepartmentUserRelation> departmentUserRelations = new HashSet<DepartmentUserRelation>();
+	private Set<TeamUserRelation> teamUserRelations = new HashSet<TeamUserRelation>();
 
 	/**
 	 * 用户的所有角色组

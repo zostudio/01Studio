@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.zos.security.rbac.bo.ResourceBO;
-import com.zos.security.rbac.dto.condition.ResourceConditionDTO;
+import com.zos.security.rbac.dto.param.ResourceParamDTO;
 import com.zos.security.rbac.dto.ResourceDTO;
 import com.zos.security.rbac.mapper.ResourceMapper;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
@@ -60,7 +60,7 @@ public class ResourceControllerImpl implements ResourceController {
 	@Override
 	@GetMapping
 	@JsonView(ResourceDTO.SimpleView.class)
-	public Page<ResourceDTO> query(ResourceConditionDTO resourceConditionDTO, @PageableDefault(direction = Direction.DESC, page = 0, size = 10, sort = {"id"}) Pageable pageable) {
+	public Page<ResourceDTO> query(ResourceParamDTO resourceConditionDTO, @PageableDefault(direction = Direction.DESC, page = 0, size = 10, sort = {"id"}) Pageable pageable) {
 		Page<ResourceBO> pageResourceBO = resourceService.query(ResourceMapper.INSTANCE.dtoToBo(resourceConditionDTO), pageable);
 		Page<ResourceDTO> pageResourceDTO = QueryResultConverter.convert(ResourceMapper.INSTANCE.boToDTO(pageResourceBO.getContent()), pageable, pageResourceBO.getTotalElements());
 		return pageResourceDTO;

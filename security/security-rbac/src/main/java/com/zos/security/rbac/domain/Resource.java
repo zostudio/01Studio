@@ -1,8 +1,8 @@
 package com.zos.security.rbac.domain;
 
-import com.zos.security.rbac.support.BaseEntity;
-import com.zos.security.rbac.support.RequestMethod;
-import com.zos.security.rbac.support.ResourceType;
+import com.zos.security.rbac.support.jpa.BaseEntity;
+import com.zos.security.rbac.support.enums.RequestMethod;
+import com.zos.security.rbac.support.enums.ResourceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

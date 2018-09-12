@@ -4,7 +4,7 @@ import com.zos.security.rbac.bo.ResourceBO;
 import com.zos.security.rbac.bo.ResourceConditionBO;
 import com.zos.security.rbac.domain.Resource;
 import com.zos.security.rbac.dto.ResourceDTO;
-import com.zos.security.rbac.dto.condition.ResourceConditionDTO;
+import com.zos.security.rbac.dto.param.ResourceParamDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -28,6 +28,6 @@ public interface ResourceMapper {
 	
 	List<ResourceDTO> boToDTO(List<ResourceBO> resourceBO);
 	
-	ResourceConditionBO dtoToBo(ResourceConditionDTO resourceConditionDTO);
+	ResourceConditionBO dtoToBo(ResourceParamDTO resourceConditionDTO);
 	
 }

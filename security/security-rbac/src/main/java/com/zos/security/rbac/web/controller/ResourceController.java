@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zos.security.rbac.dto.ResourceDTO;
-import com.zos.security.rbac.dto.condition.ResourceConditionDTO;
+import com.zos.security.rbac.dto.param.ResourceParamDTO;
 
 @RestController
 @RequestMapping("/resource")
@@ -31,5 +31,5 @@ public interface ResourceController {
 	public ResourceDTO getInfo(@PathVariable Long id);
 	
 	@GetMapping
-	public Page<ResourceDTO> query(ResourceConditionDTO resourceConditionDTO, Pageable pageable);
+	public Page<ResourceDTO> query(ResourceParamDTO resourceConditionDTO, Pageable pageable);
 }

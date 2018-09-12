@@ -4,7 +4,7 @@ import com.zos.security.rbac.bo.UserBO;
 import com.zos.security.rbac.bo.UserConditionBO;
 import com.zos.security.rbac.domain.User;
 import com.zos.security.rbac.dto.UserDTO;
-import com.zos.security.rbac.dto.condition.UserConditionDTO;
+import com.zos.security.rbac.dto.param.UserParamDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -28,6 +28,6 @@ public interface UserMapper {
 	
 	List<UserDTO> boToDTO(List<UserBO> userBO);
 	
-	UserConditionBO dtoToBO(UserConditionDTO userConditionDTO);
+	UserConditionBO dtoToBO(UserParamDTO userConditionDTO);
 	
 }

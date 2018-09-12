@@ -1,7 +1,7 @@
 package com.zos.security.rbac.web.controller.impl;
 
 import com.zos.security.rbac.bo.RoleBO;
-import com.zos.security.rbac.dto.condition.RoleConditionDTO;
+import com.zos.security.rbac.dto.param.RoleParamDTO;
 import com.zos.security.rbac.dto.RoleDTO;
 import com.zos.security.rbac.mapper.RoleMapper;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
@@ -50,7 +50,7 @@ public class RoleControllerImpl implements RoleController {
 	}
 
 	@Override
-	public Page<RoleDTO> query(RoleConditionDTO roleConditionDTO, @PageableDefault(direction = Sort.Direction.DESC, page = 0, size = 10, sort = {"id"})  Pageable pageable) {
+	public Page<RoleDTO> query(RoleParamDTO roleConditionDTO, @PageableDefault(direction = Sort.Direction.DESC, page = 0, size = 10, sort = {"id"})  Pageable pageable) {
 		Page<RoleBO> pageRoleBO = roleService.query(RoleMapper.INSTANCE.dtoToBO(roleConditionDTO), pageable);
 		Page<RoleDTO> pageRoleDTO = QueryResultConverter.convert(RoleMapper.INSTANCE.boToDTO(pageRoleBO.getContent()), pageable, pageRoleBO.getTotalElements());
 		return pageRoleDTO;

@@ -1,6 +1,6 @@
 package com.zos.security.rbac.domain;
 
-import com.zos.security.rbac.support.BaseEntity;
+import com.zos.security.rbac.support.jpa.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

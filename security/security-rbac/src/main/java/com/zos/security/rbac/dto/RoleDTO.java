@@ -1,6 +1,6 @@
 package com.zos.security.rbac.dto;
 
-import com.zos.security.rbac.support.RoleType;
+import com.zos.security.rbac.support.enums.RoleType;
 import com.zos.security.rbac.validator.constraints.NotAllowValue;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;

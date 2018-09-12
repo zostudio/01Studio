@@ -1,15 +1,14 @@
 package com.zos.security.rbac.dto;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonView;
-import com.zos.security.rbac.support.RequestMethod;
-import com.zos.security.rbac.support.ResourceType;
-
+import com.zos.security.rbac.support.enums.RequestMethod;
+import com.zos.security.rbac.support.enums.ResourceType;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.Date;
 
 @Setter
 @ToString

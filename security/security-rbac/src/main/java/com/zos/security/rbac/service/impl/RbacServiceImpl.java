@@ -1,10 +1,11 @@
 package com.zos.security.rbac.service.impl;
 
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.zos.security.rbac.domain.User;
+import com.zos.security.rbac.redis.dao.RedisCommonDAO;
+import com.zos.security.rbac.repository.UserRepository;
+import com.zos.security.rbac.service.RbacService;
+import com.zos.security.rbac.support.enums.RequestMethod;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.AntPathMatcher;
 
-import com.zos.security.rbac.domain.User;
-import com.zos.security.rbac.redis.dao.RedisCommonDAO;
-import com.zos.security.rbac.repository.UserRepository;
-import com.zos.security.rbac.service.RbacService;
-import com.zos.security.rbac.support.RequestMethod;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component("rbacService")

@@ -1,6 +1,6 @@
 package com.zos.security.rbac.bo;
 
-import com.zos.security.rbac.support.RoleType;
+import com.zos.security.rbac.support.enums.RoleType;
 import lombok.Data;
 
 @Data

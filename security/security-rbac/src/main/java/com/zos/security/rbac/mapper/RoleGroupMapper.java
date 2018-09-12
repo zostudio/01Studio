@@ -4,7 +4,7 @@ import com.zos.security.rbac.bo.RoleGroupBO;
 import com.zos.security.rbac.bo.RoleGroupConditionBO;
 import com.zos.security.rbac.domain.RoleGroup;
 import com.zos.security.rbac.dto.RoleGroupDTO;
-import com.zos.security.rbac.dto.condition.RoleGroupConditionDTO;
+import com.zos.security.rbac.dto.param.RoleGroupParamDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -28,6 +28,6 @@ public interface RoleGroupMapper {
 	
 	List<RoleGroupDTO> boToDTO(List<RoleGroupBO> roleGroupBO);
 	
-	RoleGroupConditionBO dtoToBO(RoleGroupConditionDTO roleGroupConditionDTO);
+	RoleGroupConditionBO dtoToBO(RoleGroupParamDTO roleGroupConditionDTO);
 	
 }

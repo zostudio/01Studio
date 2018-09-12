@@ -1,6 +1,6 @@
 package com.zos.security.rbac.bo;
 
-import com.zos.security.rbac.support.Gender;
+import com.zos.security.rbac.support.enums.Gender;
 import lombok.Data;
 
 @Data

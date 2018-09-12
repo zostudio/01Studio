@@ -2,8 +2,8 @@ package com.zos.security.rbac.bo;
 
 import java.util.Date;
 
-import com.zos.security.rbac.support.RequestMethod;
-import com.zos.security.rbac.support.ResourceType;
+import com.zos.security.rbac.support.enums.RequestMethod;
+import com.zos.security.rbac.support.enums.ResourceType;
 
 import lombok.Data;
 

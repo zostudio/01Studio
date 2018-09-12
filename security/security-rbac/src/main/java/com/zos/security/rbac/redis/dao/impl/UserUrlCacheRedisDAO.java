@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.zos.security.rbac.domain.User;
 import com.zos.security.rbac.domain.User.UrlCache;
 import com.zos.security.rbac.redis.dao.BaseRedisDAO;
-import com.zos.security.rbac.support.RequestMethod;
+import com.zos.security.rbac.support.enums.RequestMethod;
 
 import lombok.Getter;
 

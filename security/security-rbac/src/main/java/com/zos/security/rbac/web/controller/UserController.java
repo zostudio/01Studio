@@ -1,10 +1,10 @@
 package com.zos.security.rbac.web.controller;
 
 import com.zos.security.rbac.domain.User;
-import com.zos.security.rbac.dto.condition.UserConditionDTO;
+import com.zos.security.rbac.dto.param.UserParamDTO;
 import com.zos.security.rbac.dto.UserDTO;
 import com.zos.security.rbac.dto.UserRoleDTO;
-import com.zos.security.rbac.dto.condition.UserRoleRelationDTO;
+import com.zos.security.rbac.dto.param.UserRoleRelationDTO;
 import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,10 +32,10 @@ public interface UserController {
 	public UserDTO getInfo(@PathVariable Long id);
 	
 	@GetMapping
-	public Page<UserDTO> query(UserConditionDTO userConditionDTO, Pageable pageable);
+	public Page<UserDTO> query(UserParamDTO userConditionDTO, Pageable pageable);
 	
 	@PutMapping("/pwd/{id:\\d+}")
-	public Long updatePwd(@PathVariable Long id, @RequestBody UserConditionDTO userConditionDTO);
+	public Long updatePwd(@PathVariable Long id, @RequestBody UserParamDTO userConditionDTO);
 	
 	@PostMapping("/roles")
 	public List<UserRoleDTO> addRoles(@RequestBody UserRoleRelationDTO userRoleRelationDTO);

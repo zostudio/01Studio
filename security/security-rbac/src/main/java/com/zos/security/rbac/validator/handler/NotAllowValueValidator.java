@@ -16,7 +16,7 @@ public class NotAllowValueValidator implements ConstraintValidator<NotAllowValue
 	
 	@Override
 	public void initialize(NotAllowValue constraintAnnotation) {
-		log.info("NotAllowInput initialize");
+		log.info("NotAllowValueValidator Initialize");
 	}
 
 	@Override

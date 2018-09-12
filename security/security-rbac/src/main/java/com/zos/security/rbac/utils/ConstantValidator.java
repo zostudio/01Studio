@@ -15,4 +15,11 @@ public class ConstantValidator {
         }
         return true;
     }
+
+    public static boolean isNull(Object object) {
+        if (object == null) {
+            return true;
+        }
+        return false;
+    }
 }

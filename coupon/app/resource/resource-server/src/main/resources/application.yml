@@ -29,6 +29,8 @@ spring:
       page-param-name: page
       sort-param-name: sort
       enable-enum-translation: true
+      default-page-size: 1024
+      max-page-size: 1024
 zos:
   security:
     oauth2:

@@ -1,4 +1,5 @@
 
 dependencies {
     compile project(':coupon:app:authorization:authorization-api')
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
 }

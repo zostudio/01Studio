@@ -1,8 +1,9 @@
 package com.zos.security.rbac.service.impl;
 
 import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zos.security.rbac.bo.RoleBO;
@@ -13,7 +14,7 @@ import com.zos.security.rbac.mapper.RoleMapper;
 import com.zos.security.rbac.repository.RoleRepository;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
 import com.zos.security.rbac.service.RoleService;
-import com.zos.security.rbac.support.RoleType;
+import com.zos.security.rbac.support.enums.RoleType;
 import com.zos.security.rbac.utils.ConstantValidator;
 import com.zos.security.rbac.utils.QueryDslTools;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,9 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+    private QueryDslTools queryDslTools;
 
 	@Override
 	public RoleBO create(RoleBO roleBO) {
@@ -64,34 +68,37 @@ public class RoleServiceImpl implements RoleService {
 	public Page<RoleBO> query(RoleConditionBO roleConditionBO, Pageable pageable) {
 		QRole _Q_Role = QRole.role;
 		JPAQuery<Role> roles = jpaQueryFactory.selectFrom(_Q_Role);
-		BooleanExpression predicate = null;
+		Predicate predicate = null;
 		if (StringUtils.isNotEmpty(roleConditionBO.getName())) {
-			QueryDslTools.andBooleanExpression(predicate, _Q_Role.name.like("%" + roleConditionBO.getName() + "%"));
+			predicate = ExpressionUtils.and(predicate, _Q_Role.name.like("%" + roleConditionBO.getName() + "%"));
 		}
 		if (StringUtils.isNotEmpty(roleConditionBO.getDescription())) {
-			QueryDslTools.andBooleanExpression(predicate, _Q_Role.description.like("%" + roleConditionBO.getDescription() + "%"));
+			predicate = ExpressionUtils.and(predicate, _Q_Role.description.like("%" + roleConditionBO.getDescription() + "%"));
 		}
 		if (ConstantValidator.isAvaluableId(roleConditionBO.getId())) {
-			QueryDslTools.andBooleanExpression(predicate, _Q_Role.id.eq(roleConditionBO.getId()));
+			predicate = ExpressionUtils.and(predicate, _Q_Role.id.eq(roleConditionBO.getId()));
 		}
 		if (ConstantValidator.isNotNull(roleConditionBO.getRoleType())) {
-			QueryDslTools.andBooleanExpression(predicate, _Q_Role.type.eq(roleConditionBO.getRoleType()));
+			predicate = ExpressionUtils.and(predicate, _Q_Role.type.eq(roleConditionBO.getRoleType()));
+		}
+		if (predicate != null) {
+			roles.where(predicate);
 		}
 		if (pageable.getSort() != null) {
 			pageable.getSort().forEach(order -> {
 				if (order != null && StringUtils.isNotEmpty(order.getProperty())) {
 					switch(order.getProperty()) {
 						case "id" :
-							roles.orderBy(new OrderSpecifier<Long>(QueryDslTools.getOrder(order), _Q_Role.id, QueryDslTools.getNullHandling(order)));
+							roles.orderBy(new OrderSpecifier<Long>(queryDslTools.getOrder(order), _Q_Role.id, queryDslTools.getNullHandling(order)));
 							break;
 						case "name":
-							roles.orderBy(new OrderSpecifier<String>(QueryDslTools.getOrder(order), _Q_Role.name, QueryDslTools.getNullHandling(order)));
+							roles.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Role.name, queryDslTools.getNullHandling(order)));
 							break;
 						case "orderType":
-							roles.orderBy(new OrderSpecifier<RoleType>(QueryDslTools.getOrder(order), _Q_Role.type, QueryDslTools.getNullHandling(order)));
+							roles.orderBy(new OrderSpecifier<RoleType>(queryDslTools.getOrder(order), _Q_Role.type, queryDslTools.getNullHandling(order)));
 							break;
 						case "description":
-							roles.orderBy(new OrderSpecifier<String>(QueryDslTools.getOrder(order), _Q_Role.description, QueryDslTools.getNullHandling(order)));
+							roles.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Role.description, queryDslTools.getNullHandling(order)));
 							break;
 					}
 				}

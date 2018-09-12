@@ -1,7 +1,7 @@
 package com.zos.security.rbac.domain;
 
-import com.zos.security.rbac.support.BaseEntity;
-import com.zos.security.rbac.support.RoleType;
+import com.zos.security.rbac.support.jpa.BaseEntity;
+import com.zos.security.rbac.support.enums.RoleType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -56,10 +56,10 @@ public class Role extends BaseEntity implements Serializable {
 	private Set<UserRoleRelation> userRoleRelations = new HashSet<UserRoleRelation>();
 
 	/**
-	 * 角色的所有部门
+	 * 角色的所有团队
 	 */
 	@OneToMany(mappedBy="role", cascade = CascadeType.REMOVE)
-	private Set<DepartmentRoleRelation> departmentRoleRelations = new HashSet<DepartmentRoleRelation>();
+	private Set<TeamRoleRelation> teamRoleRelations = new HashSet<TeamRoleRelation>();
 
 	/**
 	 * 角色的所有角色组

@@ -2,53 +2,39 @@ package com.zos.security.rbac.utils;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import org.apache.commons.lang.ArrayUtils;
+import com.querydsl.jpa.impl.JPAQuery;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.rest.RepositoryRestProperties;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
+@Slf4j
+@Component
 public class QueryDslTools {
 
-    public static BooleanExpression andBooleanExpression(BooleanExpression... booleanExpressions) {
-        if (ArrayUtils.isNotEmpty(booleanExpressions)) {
-            if (booleanExpressions.length == 1) {
-                return booleanExpressions[0];
-            }
-            int index = booleanExpressions.length;
-            while(index-- > 1) {
-                if (booleanExpressions[index - 1] == null) {
-                    continue;
-                }
-                booleanExpressions[index].and(booleanExpressions[index - 1]);
-            }
-            return booleanExpressions[booleanExpressions.length - 1];
-        } else {
-            return null;
-        }
-    }
+    @Autowired
+    RepositoryRestProperties repositoryRestProperties;
 
-    public static BooleanExpression orBooleanExpression(BooleanExpression... booleanExpressions) {
-        if (ArrayUtils.isNotEmpty(booleanExpressions)) {
-            if (booleanExpressions.length == 1) {
-                return booleanExpressions[0];
-            }
-            int index = booleanExpressions.length;
-            while(index-- > 1) {
-                booleanExpressions[index].or(booleanExpressions[index - 1]);
-            }
-            return booleanExpressions[index - 1];
-        } else {
-            return null;
-        }
-    }
-
-    public static Order getOrder(Sort.Order order) {
+    /**
+     * 分析排序方式
+     * @param order 排序方式
+     * @return Order 排序方式
+     */
+    public Order getOrder(Sort.Order order) {
         if (order == null || order.getDirection() == null || order.getDirection().isDescending()) {
             return Order.DESC;
         }
         return Order.ASC;
     }
 
-    public static OrderSpecifier.NullHandling getNullHandling(Sort.Order order) {
+    /**
+     * 分析空值处理方式
+     * @param order 空值处理方式
+     * @return Order 空值处理方式
+     */
+    public OrderSpecifier.NullHandling getNullHandling(Sort.Order order) {
         if (order == null || order.getNullHandling() == null || order.getNullHandling().compareTo(Sort.NullHandling.NATIVE) == 0) {
             return OrderSpecifier.NullHandling.Default;
         } else if (order.getNullHandling().compareTo(Sort.NullHandling.NULLS_FIRST) == 0) {
@@ -57,5 +43,19 @@ public class QueryDslTools {
         return  OrderSpecifier.NullHandling.NullsLast;
     }
 
+    /**
+     * 添加分页参数
+     *
+     * @param pageable 分页参数
+     * @param jpaQuery 查询对象
+     */
+    public void addPageable(Pageable pageable, JPAQuery<?> jpaQuery) {
+        if (pageable == null || jpaQuery == null) {
+            return;
+        }
+        if (pageable.getOffset() >= 0 && pageable.getPageSize() < repositoryRestProperties.getMaxPageSize()) {
+            jpaQuery.offset(pageable.getOffset()).limit(pageable.getPageSize());
+        }
+    }
 
 }

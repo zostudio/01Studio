@@ -4,8 +4,8 @@ import com.zos.security.rbac.bo.UserBO;
 import com.zos.security.rbac.domain.User;
 import com.zos.security.rbac.dto.UserDTO;
 import com.zos.security.rbac.dto.UserRoleDTO;
-import com.zos.security.rbac.dto.condition.UserConditionDTO;
-import com.zos.security.rbac.dto.condition.UserRoleRelationDTO;
+import com.zos.security.rbac.dto.param.UserParamDTO;
+import com.zos.security.rbac.dto.param.UserRoleRelationDTO;
 import com.zos.security.rbac.mapper.UserMapper;
 import com.zos.security.rbac.mapper.UserRoleMapper;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
@@ -57,7 +57,7 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	public Page<UserDTO> query(UserConditionDTO userConditionDTO, @PageableDefault(direction = Direction.DESC, page = 0, size = 10, sort = {"id"}) Pageable pageable) {
+	public Page<UserDTO> query(UserParamDTO userConditionDTO, @PageableDefault(direction = Direction.DESC, page = 0, size = 10, sort = {"id"}) Pageable pageable) {
 		Page<UserBO> pageUserBO = userService.query(UserMapper.INSTANCE.dtoToBO(userConditionDTO), pageable);
 		Page<UserDTO> pageUserDTO = QueryResultConverter.convert(UserMapper.INSTANCE.boToDTO(pageUserBO.getContent()), pageable, pageUserBO.getTotalElements());
 		return pageUserDTO;
@@ -74,7 +74,7 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	public Long updatePwd(@PathVariable Long id, @RequestBody UserConditionDTO userConditionDTO) {
+	public Long updatePwd(@PathVariable Long id, @RequestBody UserParamDTO userConditionDTO) {
 		return userService.updatePwd(id, UserMapper.INSTANCE.dtoToBO(userConditionDTO));
 	}
 

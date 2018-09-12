@@ -1,12 +1,12 @@
 package com.zos.security.rbac.web.controller;
 
+import com.zos.security.rbac.dto.param.RoleParamDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.zos.security.rbac.dto.RoleDTO;
-import com.zos.security.rbac.dto.condition.RoleConditionDTO;
 
 import javax.validation.Valid;
 
@@ -26,5 +26,5 @@ public interface RoleController {
 	public RoleDTO getInfo(@PathVariable Long id);
 	
 	@GetMapping
-	public Page<RoleDTO> query(RoleConditionDTO roleConditionDTO, Pageable pageable);
+	public Page<RoleDTO> query(RoleParamDTO roleConditionDTO, Pageable pageable);
 }

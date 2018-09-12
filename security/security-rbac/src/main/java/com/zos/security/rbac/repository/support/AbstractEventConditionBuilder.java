@@ -1,10 +1,10 @@
 package com.zos.security.rbac.repository.support;
 
-import java.lang.reflect.InvocationTargetException;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.apache.commons.beanutils.PropertyUtils;
+
+import java.lang.reflect.InvocationTargetException;
 
 
 /**
@@ -33,7 +33,7 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 	 * 向查询中添加包含(like)条件
 	 * 
 	 * @param queryWraper 查询构造器
-	 * @param field 指出查询条件的值从 condition 对象的哪个字段里取, 并且指出要向哪个字段添加包含(like)条件(同一个字段名称)
+	 * @param field 指出查询条件的值从 param 对象的哪个字段里取, 并且指出要向哪个字段添加包含(like)条件(同一个字段名称)
 	 */
 	protected void addLikeCondition(QueryWraper<T> queryWraper, String field){
 		addLikeCondition(queryWraper, field, field);
@@ -43,7 +43,7 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 	 * 向查询中添加包含(like)条件
 	 * 
 	 * @param queryWraper 查询构造器
-	 * @param field 指出查询条件的值从 condition 对象的哪个字段里取
+	 * @param field 指出查询条件的值从 param 对象的哪个字段里取
 	 * @param column 指出要向哪个字段添加包含(like)条件
 	 */
 	protected void addLikeCondition(QueryWraper<T> queryWraper, String field, String column){
@@ -56,7 +56,7 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 	 * 向查询中添加包含(like)条件,%放在值后面
 	 * 
 	 * @param queryWraper 查询构造器
-	 * @param field 指出查询条件的值从 condition 对象的哪个字段里取, 并且指出要向哪个字段添加包含(like)条件(同一个字段名称)
+	 * @param field 指出查询条件的值从 param 对象的哪个字段里取, 并且指出要向哪个字段添加包含(like)条件(同一个字段名称)
 	 */
 	protected void addStartsWidthCondition(QueryWraper<T> queryWraper, String field){
 		addStartsWidthCondition(queryWraper, field, field);
@@ -66,7 +66,7 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 	 * 向查询中添加包含(like)条件, %放在值后面
 	 * 
 	 * @param queryWraper 查询构造器
-	 * @param field 指出查询条件的值从 condition 对象的哪个字段里取
+	 * @param field 指出查询条件的值从 param 对象的哪个字段里取
 	 * @param column 指出要向哪个字段添加包含(like)条件
 	 */
 	protected void addStartsWidthCondition(QueryWraper<T> queryWraper, String field, String column){
@@ -78,7 +78,7 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 	 * 向查询中添加等于(=)条件
 	 * 
 	 * @param queryWraper 查询构造器
-	 * @param field 指出查询条件的值从 condition 对象的哪个字段里取, 并且指出要向哪个字段添加条件(同一个字段名称)
+	 * @param field 指出查询条件的值从 param 对象的哪个字段里取, 并且指出要向哪个字段添加条件(同一个字段名称)
 	 */
 	protected void addEqualsCondition(QueryWraper<T> queryWraper, String field){
 		addEqualsCondition(queryWraper, field, field);
@@ -88,7 +88,7 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 	 * 向查询中添加等于(=)条件
 	 * 
 	 * @param queryWraper 查询构造器
-	 * @param field 指出查询条件的值从 condition 对象的哪个字段里取
+	 * @param field 指出查询条件的值从 param 对象的哪个字段里取
 	 * @param column 指出要向哪个字段添加条件
 	 */
 	protected void addEqualsCondition(QueryWraper<T> queryWraper, String field, String column){
@@ -100,7 +100,7 @@ public abstract class AbstractEventConditionBuilder<T, C> extends AbstractCondit
 	 * 向查询中添加不等于(!=)条件
 	 * 
 	 * @param queryWraper 查询构造器
-	 * @param field 指出查询条件的值从 condition 对象的哪个字段里取, 并且指出要向哪个字段添加条件(同一个字段名称)
+	 * @param field 指出查询条件的值从 param 对象的哪个字段里取, 并且指出要向哪个字段添加条件(同一个字段名称)
 	 */
 	protected void addNotEqualsCondition(QueryWraper<T> queryWraper, String field){
 		addNotEqualsCondition(queryWraper, field, field);

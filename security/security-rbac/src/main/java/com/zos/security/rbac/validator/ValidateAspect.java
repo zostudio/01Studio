@@ -17,17 +17,15 @@ import org.springframework.validation.BindingResult;
 public class ValidateAspect {
 	
 	@Around("execution(* com.zos.security.rbac.web.controller.*.*.*(..))")
-	public Object handleValidateResult(ProceedingJoinPoint pjp) throws Throwable {
-		Object[] args = pjp.getArgs();
-		for (Object arg : args) {
-			if(arg instanceof BindingResult) {
-				BindingResult errors = (BindingResult)arg;
-				if (errors.hasErrors()) {
-					throw new ValidateException(errors.getAllErrors());
+	public Object handleValidateResult(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+		Object[] arguments = proceedingJoinPoint.getArgs();
+		for (Object argument : arguments) {
+			if(argument instanceof BindingResult) {
+				if (((BindingResult) argument).hasErrors()) {
+					throw new ValidateException(((BindingResult) argument).getAllErrors());
 				}
 			}
 		}
-		Object result = pjp.proceed();
-		return result;
+		return proceedingJoinPoint.proceed();
 	}
 }

@@ -8,7 +8,7 @@ import com.zos.security.rbac.domain.UserRoleRelation;
 import com.zos.security.rbac.dto.RoleDTO;
 import com.zos.security.rbac.dto.UserDTO;
 import com.zos.security.rbac.dto.UserRoleDTO;
-import com.zos.security.rbac.dto.condition.UserRoleRelationDTO;
+import com.zos.security.rbac.dto.param.UserRoleRelationDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
