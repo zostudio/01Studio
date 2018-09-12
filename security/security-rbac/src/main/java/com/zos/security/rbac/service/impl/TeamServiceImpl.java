@@ -34,9 +34,6 @@ import java.util.Date;
 @Service
 public class TeamServiceImpl implements TeamService {
 
-    /**
-     * JPA查询工厂
-     */
 	@Autowired
     private JPAQueryFactory jpaQueryFactory;
 	
