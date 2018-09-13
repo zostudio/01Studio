@@ -1,20 +1,23 @@
 package com.zos.security.rbac.service;
 
+import com.zos.security.rbac.bo.param.base.RoleParamBaseBO;
+import com.zos.security.rbac.bo.param.detail.RoleParamDetailBO;
+import com.zos.security.rbac.bo.resopnse.base.RoleBaseBO;
+import com.zos.security.rbac.bo.resopnse.detail.RoleDetailBO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.zos.security.rbac.bo.RoleBO;
-import com.zos.security.rbac.bo.RoleConditionBO;
-
 public interface RoleService {
-	
-	public RoleBO create(RoleBO roleBO);
-	
-	public RoleBO update(String id, RoleBO roleBO);
-	
-	public void delete(String id);
-	
-	public RoleBO getInfo(String id);
-	
-	public Page<RoleBO> query(RoleConditionBO roleConditionBO, Pageable pageable);
+
+	RoleBaseBO create(RoleBaseBO roleBaseBO);
+
+	RoleBaseBO update(String id, RoleBaseBO roleBaseBO);
+
+	void delete(String id);
+
+	RoleDetailBO getInfo(String id);
+
+	Page<RoleBaseBO> querySimple(RoleParamBaseBO roleParamBaseBO, Pageable pageable);
+
+	Page<RoleDetailBO> queryDetail(RoleParamDetailBO roleParamDetailBO, Pageable pageable);
 }

@@ -3,11 +3,8 @@ package com.zos.security.rbac.web.controller.impl;
 import com.zos.security.rbac.bo.UserBO;
 import com.zos.security.rbac.domain.User;
 import com.zos.security.rbac.dto.UserDTO;
-import com.zos.security.rbac.dto.UserRoleDTO;
 import com.zos.security.rbac.dto.param.UserParamDTO;
-import com.zos.security.rbac.dto.param.UserRoleRelationDTO;
 import com.zos.security.rbac.mapper.UserMapper;
-import com.zos.security.rbac.mapper.UserRoleMapper;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
 import com.zos.security.rbac.service.RbacService;
 import com.zos.security.rbac.service.UserService;
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -63,15 +59,16 @@ public class UserControllerImpl implements UserController {
 		return pageUserDTO;
 	}
 
-	@Override
+	//TODO 添加角色
+	/*@Override
 	public List<UserRoleDTO> addRoles(@RequestBody UserRoleRelationDTO userRoleRelationDTO) {
 		return UserRoleMapper.INSTANCE.boToDTO(userService.addRoles(UserRoleMapper.INSTANCE.dtoToBO(userRoleRelationDTO)));
-	}
+	}*/
 
-	@Override
-	public void delRoles(@PathVariable String id, @RequestBody UserRoleRelationDTO userRoleRelationDTO) {
-		userService.delRoles(id, UserRoleMapper.INSTANCE.dtoToBO(userRoleRelationDTO));
-	}
+//	@Override
+//	public void delRoles(@PathVariable String id, @RequestBody UserRoleRelationDTO userRoleRelationDTO) {
+//		userService.delRoles(id, UserRoleMapper.INSTANCE.dtoToBO(userRoleRelationDTO));
+//	}
 
 	@Override
 	public Long updatePwd(@PathVariable String id, @RequestBody UserParamDTO userConditionDTO) {

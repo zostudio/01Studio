@@ -1,30 +1,32 @@
 package com.zos.security.rbac.web.controller;
 
-import com.zos.security.rbac.dto.param.RoleParamDTO;
+import com.zos.security.rbac.dto.common.ResponseDTO;
+import com.zos.security.rbac.dto.param.base.RoleParamBaseDTO;
+import com.zos.security.rbac.dto.param.detail.RoleParamDetailDTO;
+import com.zos.security.rbac.dto.response.base.RoleBaseDTO;
+import com.zos.security.rbac.dto.response.detail.RoleDetailDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import com.zos.security.rbac.dto.RoleDTO;
-
-import javax.validation.Valid;
 
 @RequestMapping("/role")
 public interface RoleController {
 
 	@PostMapping
-	public RoleDTO create(@Valid @RequestBody RoleDTO roleDTO, BindingResult errors);
+	ResponseDTO<RoleBaseDTO> create(@RequestBody RoleBaseDTO roleBaseDTO);
 
-	@PatchMapping("/{id:\\d+}")
-	public RoleDTO update(@PathVariable String id, @Valid @RequestBody RoleDTO roleDTO, BindingResult errors);
-	
-	@DeleteMapping("/{id:\\d+}")
-	public void delete(@PathVariable String id);
-	
-	@GetMapping("/{id:\\d+}")
-	public RoleDTO getInfo(@PathVariable String id);
-	
+	@PatchMapping("/{id:\\w{32}}")
+	ResponseDTO<RoleBaseDTO> update(@PathVariable String id, @RequestBody RoleBaseDTO roleBaseDTO) throws Exception;
+
+	@DeleteMapping("/{id:\\w{32}}")
+	void delete(@PathVariable String id) throws Exception;
+
+	@GetMapping("/{id:\\w{32}}")
+	ResponseDTO<RoleDetailDTO> getInfo(@PathVariable String id) throws Exception;
+
 	@GetMapping
-	public Page<RoleDTO> query(RoleParamDTO roleConditionDTO, Pageable pageable);
+	ResponseDTO<Page<RoleBaseDTO>> querySimple(RoleParamBaseDTO roleParamBaseDTO, Pageable pageable) throws Exception;
+
+	@GetMapping("/detail")
+	ResponseDTO<Page<RoleDetailDTO>> queryDetail(RoleParamDetailDTO roleParamDetailDTO, Pageable pageable) throws Exception;
 }

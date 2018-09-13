@@ -1,35 +1,45 @@
 package com.zos.security.rbac.web.controller;
 
+import com.zos.security.rbac.dto.common.ResponseDTO;
+import com.zos.security.rbac.dto.param.base.RoleGroupParamBaseDTO;
+import com.zos.security.rbac.dto.param.detail.RoleGroupParamDetailDTO;
+import com.zos.security.rbac.dto.response.base.RoleGroupBaseDTO;
+import com.zos.security.rbac.dto.response.detail.RoleGroupDetailDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.zos.security.rbac.dto.param.RoleGroupParamDTO;
-import com.zos.security.rbac.dto.RoleGroupDTO;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rolegroup")
 public interface RoleGroupController {
 
 	@PostMapping
-	public RoleGroupDTO create(@RequestBody RoleGroupDTO roleGroupDTO);
-	
-	@PutMapping("/{id:\\d+}")
-	public RoleGroupDTO update(@PathVariable String id, @RequestBody RoleGroupDTO roleGroupDTO);
-	
-	@DeleteMapping("/{id:\\d+}")
-	public void delete(@PathVariable String id);
-	
-	@GetMapping("/{id:\\d+}")
-	public RoleGroupDTO getInfo(@PathVariable String id);
-	
+	ResponseDTO<RoleGroupBaseDTO> create(@RequestBody RoleGroupBaseDTO roleGroupBaseDTO);
+
+	@PatchMapping("/{id:\\w{32}}")
+	ResponseDTO<RoleGroupBaseDTO> update(@PathVariable String id, @RequestBody RoleGroupBaseDTO roleGroupBaseDTO) throws Exception;
+
+	@DeleteMapping("/{id:\\w{32}}")
+	void delete(@PathVariable String id) throws Exception;
+
+	@GetMapping("/{id:\\w{32}}")
+	ResponseDTO<RoleGroupDetailDTO> getInfo(@PathVariable String id) throws Exception;
+
 	@GetMapping
-	public Page<RoleGroupDTO> query(RoleGroupParamDTO roleGroupConditionDTO, Pageable pageable);
+	ResponseDTO<Page<RoleGroupBaseDTO>> querySimple(RoleGroupParamBaseDTO roleGroupParamBaseDTO, Pageable pageable) throws Exception;
+
+	@GetMapping("/detail")
+	ResponseDTO<Page<RoleGroupDetailDTO>> queryDetail(RoleGroupParamDetailDTO roleGroupParamDetailDTO, Pageable pageable) throws Exception;
+
+	@PutMapping("/parent/{parentId:\\w{32}}/{id:\\w{32}}")
+	void changeParent(@PathVariable String parentId, @PathVariable String id) throws Exception;
+
+	@GetMapping("/parent/{parentId:\\w{32}}")
+	ResponseDTO<Page<RoleGroupBaseDTO>> queryByParentId(@PathVariable String parentId, Pageable pageable) throws Exception;
+
+	@GetMapping("/children/{id:\\w{32}}")
+	ResponseDTO<RoleGroupBaseDTO> queryParentById(@PathVariable String id) throws Exception;
+
+	@DeleteMapping("/children/{parentId:\\w{32}}")
+	void deleteByParentId(@PathVariable String parentId) throws Exception;
 }

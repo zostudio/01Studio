@@ -1,17 +1,14 @@
 package com.zos.security.rbac.web.controller;
 
 import com.zos.security.rbac.domain.User;
-import com.zos.security.rbac.dto.param.UserParamDTO;
 import com.zos.security.rbac.dto.UserDTO;
-import com.zos.security.rbac.dto.UserRoleDTO;
-import com.zos.security.rbac.dto.param.UserRoleRelationDTO;
+import com.zos.security.rbac.dto.param.UserParamDTO;
 import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -36,16 +33,17 @@ public interface UserController {
 	
 	@PutMapping("/pwd/{id:\\d+}")
 	public Long updatePwd(@PathVariable String id, @RequestBody UserParamDTO userConditionDTO);
-	
-	@PostMapping("/roles")
-	public List<UserRoleDTO> addRoles(@RequestBody UserRoleRelationDTO userRoleRelationDTO);
-	
+
+	//TODO 添加角色
+//	@PostMapping("/roles")
+//	public List<UserRoleDTO> addRoles(@RequestBody UserRoleRelationDTO userRoleRelationDTO);
+//
 	@GetMapping("/roles/{id:\\d+}")
 	public Set<User.RoleCache> getRoles(@PathVariable String id, Authentication authentication);
 	
-	@DeleteMapping("/roles/{id:\\d+}")
-	public void delRoles(@PathVariable String id, @RequestBody UserRoleRelationDTO userRoleRelationDTO);
-	
+//	@DeleteMapping("/roles/{id:\\d+}")
+//	public void delRoles(@PathVariable String id, @RequestBody UserRoleRelationDTO userRoleRelationDTO);
+//
 	@GetMapping("/authentication")
 	public Authentication getAuthentication(Authentication authentication);
 	

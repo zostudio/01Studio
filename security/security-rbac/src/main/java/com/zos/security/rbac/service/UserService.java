@@ -1,14 +1,9 @@
 package com.zos.security.rbac.service;
 
-import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.zos.security.rbac.bo.UserBO;
 import com.zos.security.rbac.bo.UserConditionBO;
-import com.zos.security.rbac.bo.UserRoleBO;
-import com.zos.security.rbac.bo.UserRoleRelationBO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
@@ -28,9 +23,9 @@ public interface UserService {
 	
 	public Page<UserBO> query(UserConditionBO userConditionBO, Pageable pageable);
 	
-	public List<UserRoleBO> addRoles(UserRoleRelationBO userRoleRelationBO);
-	
-	public void delRoles(String id, UserRoleRelationBO userRoleRelationBO);
+//	public List<UserRoleBO> addRoles(UserRoleRelationBO userRoleRelationBO);
+//
+//	public void delRoles(String id, UserRoleRelationBO userRoleRelationBO);
 	
 	public Long updatePwd(String id, UserConditionBO userConditionBO);
 }

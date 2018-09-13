@@ -8,15 +8,10 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zos.security.rbac.bo.UserBO;
 import com.zos.security.rbac.bo.UserConditionBO;
-import com.zos.security.rbac.bo.UserRoleBO;
-import com.zos.security.rbac.bo.UserRoleRelationBO;
 import com.zos.security.rbac.domain.QUser;
 import com.zos.security.rbac.domain.QUserRoleRelation;
 import com.zos.security.rbac.domain.User;
-import com.zos.security.rbac.domain.UserRoleRelation;
-import com.zos.security.rbac.mapper.RoleMapper;
 import com.zos.security.rbac.mapper.UserMapper;
-import com.zos.security.rbac.mapper.UserRoleMapper;
 import com.zos.security.rbac.redis.dao.RedisCommonDAO;
 import com.zos.security.rbac.repository.UserRepository;
 import com.zos.security.rbac.repository.UserRoleRelationRepository;
@@ -31,22 +26,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
-	
-	/**
-	 * 实体管理者
-	 */
-//    @Autowired
-//    private EntityManager entityManager;
 
-    /**
-     * JPA查询工厂
-     */
 	@Autowired
     private JPAQueryFactory jpaQueryFactory;
 	
@@ -111,27 +94,27 @@ public class UserServiceImpl implements UserService {
 		return UserMapper.INSTANCE.domainToBO(user);
 	}
 
-	@Override
-	public List<UserRoleBO> addRoles(UserRoleRelationBO userRoleRelationBO) {
-		List<UserRoleRelation> entities = new ArrayList<UserRoleRelation>();
-		userRoleRelationBO.getRoleBOs().forEach(roleBO -> {
-			UserRoleRelation userRoleRelation = new UserRoleRelation();
-			userRoleRelation.setUser(UserMapper.INSTANCE.boToDomain(userRoleRelationBO.getUserBO()));
-			userRoleRelation.setRole(RoleMapper.INSTANCE.boToDomain(roleBO));
-			entities.add(userRoleRelation);
-		});
-		List<UserRoleRelation> userRoles = userRoleRelationRepository.save(entities);
-		return UserRoleMapper.INSTANCE.domainToBO(userRoles);
-	}
+//	@Override
+//	public List<UserRoleBO> addRoles(UserRoleRelationBO userRoleRelationBO) {
+//		List<UserRoleRelation> entities = new ArrayList<UserRoleRelation>();
+//		userRoleRelationBO.getRoleBOs().forEach(roleBO -> {
+//			UserRoleRelation userRoleRelation = new UserRoleRelation();
+//			userRoleRelation.setUser(UserMapper.INSTANCE.boToDomain(userRoleRelationBO.getUserBO()));
+//			userRoleRelation.setRole(RoleMapper.INSTANCE.boToDomain(roleBO));
+//			entities.add(userRoleRelation);
+//		});
+//		List<UserRoleRelation> userRoles = userRoleRelationRepository.save(entities);
+//		return UserRoleMapper.INSTANCE.domainToBO(userRoles);
+//	}
 
-	@Override
-	public void delRoles(String id, UserRoleRelationBO userRoleRelationBO) {
-		List<String> ids = new ArrayList<String>();
-		userRoleRelationBO.getRoleBOs().forEach(roleBO -> {
-			ids.add(roleBO.getId());
-		});
-		jpaQueryFactory.delete(_Q_UserRoleRelation).where(_Q_UserRoleRelation.user.id.eq(id).and(_Q_UserRoleRelation.role.id.in(ids))).execute();
-	}
+//	@Override
+//	public void delRoles(String id, UserRoleRelationBO userRoleRelationBO) {
+//		List<String> ids = new ArrayList<String>();
+//		userRoleRelationBO.getRoleBOs().forEach(roleBO -> {
+//			ids.add(roleBO.getId());
+//		});
+//		jpaQueryFactory.delete(_Q_UserRoleRelation).where(_Q_UserRoleRelation.user.id.eq(id).and(_Q_UserRoleRelation.role.id.in(ids))).execute();
+//	}
 
 	@Override
 	@Transactional
