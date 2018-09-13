@@ -75,17 +75,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public UserBO update(Long id, UserBO userBO) {
+	public UserBO update(String id, UserBO userBO) {
 		return UserMapper.INSTANCE.domainToBO(userRepository.save(UserMapper.INSTANCE.boToDomain(userBO)));
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(String id) {
 		userRepository.delete(id);
 	}
 
 	@Override
-	public UserBO getInfo(Long id) {
+	public UserBO getInfo(String id) {
 		return UserMapper.INSTANCE.domainToBO(userRepository.findOne(id));
 	}
 
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 		}
 		JPAQuery<User> users = jpaQueryFactory.selectFrom(_Q_User)
 				.where(predicate)
-												.orderBy(new OrderSpecifier<Long>(Order.DESC, _Q_User.id))
+												.orderBy(new OrderSpecifier<String>(Order.DESC, _Q_User.id))
 										        .offset(pageable.getOffset())
 										        .limit(pageable.getPageSize());
 		QueryResults<User> result = users.fetchResults();
@@ -125,8 +125,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void delRoles(Long id, UserRoleRelationBO userRoleRelationBO) {
-		List<Long> ids = new ArrayList<Long>();
+	public void delRoles(String id, UserRoleRelationBO userRoleRelationBO) {
+		List<String> ids = new ArrayList<String>();
 		userRoleRelationBO.getRoleBOs().forEach(roleBO -> {
 			ids.add(roleBO.getId());
 		});
@@ -135,7 +135,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public Long updatePwd(Long id, UserConditionBO userConditionBO) {
+	public Long updatePwd(String id, UserConditionBO userConditionBO) {
 		User user = jpaQueryFactory.selectFrom(_Q_User).where(_Q_User.id.eq(id)).fetchOne();
 		if (!passwordEncoder.matches(userConditionBO.getOldPassword(), user.getPassword())) {
 			throw new BadCredentialsException("原密码错误");

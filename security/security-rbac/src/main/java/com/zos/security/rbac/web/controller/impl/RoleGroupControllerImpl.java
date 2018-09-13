@@ -16,19 +16,19 @@ public class RoleGroupControllerImpl implements RoleGroupController {
 	}
 
 	@Override
-	public RoleGroupDTO update(Long id, RoleGroupDTO roleGroupDTO) {
+	public RoleGroupDTO update(String id, RoleGroupDTO roleGroupDTO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(String id) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public RoleGroupDTO getInfo(Long id) {
+	public RoleGroupDTO getInfo(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

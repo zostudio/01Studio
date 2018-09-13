@@ -443,7 +443,7 @@ public class CouponAppResourceApplication {
     private JPAQueryFactory queryFactory;
 	
 	@GetMapping(value = "/detail/{id}")
-    public User detail(@PathVariable("id") Long id) {
+    public User detail(@PathVariable("id") String id) {
         //使用querydsl查询
         QUser _Q_user = QUser.user;
         //查询并返回结果集

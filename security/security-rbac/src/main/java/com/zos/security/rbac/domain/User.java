@@ -165,7 +165,7 @@ public class User extends BaseEntity implements SocialUserDetails {
 	@NoArgsConstructor
 	@AllArgsConstructor
 	public class RoleCache {
-		private Long id;
+		private String id;
 		private String name;
 		
 	}

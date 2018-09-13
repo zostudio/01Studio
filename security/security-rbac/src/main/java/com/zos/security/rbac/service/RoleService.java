@@ -10,11 +10,11 @@ public interface RoleService {
 	
 	public RoleBO create(RoleBO roleBO);
 	
-	public RoleBO update(Long id, RoleBO roleBO);
+	public RoleBO update(String id, RoleBO roleBO);
 	
-	public void delete(Long id);
+	public void delete(String id);
 	
-	public RoleBO getInfo(Long id);
+	public RoleBO getInfo(String id);
 	
 	public Page<RoleBO> query(RoleConditionBO roleConditionBO, Pageable pageable);
 }

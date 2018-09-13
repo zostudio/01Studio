@@ -35,17 +35,17 @@ public class RoleControllerImpl implements RoleController {
 	}
 
 	@Override
-	public RoleDTO update(@PathVariable Long id, @Valid @RequestBody RoleDTO roleDTO, BindingResult errors) {
+	public RoleDTO update(@PathVariable String id, @Valid @RequestBody RoleDTO roleDTO, BindingResult errors) {
 		return RoleMapper.INSTANCE.boToDTO(roleService.update(id, RoleMapper.INSTANCE.dtoToBO(roleDTO)));
 	}
 
 	@Override
-	public void delete(@PathVariable Long id) {
+	public void delete(@PathVariable String id) {
 		roleService.delete(id);
 	}
 
 	@Override
-	public RoleDTO getInfo(@PathVariable Long id) {
+	public RoleDTO getInfo(@PathVariable String id) {
 		return RoleMapper.INSTANCE.boToDTO(roleService.getInfo(id));
 	}
 

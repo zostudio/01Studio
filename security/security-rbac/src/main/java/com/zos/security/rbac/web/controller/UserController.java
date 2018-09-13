@@ -23,28 +23,28 @@ public interface UserController {
 	public UserDTO create(@RequestBody UserDTO userDTO);
 	
 	@PutMapping("/{id:\\d+}")
-	public UserDTO update(@PathVariable Long id, @RequestBody UserDTO userDTO);
+	public UserDTO update(@PathVariable String id, @RequestBody UserDTO userDTO);
 	
 	@DeleteMapping("/{id:\\d+}")
-	public void delete(@PathVariable Long id);
+	public void delete(@PathVariable String id);
 	
 	@GetMapping("/{id:\\d+}")
-	public UserDTO getInfo(@PathVariable Long id);
+	public UserDTO getInfo(@PathVariable String id);
 	
 	@GetMapping
 	public Page<UserDTO> query(UserParamDTO userConditionDTO, Pageable pageable);
 	
 	@PutMapping("/pwd/{id:\\d+}")
-	public Long updatePwd(@PathVariable Long id, @RequestBody UserParamDTO userConditionDTO);
+	public Long updatePwd(@PathVariable String id, @RequestBody UserParamDTO userConditionDTO);
 	
 	@PostMapping("/roles")
 	public List<UserRoleDTO> addRoles(@RequestBody UserRoleRelationDTO userRoleRelationDTO);
 	
 	@GetMapping("/roles/{id:\\d+}")
-	public Set<User.RoleCache> getRoles(@PathVariable Long id, Authentication authentication);
+	public Set<User.RoleCache> getRoles(@PathVariable String id, Authentication authentication);
 	
 	@DeleteMapping("/roles/{id:\\d+}")
-	public void delRoles(@PathVariable Long id, @RequestBody UserRoleRelationDTO userRoleRelationDTO);
+	public void delRoles(@PathVariable String id, @RequestBody UserRoleRelationDTO userRoleRelationDTO);
 	
 	@GetMapping("/authentication")
 	public Authentication getAuthentication(Authentication authentication);

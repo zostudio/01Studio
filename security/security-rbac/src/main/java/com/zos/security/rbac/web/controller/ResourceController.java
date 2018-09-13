@@ -1,35 +1,44 @@
 package com.zos.security.rbac.web.controller;
 
+import com.zos.security.rbac.dto.common.ResponseDTO;
+import com.zos.security.rbac.dto.param.base.ResourceParamBaseDTO;
+import com.zos.security.rbac.dto.param.detail.ResourceParamDetailDTO;
+import com.zos.security.rbac.dto.response.base.ResourceBaseDTO;
+import com.zos.security.rbac.dto.response.detail.ResourceDetailDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.zos.security.rbac.dto.ResourceDTO;
-import com.zos.security.rbac.dto.param.ResourceParamDTO;
-
-@RestController
 @RequestMapping("/resource")
 public interface ResourceController {
 
 	@PostMapping
-	public ResourceDTO create(@RequestBody ResourceDTO resourceDTO);
-	
-	@PutMapping("/{id:\\d+}")
-	public ResourceDTO update(@PathVariable Long id, @RequestBody ResourceDTO resourceDTO);
-	
-	@DeleteMapping("/{id:\\d+}")
-	public void delete(@PathVariable Long id);
-	
-	@GetMapping("/{id:\\d+}")
-	public ResourceDTO getInfo(@PathVariable Long id);
-	
+	ResponseDTO<ResourceBaseDTO> create(@RequestBody ResourceBaseDTO resourceBaseDTO);
+
+	@PatchMapping("/{id:\\w{32}}")
+	ResponseDTO<ResourceBaseDTO> update(@PathVariable String id, @RequestBody ResourceBaseDTO resourceBaseDTO) throws Exception;
+
+	@DeleteMapping("/{id:\\w{32}}")
+	void delete(@PathVariable String id) throws Exception;
+
+	@GetMapping("/{id:\\w{32}}")
+	ResponseDTO<ResourceDetailDTO> getInfo(@PathVariable String id) throws Exception;
+
 	@GetMapping
-	public Page<ResourceDTO> query(ResourceParamDTO resourceConditionDTO, Pageable pageable);
+	ResponseDTO<Page<ResourceBaseDTO>> querySimple(ResourceParamBaseDTO resourceParamBaseDTO, Pageable pageable) throws Exception;
+
+	@GetMapping("/detail")
+	ResponseDTO<Page<ResourceDetailDTO>> queryDetail(ResourceParamDetailDTO resourceParamDetailDTO, Pageable pageable) throws Exception;
+
+	@PutMapping("/parent/{parentId:\\w{32}}/{id:\\w{32}}")
+	void changeParent(@PathVariable String parentId, @PathVariable String id) throws Exception;
+
+	@GetMapping("/parent/{parentId:\\w{32}}")
+	ResponseDTO<Page<ResourceBaseDTO>> queryByParentId(@PathVariable String parentId, Pageable pageable) throws Exception;
+
+	@GetMapping("/children/{id:\\w{32}}")
+	ResponseDTO<ResourceBaseDTO> queryParentById(@PathVariable String id) throws Exception;
+
+	@DeleteMapping("/children/{parentId:\\w{32}}")
+	void deleteByParentId(@PathVariable String parentId) throws Exception;
 }

@@ -1,9 +1,9 @@
-package com.zos.security.rbac.bo.param.simple;
+package com.zos.security.rbac.bo.param.base;
 
 import lombok.Data;
 
 @Data
-public class TeamParamSimpleBO {
+public class TeamParamBaseBO {
 	
 	/**
 	 * 团队名称

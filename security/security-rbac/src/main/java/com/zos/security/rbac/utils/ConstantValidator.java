@@ -1,12 +1,14 @@
 package com.zos.security.rbac.utils;
 
+import org.apache.commons.lang.StringUtils;
+
 public class ConstantValidator {
 
-    public static boolean isAvaluableId(Long id) {
-        if (id == null || id.compareTo(0L) <= 0) {
-            return false;
+    public static boolean isAvaluableId(String id) {
+        if (StringUtils.isNotBlank(id) && id.matches("\\w{32}")) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     public static boolean isNotNull(Object object) {

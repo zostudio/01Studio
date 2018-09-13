@@ -14,7 +14,7 @@ public class RoleDTO {
 	 * 数据库表主键
 	 */
 	@NotAllowValue(message = "主键必须为空")
-	private Long id;
+	private String id;
 
 	/**
 	 * 角色名称

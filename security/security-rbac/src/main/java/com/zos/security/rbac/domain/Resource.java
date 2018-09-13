@@ -54,7 +54,7 @@ public class Resource extends BaseEntity implements Serializable {
 	private ResourceType type;
 
     /**
-     * 权限对应请求方式, 适应 Restful 风格  ALL 全部权限  GET get, POST post, PUT put, PATCH patch, DELETE delete
+     * 请求方式, 适用 Restful, ALL all  GET get, POST post, PUT put, DELETE delete
      */
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)

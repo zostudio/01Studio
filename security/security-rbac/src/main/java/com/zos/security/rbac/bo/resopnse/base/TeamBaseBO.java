@@ -1,14 +1,14 @@
-package com.zos.security.rbac.bo.resopnse.simple;
+package com.zos.security.rbac.bo.resopnse.base;
 
 import lombok.Data;
 
 @Data
-public class TeamSimpleBO {
+public class TeamBaseBO {
 
 	/**
 	 * 数据库表主键
 	 */
-	private Long id;
+	private String id;
 	
 	/**
 	 * 团队名称

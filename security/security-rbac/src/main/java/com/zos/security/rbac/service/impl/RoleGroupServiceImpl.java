@@ -48,12 +48,12 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(String id) {
 		roleGroupRepository.delete(id);
 	}
 
 	@Override
-	public RoleGroupBO getInfo(Long id) {
+	public RoleGroupBO getInfo(String id) {
 		return RoleGroupMapper.INSTANCE.domainToBO(roleGroupRepository.findOne(id));
 	}
 
@@ -61,7 +61,7 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 	public Page<RoleGroupBO> query(RoleGroupConditionBO RoleGroupConditionBO, Pageable pageable) {
 		QRoleGroup _Q_RoleGroup = QRoleGroup.roleGroup;
 		JPAQuery<RoleGroup> RoleGroups = jpaQueryFactory.selectFrom(_Q_RoleGroup)
-        .orderBy(new OrderSpecifier<Long>(Order.DESC, _Q_RoleGroup.id))
+        .orderBy(new OrderSpecifier<String>(Order.DESC, _Q_RoleGroup.id))
         .offset(pageable.getOffset())
         .limit(pageable.getPageSize());
 		QueryResults<RoleGroup> result = RoleGroups.fetchResults();

@@ -9,7 +9,7 @@ public class UserBO {
 	/**
 	 * 数据库表主键
 	 */
-	private Long id;
+	private String id;
 
 	/**
 	 * 用户名

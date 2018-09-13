@@ -10,7 +10,7 @@ public class RoleGroupBO {
 	/**
 	 * 数据库表主键
 	 */
-	private Long id;
+	private String id;
 
 	/**
 	 * 审计日志, 记录条目创建时间, 自动赋值

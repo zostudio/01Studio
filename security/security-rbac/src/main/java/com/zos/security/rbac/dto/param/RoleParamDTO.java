@@ -9,7 +9,7 @@ public class RoleParamDTO {
     /**
      * 数据库表主键
      */
-    private Long id;
+    private String id;
 
     /**
      * 角色名称

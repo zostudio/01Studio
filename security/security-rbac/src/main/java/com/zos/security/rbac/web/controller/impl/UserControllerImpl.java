@@ -42,17 +42,17 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	public UserDTO update(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+	public UserDTO update(@PathVariable String id, @RequestBody UserDTO userDTO) {
 		return UserMapper.INSTANCE.boToDTO(userService.update(id, UserMapper.INSTANCE.dtoToBO(userDTO)));
 	}
 
 	@Override
-	public void delete(@PathVariable Long id) {
+	public void delete(@PathVariable String id) {
 		userService.delete(id);
 	}
 
 	@Override
-	public UserDTO getInfo(@PathVariable Long id) {
+	public UserDTO getInfo(@PathVariable String id) {
 		return UserMapper.INSTANCE.boToDTO(userService.getInfo(id));
 	}
 
@@ -69,17 +69,17 @@ public class UserControllerImpl implements UserController {
 	}
 
 	@Override
-	public void delRoles(@PathVariable Long id, @RequestBody UserRoleRelationDTO userRoleRelationDTO) {
+	public void delRoles(@PathVariable String id, @RequestBody UserRoleRelationDTO userRoleRelationDTO) {
 		userService.delRoles(id, UserRoleMapper.INSTANCE.dtoToBO(userRoleRelationDTO));
 	}
 
 	@Override
-	public Long updatePwd(@PathVariable Long id, @RequestBody UserParamDTO userConditionDTO) {
+	public Long updatePwd(@PathVariable String id, @RequestBody UserParamDTO userConditionDTO) {
 		return userService.updatePwd(id, UserMapper.INSTANCE.dtoToBO(userConditionDTO));
 	}
 
 	@Override
-	public Set<User.RoleCache> getRoles(@PathVariable Long id, Authentication authentication) {
+	public Set<User.RoleCache> getRoles(@PathVariable String id, Authentication authentication) {
 		if ("Administrator".equals(authentication.getName())) {
 			return null;
 		} else {

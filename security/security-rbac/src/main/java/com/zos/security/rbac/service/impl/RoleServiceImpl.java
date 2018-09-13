@@ -46,7 +46,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public RoleBO update(Long id, RoleBO roleBO) {
+	public RoleBO update(String id, RoleBO roleBO) {
 		Role role = roleRepository.findOne(id);
 		role.setName(roleBO.getName());
 		role.setType(roleBO.getType());
@@ -55,12 +55,12 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(String id) {
 		roleRepository.delete(id);
 	}
 
 	@Override
-	public RoleBO getInfo(Long id) {
+	public RoleBO getInfo(String id) {
 		return RoleMapper.INSTANCE.domainToBO(roleRepository.findOne(id));
 	}
 
@@ -89,7 +89,7 @@ public class RoleServiceImpl implements RoleService {
 				if (order != null && StringUtils.isNotEmpty(order.getProperty())) {
 					switch(order.getProperty()) {
 						case "id" :
-							roles.orderBy(new OrderSpecifier<Long>(queryDslTools.getOrder(order), _Q_Role.id, queryDslTools.getNullHandling(order)));
+							roles.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Role.id, queryDslTools.getNullHandling(order)));
 							break;
 						case "name":
 							roles.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Role.name, queryDslTools.getNullHandling(order)));

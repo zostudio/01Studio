@@ -15,11 +15,11 @@ public interface TeamDetailMapper {
     TeamDetailMapper INSTANCE = Mappers.getMapper(TeamDetailMapper.class);
 
     // 详细信息
-    TeamDetailBO domainToBO4Detail(Team team);
+    TeamDetailBO domainToBO(Team team);
 
-    List<TeamDetailBO> domainToBO4Detail(List<Team> teams);
+    List<TeamDetailBO> domainToBO(List<Team> teams);
 
-    TeamDetailDTO boToDTO4Detail(TeamDetailBO teamDetailBO);
+    TeamDetailDTO boToDTO(TeamDetailBO teamDetailBO);
 
-    List<TeamDetailDTO> boToDTO4Detail(List<TeamDetailBO> teamDetailBOs);
+    List<TeamDetailDTO> boToDTO(List<TeamDetailBO> teamDetailBOs);
 }

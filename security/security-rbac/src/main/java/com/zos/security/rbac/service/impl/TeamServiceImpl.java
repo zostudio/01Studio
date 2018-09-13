@@ -1,27 +1,25 @@
 package com.zos.security.rbac.service.impl;
 
 import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.*;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zos.security.rbac.bo.param.detail.TeamParamDetailBO;
-import com.zos.security.rbac.bo.param.simple.TeamParamSimpleBO;
+import com.zos.security.rbac.bo.param.base.TeamParamBaseBO;
 import com.zos.security.rbac.bo.resopnse.detail.TeamDetailBO;
-import com.zos.security.rbac.bo.resopnse.simple.TeamSimpleBO;
+import com.zos.security.rbac.bo.resopnse.base.TeamBaseBO;
 import com.zos.security.rbac.domain.QTeam;
 import com.zos.security.rbac.domain.Team;
 import com.zos.security.rbac.exception.common.NotExistException;
 import com.zos.security.rbac.mapper.detail.TeamDetailMapper;
-import com.zos.security.rbac.mapper.simple.TeamSimpleMapper;
+import com.zos.security.rbac.mapper.base.TeamBaseMapper;
 import com.zos.security.rbac.repository.TeamRepository;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
 import com.zos.security.rbac.service.TeamService;
 import com.zos.security.rbac.utils.ConstantValidator;
 import com.zos.security.rbac.utils.QueryDslTools;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,42 +42,48 @@ public class TeamServiceImpl implements TeamService {
     private QueryDslTools queryDslTools;
 
 	@Override
-	public TeamSimpleBO create(TeamSimpleBO teamSimpleBO) {
-		return TeamSimpleMapper.INSTANCE.domainToBO4Simple(teamRepository.save(TeamSimpleMapper.INSTANCE.boToDomain4Simple(teamSimpleBO)));
+	public TeamBaseBO create(TeamBaseBO teamBaseBO) {
+		return TeamBaseMapper.INSTANCE.domainToBO(teamRepository.save(TeamBaseMapper.INSTANCE.boToDomain(teamBaseBO)));
 	}
 
 	@Override
-	public TeamSimpleBO update(Long id, TeamSimpleBO teamSimpleBO) {
-        Team team = teamRepository.findOne(id);
+	public TeamBaseBO update(String id, TeamBaseBO teamBaseBO) {
+        QTeam _Q_Team = QTeam.team;
+        Team team = jpaQueryFactory.selectFrom(_Q_Team).where(_Q_Team.id.eq(id)).fetchOne();
         if (ConstantValidator.isNull(team)) {
             throw new NotExistException("团队数据不存在");
         }
-        team.setName(teamSimpleBO.getName());
-        team.setDescription(teamSimpleBO.getDescription());
-		return TeamSimpleMapper.INSTANCE.domainToBO4Simple(teamRepository.save(team));
+        jpaQueryFactory.update(_Q_Team).where(_Q_Team.id.eq(id))
+                .set(_Q_Team.name, teamBaseBO.getName())
+                .set(_Q_Team.description, teamBaseBO.getDescription())
+                .execute();
+        teamBaseBO.setId(id);
+		return teamBaseBO;
 	}
 
 	@Override
-	public void delete(Long id) {
+	public void delete(String id) {
 		teamRepository.delete(id);
 	}
 
 	@Override
-	public TeamDetailBO getInfo(Long id) {
-		return TeamDetailMapper.INSTANCE.domainToBO4Detail(teamRepository.findOne(id));
+	public TeamDetailBO getInfo(String id) {
+        QTeam _Q_Team = QTeam.team;
+        Team team = jpaQueryFactory.selectFrom(_Q_Team).where(_Q_Team.id.eq(id)).fetchOne();
+		return TeamDetailMapper.INSTANCE.domainToBO(team);
 	}
 
 	@Override
-	public Page<TeamSimpleBO> querySimple(TeamParamSimpleBO teamParamSimpleBO, Pageable pageable) {
+	public Page<TeamBaseBO> querySimple(TeamParamBaseBO teamParamBaseBO, Pageable pageable) {
 		QTeam _Q_Team = QTeam.team;
-		JPAQuery<Team> teamJPAQuery = jpaQueryFactory.select(Projections.bean(Team.class, _Q_Team.id, _Q_Team.name, _Q_Team.description)).from(_Q_Team);
+		JPAQuery<Team> teamJPAQuery = jpaQueryFactory.select(getBaseBean(_Q_Team)).from(_Q_Team);
         Predicate predicate = _Q_Team.isNotNull();
-        predicate = addWhere4Simple(predicate, teamParamSimpleBO, _Q_Team, teamJPAQuery);
+        predicate = addBaseWhere(predicate, teamParamBaseBO, _Q_Team, teamJPAQuery);
         teamJPAQuery.where(predicate);
         orderBy(pageable, _Q_Team, teamJPAQuery);
         queryDslTools.addPageable(pageable, teamJPAQuery);
         QueryResults<Team> result = teamJPAQuery.fetchResults();
-		Page<TeamSimpleBO> teamSimpleBOPage = QueryResultConverter.convert(TeamSimpleMapper.INSTANCE.domainToBO4Simple(result.getResults()), pageable, result.getTotal());
+		Page<TeamBaseBO> teamSimpleBOPage = QueryResultConverter.convert(TeamBaseMapper.INSTANCE.domainToBO(result.getResults()), pageable, result.getTotal());
 		return teamSimpleBOPage;
 	}
 
@@ -88,17 +92,17 @@ public class TeamServiceImpl implements TeamService {
         QTeam _Q_Team = QTeam.team;
         JPAQuery<Team> teamJPAQuery = jpaQueryFactory.selectFrom(_Q_Team);
         Predicate predicate = _Q_Team.isNotNull();
-        predicate = addWhere4Detail(predicate, teamParamDetailBO, _Q_Team, teamJPAQuery);
+        predicate = addDetailWhere(predicate, teamParamDetailBO, _Q_Team, teamJPAQuery);
         teamJPAQuery.where(predicate);
         orderBy(pageable, _Q_Team, teamJPAQuery);
         queryDslTools.addPageable(pageable, teamJPAQuery);
         QueryResults<Team> result = teamJPAQuery.fetchResults();
-        Page<TeamDetailBO> teamDetailBOPage = QueryResultConverter.convert(TeamDetailMapper.INSTANCE.domainToBO4Detail(result.getResults()), pageable, result.getTotal());
+        Page<TeamDetailBO> teamDetailBOPage = QueryResultConverter.convert(TeamDetailMapper.INSTANCE.domainToBO(result.getResults()), pageable, result.getTotal());
         return teamDetailBOPage;
 	}
 
     @Override
-    public void changeParent(Long parentId, Long id) throws Exception {
+    public void changeParent(String parentId, String id) throws Exception {
         Team parentTeam = teamRepository.findOne(parentId);
         if (ConstantValidator.isNull(parentTeam)) {
             throw new NotExistException("父团队数据不存在");
@@ -112,20 +116,20 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Page<TeamSimpleBO> queryByParentId(Long parentId, Pageable pageable) throws Exception {
+    public Page<TeamBaseBO> queryByParentId(String parentId, Pageable pageable) throws Exception {
         QTeam _Q_Team = QTeam.team;
-        JPAQuery<Team> teamJPAQuery = jpaQueryFactory.select(Projections.bean(Team.class, _Q_Team.id, _Q_Team.name, _Q_Team.description)).from(_Q_Team);
+        JPAQuery<Team> teamJPAQuery = jpaQueryFactory.select(getBaseBean(_Q_Team)).from(_Q_Team);
         Predicate predicate = _Q_Team.parent.id.eq(parentId);
         teamJPAQuery.where(predicate);
         orderBy(pageable, _Q_Team, teamJPAQuery);
         queryDslTools.addPageable(pageable, teamJPAQuery);
         QueryResults<Team> result = teamJPAQuery.fetchResults();
-        Page<TeamSimpleBO> teamSimpleBOPage = QueryResultConverter.convert(TeamSimpleMapper.INSTANCE.domainToBO4Simple(result.getResults()), pageable, result.getTotal());
+        Page<TeamBaseBO> teamSimpleBOPage = QueryResultConverter.convert(TeamBaseMapper.INSTANCE.domainToBO(result.getResults()), pageable, result.getTotal());
         return teamSimpleBOPage;
     }
 
     @Override
-    public TeamSimpleBO queryParentById(Long id) throws Exception {
+    public TeamBaseBO queryParentById(String id) throws Exception {
         Team childTeam = teamRepository.findOne(id);
         if (ConstantValidator.isNull(childTeam)) {
             throw new NotExistException("子团队数据不存在");
@@ -133,30 +137,36 @@ public class TeamServiceImpl implements TeamService {
         if (childTeam.getParent() == null) {
             throw new NotExistException("父团队数据不存在");
         }
-        return TeamSimpleMapper.INSTANCE.domainToBO4Simple(childTeam.getParent());
+        return TeamBaseMapper.INSTANCE.domainToBO(childTeam.getParent());
     }
 
     @Override
-    public void deleteByParentId(Long parentId) throws Exception {
+    public void deleteByParentId(String parentId) throws Exception {
         Team parentTeam = teamRepository.findOne(parentId);
         if (ConstantValidator.isNull(parentTeam)) {
             throw new NotExistException("父团队数据不存在");
         }
-        teamRepository.deleteInBatch(parentTeam.getChildren());
+        if (CollectionUtils.isNotEmpty(parentTeam.getChildren())) {
+            teamRepository.deleteInBatch(parentTeam.getChildren());
+        }
     }
 
-    private Predicate addWhere4Simple(Predicate predicate, TeamParamSimpleBO teamParamSimpleBO, QTeam _Q_Team, JPAQuery<Team> teamJPAQuery) {
-        if (StringUtils.isNotEmpty(teamParamSimpleBO.getName())) {
-            predicate = ExpressionUtils.and(predicate, _Q_Team.name.like("%" + teamParamSimpleBO.getName() + "%"));
+    private QBean<Team> getBaseBean(QTeam _Q_Team) {
+        return Projections.bean(Team.class, _Q_Team.id, _Q_Team.name, _Q_Team.description);
+    }
+
+    private Predicate addBaseWhere(Predicate predicate, TeamParamBaseBO teamParamBaseBO, QTeam _Q_Team, JPAQuery<Team> teamJPAQuery) {
+        if (StringUtils.isNotEmpty(teamParamBaseBO.getName())) {
+            predicate = ExpressionUtils.and(predicate, _Q_Team.name.like("%" + teamParamBaseBO.getName() + "%"));
         }
-        if (StringUtils.isNotEmpty(teamParamSimpleBO.getDescription())) {
-            predicate = ExpressionUtils.and(predicate, _Q_Team.description.like("%" + teamParamSimpleBO.getDescription() + "%"));
+        if (StringUtils.isNotEmpty(teamParamBaseBO.getDescription())) {
+            predicate = ExpressionUtils.and(predicate, _Q_Team.description.like("%" + teamParamBaseBO.getDescription() + "%"));
         }
         return predicate;
     }
 
-    private Predicate addWhere4Detail(Predicate predicate, TeamParamDetailBO teamParamDetailBO, QTeam _Q_Team, JPAQuery<Team> teamJPAQuery) {
-        predicate = addWhere4Simple(predicate, teamParamDetailBO, _Q_Team, teamJPAQuery);
+    private Predicate addDetailWhere(Predicate predicate, TeamParamDetailBO teamParamDetailBO, QTeam _Q_Team, JPAQuery<Team> teamJPAQuery) {
+        predicate = addBaseWhere(predicate, teamParamDetailBO, _Q_Team, teamJPAQuery);
         if (teamParamDetailBO.getCreatedDateStart() != null) {
             predicate = ExpressionUtils.and(predicate, _Q_Team.createdDate.goe(teamParamDetailBO.getCreatedDateStart()));
         }
@@ -190,19 +200,19 @@ public class TeamServiceImpl implements TeamService {
                             teamJPAQuery.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Team.description, queryDslTools.getNullHandling(order)));
                             break;
                         case "id":
-                            teamJPAQuery.orderBy(new OrderSpecifier<Long>(queryDslTools.getOrder(order), _Q_Team.id, queryDslTools.getNullHandling(order)));
+                            teamJPAQuery.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Team.id, queryDslTools.getNullHandling(order)));
                             break;
                         case "createdDate":
                             teamJPAQuery.orderBy(new OrderSpecifier<Date>(queryDslTools.getOrder(order), _Q_Team.createdDate, queryDslTools.getNullHandling(order)));
                             break;
                         case "createdBy":
-                            teamJPAQuery.orderBy(new OrderSpecifier<Long>(queryDslTools.getOrder(order), _Q_Team.createdBy, queryDslTools.getNullHandling(order)));
+                            teamJPAQuery.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Team.createdBy, queryDslTools.getNullHandling(order)));
                             break;
                         case "lastModifiedDate":
                             teamJPAQuery.orderBy(new OrderSpecifier<Date>(queryDslTools.getOrder(order), _Q_Team.lastModifiedDate, queryDslTools.getNullHandling(order)));
                             break;
                         case "lastModifiedBy":
-                            teamJPAQuery.orderBy(new OrderSpecifier<Long>(queryDslTools.getOrder(order), _Q_Team.lastModifiedBy, queryDslTools.getNullHandling(order)));
+                            teamJPAQuery.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Team.lastModifiedBy, queryDslTools.getNullHandling(order)));
                             break;
                     }
                 }

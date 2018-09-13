@@ -22,13 +22,13 @@ public interface RoleGroupController {
 	public RoleGroupDTO create(@RequestBody RoleGroupDTO roleGroupDTO);
 	
 	@PutMapping("/{id:\\d+}")
-	public RoleGroupDTO update(@PathVariable Long id, @RequestBody RoleGroupDTO roleGroupDTO);
+	public RoleGroupDTO update(@PathVariable String id, @RequestBody RoleGroupDTO roleGroupDTO);
 	
 	@DeleteMapping("/{id:\\d+}")
-	public void delete(@PathVariable Long id);
+	public void delete(@PathVariable String id);
 	
 	@GetMapping("/{id:\\d+}")
-	public RoleGroupDTO getInfo(@PathVariable Long id);
+	public RoleGroupDTO getInfo(@PathVariable String id);
 	
 	@GetMapping
 	public Page<RoleGroupDTO> query(RoleGroupParamDTO roleGroupConditionDTO, Pageable pageable);

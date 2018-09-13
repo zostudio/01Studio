@@ -12,9 +12,9 @@ public interface RoleGroupService {
 	
 	public RoleGroupBO update(RoleGroupBO roleGroupBO);
 	
-	public void delete(Long id);
+	public void delete(String id);
 	
-	public RoleGroupBO getInfo(Long id);
+	public RoleGroupBO getInfo(String id);
 	
 	public Page<RoleGroupBO> query(RoleGroupConditionBO roleGroupConditionBO, Pageable pageable);
 }

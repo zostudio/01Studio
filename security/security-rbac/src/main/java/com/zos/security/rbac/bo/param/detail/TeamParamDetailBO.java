@@ -1,6 +1,6 @@
 package com.zos.security.rbac.bo.param.detail;
 
-import com.zos.security.rbac.bo.param.simple.TeamParamSimpleBO;
+import com.zos.security.rbac.bo.param.base.TeamParamBaseBO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class TeamParamDetailBO extends TeamParamSimpleBO{
+public class TeamParamDetailBO extends TeamParamBaseBO {
 
 	/**
 	 * 创建时间开始
@@ -24,7 +24,7 @@ public class TeamParamDetailBO extends TeamParamSimpleBO{
 	/**
 	 * 创建人员
 	 */
-	private Long createdBy;
+	private String createdBy;
 
 	/**
 	 * 修改时间开始
@@ -39,5 +39,5 @@ public class TeamParamDetailBO extends TeamParamSimpleBO{
 	/**
 	 * 修改人员
 	 */
-	private Long lastModifiedBy;
+	private String lastModifiedBy;
 }

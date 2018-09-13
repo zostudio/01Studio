@@ -14,11 +14,11 @@ public interface UserService {
 
 	public UserBO create(UserBO userBO);
 	
-	public UserBO update(Long id, UserBO userBO);
+	public UserBO update(String id, UserBO userBO);
 	
-	public void delete(Long id);
+	public void delete(String id);
 	
-	public UserBO getInfo(Long id);
+	public UserBO getInfo(String id);
 	
 	public UserBO findByUsername(String username);
 	
@@ -30,7 +30,7 @@ public interface UserService {
 	
 	public List<UserRoleBO> addRoles(UserRoleRelationBO userRoleRelationBO);
 	
-	public void delRoles(Long id, UserRoleRelationBO userRoleRelationBO);
+	public void delRoles(String id, UserRoleRelationBO userRoleRelationBO);
 	
-	public Long updatePwd(Long id, UserConditionBO userConditionBO);
+	public Long updatePwd(String id, UserConditionBO userConditionBO);
 }

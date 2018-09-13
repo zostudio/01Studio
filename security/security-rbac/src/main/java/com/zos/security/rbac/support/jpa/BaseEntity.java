@@ -1,6 +1,7 @@
 package com.zos.security.rbac.support.jpa;
 
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -23,8 +24,10 @@ public abstract class BaseEntity implements Serializable {
      * 数据库表主键
      */
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generator = "user-uuid")
+    @Column(name = "id", nullable = false, length = 64)
+    @GenericGenerator(name = "user-uuid", strategy = "uuid")
+    private String id;
 
     /**
      * 审计日志, 记录条目创建时间, 自动赋值
@@ -38,8 +41,8 @@ public abstract class BaseEntity implements Serializable {
      * 创建人
      */
     @CreatedBy
-    @Column(nullable = false)
-    private Long createdBy;
+    @Column(nullable = false, length = 64)
+    private String createdBy;
 
     /**
      * 修改时间
@@ -53,6 +56,6 @@ public abstract class BaseEntity implements Serializable {
      * 修改人
      */
     @LastModifiedBy
-    @Column(nullable = false)
-    private Long lastModifiedBy;
+    @Column(nullable = false, length = 64)
+    private String lastModifiedBy;
 }

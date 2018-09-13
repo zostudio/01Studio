@@ -1,6 +1,9 @@
 server:
   port: 8060
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/zos?useUnicode=yes&characterEncoding=UTF-8&useSSL=false

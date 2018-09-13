@@ -1,6 +1,6 @@
 package com.zos.security.rbac.dto.response.detail;
 
-import com.zos.security.rbac.dto.response.simple.TeamSimpleDTO;
+import com.zos.security.rbac.dto.response.base.TeamBaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -8,9 +8,9 @@ import lombok.*;
 import java.util.Date;
 
 @Data
-@EqualsAndHashCode(callSuper=true)
 @ApiModel(value = "团队详细信息")
-public class TeamDetailDTO extends TeamSimpleDTO {
+@EqualsAndHashCode(callSuper=true)
+public class TeamDetailDTO extends TeamBaseDTO {
 
 	/**
 	 * 创建时间
@@ -22,7 +22,7 @@ public class TeamDetailDTO extends TeamSimpleDTO {
 	 * 创建人员
 	 */
 	@ApiModelProperty(value = "创建人员")
-	private Long createdBy;
+	private String createdBy;
 
 	/**
 	 * 修改时间
@@ -34,5 +34,5 @@ public class TeamDetailDTO extends TeamSimpleDTO {
 	 * 修改人员
 	 */
 	@ApiModelProperty(value = "修改人员")
-	private Long lastModifiedBy;
+	private String lastModifiedBy;
 }

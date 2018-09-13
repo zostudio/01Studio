@@ -1,7 +1,7 @@
 package com.zos.security.rbac.dto.param.detail;
 
 
-import com.zos.security.rbac.dto.param.simple.TeamParamSimpleDTO;
+import com.zos.security.rbac.dto.param.base.TeamParamBaseDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper=true)
 @ApiModel(value = "团队详细信息查询条件")
-public class TeamParamDetailDTO extends TeamParamSimpleDTO {
+public class TeamParamDetailDTO extends TeamParamBaseDTO {
 
     /**
      * 创建时间开始
@@ -33,7 +33,7 @@ public class TeamParamDetailDTO extends TeamParamSimpleDTO {
      * 创建人员
      */
     @ApiModelProperty(value = "创建人员")
-    private Long createdBy;
+    private String createdBy;
 
     /**
      * 修改时间开始
@@ -53,5 +53,5 @@ public class TeamParamDetailDTO extends TeamParamSimpleDTO {
      * 修改人员
      */
     @ApiModelProperty(value = "修改人员")
-    private Long lastModifiedBy;
+    private String lastModifiedBy;
 }

@@ -17,13 +17,13 @@ public interface RoleController {
 	public RoleDTO create(@Valid @RequestBody RoleDTO roleDTO, BindingResult errors);
 
 	@PatchMapping("/{id:\\d+}")
-	public RoleDTO update(@PathVariable Long id, @Valid @RequestBody RoleDTO roleDTO, BindingResult errors);
+	public RoleDTO update(@PathVariable String id, @Valid @RequestBody RoleDTO roleDTO, BindingResult errors);
 	
 	@DeleteMapping("/{id:\\d+}")
-	public void delete(@PathVariable Long id);
+	public void delete(@PathVariable String id);
 	
 	@GetMapping("/{id:\\d+}")
-	public RoleDTO getInfo(@PathVariable Long id);
+	public RoleDTO getInfo(@PathVariable String id);
 	
 	@GetMapping
 	public Page<RoleDTO> query(RoleParamDTO roleConditionDTO, Pageable pageable);
