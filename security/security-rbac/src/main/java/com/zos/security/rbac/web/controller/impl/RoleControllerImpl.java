@@ -52,7 +52,7 @@ public class RoleControllerImpl implements RoleController {
 	public ResponseDTO<RoleBaseDTO> update(@ApiParam(value = "角色主键") @PathVariable String id, @Valid @RequestBody RoleBaseDTO roleBaseDTO) throws Exception {
 		RoleBaseDTO roleBaseDTOResult = RoleBaseMapper.INSTANCE.boToDTO(roleService.update(id, RoleBaseMapper.INSTANCE.dtoToBO(roleBaseDTO)));
 		ResponseDTO<RoleBaseDTO> responseDTO = new ResponseDTO<RoleBaseDTO>();
-		if (ConstantValidator.isAvaluableId(roleBaseDTOResult.getId())) {
+		if (ConstantValidator.isValuable(roleBaseDTOResult.getId())) {
 			responseDTO.setCode(ResponseCode.SUCCESS);
 			responseDTO.setData(roleBaseDTOResult);
 		} else {

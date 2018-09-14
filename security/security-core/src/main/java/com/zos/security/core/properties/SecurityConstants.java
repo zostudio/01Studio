@@ -28,7 +28,7 @@ public interface SecurityConstants {
 	String DEFAULT_UNAUTHENTICATION_URL = "/authentication/require";
 
 	/**
-	 * 默认的用户名密码登录请求处理 url
+	 * 默认的账号密码登录请求处理 url
 	 */
 	String DEFAULT_SIGN_IN_PROCESSING_URL_FORM = "/authentication/form";
 

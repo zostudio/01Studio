@@ -52,7 +52,7 @@ public class ResourceControllerImpl implements ResourceController {
 	public ResponseDTO<ResourceBaseDTO> update(@ApiParam(value = "资源主键") @PathVariable String id, @Valid @RequestBody ResourceBaseDTO resourceBaseDTO) throws Exception {
 		ResourceBaseDTO resourceBaseDTOResult = ResourceBaseMapper.INSTANCE.boToDTO(resourceService.update(id, ResourceBaseMapper.INSTANCE.dtoToBO(resourceBaseDTO)));
 		ResponseDTO<ResourceBaseDTO> responseDTO = new ResponseDTO<ResourceBaseDTO>();
-		if (ConstantValidator.isAvaluableId(resourceBaseDTOResult.getId())) {
+		if (ConstantValidator.isValuable(resourceBaseDTOResult.getId())) {
 			responseDTO.setCode(ResponseCode.SUCCESS);
 			responseDTO.setData(resourceBaseDTOResult);
 		} else {

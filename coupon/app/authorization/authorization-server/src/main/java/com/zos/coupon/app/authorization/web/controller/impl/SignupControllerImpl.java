@@ -1,9 +1,11 @@
 package com.zos.coupon.app.authorization.web.controller.impl;
 
 import com.zos.coupon.app.authorization.web.controller.SignupController;
-import com.zos.security.rbac.dto.UserDTO;
-import com.zos.security.rbac.mapper.UserMapper;
+import com.zos.security.rbac.dto.common.ResponseDTO;
+import com.zos.security.rbac.dto.response.info.UserInfoDTO;
+import com.zos.security.rbac.mapper.info.UserInfoMapper;
 import com.zos.security.rbac.service.UserService;
+import com.zos.security.rbac.support.constance.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,8 +23,11 @@ public class SignupControllerImpl implements SignupController {
 
 	@Override
 	@PostMapping("/signup")
-	public UserDTO signup(@RequestBody UserDTO user, HttpServletRequest request) throws Exception {
-		return UserMapper.INSTANCE.boToDTO(userService.create(UserMapper.INSTANCE.dtoToBO(user)));
+	public ResponseDTO<UserInfoDTO> signup(@RequestBody UserInfoDTO userInfoDTO, HttpServletRequest request) throws Exception {
+		ResponseDTO<UserInfoDTO> responseDTO = new ResponseDTO<UserInfoDTO>();
+		responseDTO.setCode(ResponseCode.SUCCESS);
+		responseDTO.setData(UserInfoMapper.INSTANCE.boToDTO(userService.create(UserInfoMapper.INSTANCE.dtoToBO(userInfoDTO))));
+		return responseDTO;
 	}
 
 }

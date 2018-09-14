@@ -49,8 +49,8 @@ public class ResourceServiceImpl implements ResourceService {
 	@Override
 	public ResourceBaseBO update(String id, ResourceBaseBO resourceBaseBO) {
 		QResource _Q_Resource = QResource.resource;
-		Resource resource = jpaQueryFactory.selectFrom(_Q_Resource).where(_Q_Resource.id.eq(id)).fetchOne();
-		if (ConstantValidator.isNull(resource)) {
+		Long count = jpaQueryFactory.select(_Q_Resource.id.count()).where(_Q_Resource.id.eq(id)).fetchOne();
+		if (ConstantValidator.isValueless(count)) {
 			throw new NotExistException("资源数据不存在");
 		}
 		jpaQueryFactory.update(_Q_Resource).where(_Q_Resource.id.eq(id))
@@ -191,31 +191,31 @@ public class ResourceServiceImpl implements ResourceService {
 
 	private Predicate addDetailWhere(Predicate predicate, ResourceParamDetailBO resourceParamDetailBO, QResource _Q_Resource, JPAQuery<Resource> resourceJPAQuery) {
 		predicate = addBaseWhere(predicate, resourceParamDetailBO, _Q_Resource, resourceJPAQuery);
-		if (resourceParamDetailBO.getCreatedDateStart() != null) {
+		if (ConstantValidator.isNotNull(resourceParamDetailBO.getCreatedDateStart())) {
 			predicate = ExpressionUtils.and(predicate, _Q_Resource.createdDate.goe(resourceParamDetailBO.getCreatedDateStart()));
 		}
-		if (resourceParamDetailBO.getCreatedDateEnd() != null) {
+		if (ConstantValidator.isNotNull(resourceParamDetailBO.getCreatedDateEnd())) {
 			predicate = ExpressionUtils.and(predicate, _Q_Resource.createdDate.loe(resourceParamDetailBO.getCreatedDateEnd()));
 		}
-		if (resourceParamDetailBO.getLastModifiedDateStart() != null) {
+		if (ConstantValidator.isNotNull(resourceParamDetailBO.getLastModifiedDateStart())) {
 			predicate = ExpressionUtils.and(predicate, _Q_Resource.lastModifiedDate.goe(resourceParamDetailBO.getLastModifiedDateStart()));
 		}
-		if (resourceParamDetailBO.getLastModifiedDateEnd() != null) {
+		if (ConstantValidator.isNotNull(resourceParamDetailBO.getLastModifiedDateEnd())) {
 			predicate = ExpressionUtils.and(predicate, _Q_Resource.lastModifiedDate.loe(resourceParamDetailBO.getLastModifiedDateEnd()));
 		}
-		if (ConstantValidator.isAvaluableId(resourceParamDetailBO.getCreatedBy())) {
+		if (ConstantValidator.isValuable(resourceParamDetailBO.getCreatedBy())) {
 			predicate = ExpressionUtils.and(predicate, _Q_Resource.createdBy.eq(resourceParamDetailBO.getCreatedBy()));
 		}
-		if (ConstantValidator.isAvaluableId(resourceParamDetailBO.getLastModifiedBy())) {
+		if (ConstantValidator.isValuable(resourceParamDetailBO.getLastModifiedBy())) {
 			predicate = ExpressionUtils.and(predicate, _Q_Resource.lastModifiedBy.eq(resourceParamDetailBO.getLastModifiedBy()));
 		}
 		return predicate;
 	}
 
 	private void orderBy(Pageable pageable, QResource _Q_Resource, JPAQuery<Resource> resourceJPAQuery) {
-		if (pageable.getSort() != null) {
+		if (ConstantValidator.isNotNull(pageable.getSort())) {
 			pageable.getSort().forEach(order -> {
-				if (order != null && StringUtils.isNotEmpty(order.getProperty())) {
+				if (ConstantValidator.isNotNull(order) && StringUtils.isNotEmpty(order.getProperty())) {
 					switch(order.getProperty()) {
 						case "name":
 							resourceJPAQuery.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Resource.name, queryDslTools.getNullHandling(order)));

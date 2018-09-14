@@ -52,7 +52,7 @@ public class RbacServiceImpl implements RbacService {
 		boolean hasPermission = false;
 		User currentUser = (User) principal;
 		/**
-		 * 若用户名是 Administrator, 就永远返回 true, 导致 Administrator 用户没有任何角色在缓存中, 校验角色时需要特殊处理
+		 * 若账号是 Administrator, 就永远返回 true, 导致 Administrator 用户没有任何角色在缓存中, 校验角色时需要特殊处理
 		 */
 		if (StringUtils.equals(currentUser.getUsername(), "Administrator")) {
 			hasPermission = true;

@@ -19,7 +19,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
 	/**
 	 * 查询用户信息
 	 *
-	 * @param username 用户名
+	 * @param username 账号
 	 * @return 用户信息
 	 * @throws UsernameNotFoundException 因未实现业务逻辑, 因此抛出异常
 	 */

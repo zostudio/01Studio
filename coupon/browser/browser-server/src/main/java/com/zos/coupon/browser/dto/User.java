@@ -23,7 +23,7 @@ public class User {
 	private String id;
 	
 	@MyConstraint(message = "这是一个测试")
-	@ApiModelProperty(value = "用户名")
+	@ApiModelProperty(value = "账号")
 	private String username;
 	
 	@NotBlank(message = "密码不能为空")

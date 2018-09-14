@@ -48,8 +48,8 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 	@Override
 	public RoleGroupBaseBO update(String id, RoleGroupBaseBO roleGroupBaseBO) {
 		QRoleGroup _Q_RoleGroup = QRoleGroup.roleGroup;
-		RoleGroup roleGroup = jpaQueryFactory.selectFrom(_Q_RoleGroup).where(_Q_RoleGroup.id.eq(id)).fetchOne();
-		if (ConstantValidator.isNull(roleGroup)) {
+		Long count = jpaQueryFactory.select(_Q_RoleGroup.id.count()).where(_Q_RoleGroup.id.eq(id)).fetchOne();
+		if (ConstantValidator.isValueless(count)) {
 			throw new NotExistException("角色组数据不存在");
 		}
 		jpaQueryFactory.update(_Q_RoleGroup).where(_Q_RoleGroup.id.eq(id))
@@ -175,31 +175,31 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 
 	private Predicate addDetailWhere(Predicate predicate, RoleGroupParamDetailBO roleGroupParamDetailBO, QRoleGroup _Q_RoleGroup, JPAQuery<RoleGroup> roleGroupJPAQuery) {
 		predicate = addBaseWhere(predicate, roleGroupParamDetailBO, _Q_RoleGroup, roleGroupJPAQuery);
-		if (roleGroupParamDetailBO.getCreatedDateStart() != null) {
+		if (ConstantValidator.isNotNull(roleGroupParamDetailBO.getCreatedDateStart())) {
 			predicate = ExpressionUtils.and(predicate, _Q_RoleGroup.createdDate.goe(roleGroupParamDetailBO.getCreatedDateStart()));
 		}
-		if (roleGroupParamDetailBO.getCreatedDateEnd() != null) {
+		if (ConstantValidator.isNotNull(roleGroupParamDetailBO.getCreatedDateEnd())) {
 			predicate = ExpressionUtils.and(predicate, _Q_RoleGroup.createdDate.loe(roleGroupParamDetailBO.getCreatedDateEnd()));
 		}
-		if (roleGroupParamDetailBO.getLastModifiedDateStart() != null) {
+		if (ConstantValidator.isNotNull(roleGroupParamDetailBO.getLastModifiedDateStart())) {
 			predicate = ExpressionUtils.and(predicate, _Q_RoleGroup.lastModifiedDate.goe(roleGroupParamDetailBO.getLastModifiedDateStart()));
 		}
-		if (roleGroupParamDetailBO.getLastModifiedDateEnd() != null) {
+		if (ConstantValidator.isNotNull(roleGroupParamDetailBO.getLastModifiedDateEnd())) {
 			predicate = ExpressionUtils.and(predicate, _Q_RoleGroup.lastModifiedDate.loe(roleGroupParamDetailBO.getLastModifiedDateEnd()));
 		}
-		if (ConstantValidator.isAvaluableId(roleGroupParamDetailBO.getCreatedBy())) {
+		if (ConstantValidator.isValuable(roleGroupParamDetailBO.getCreatedBy())) {
 			predicate = ExpressionUtils.and(predicate, _Q_RoleGroup.createdBy.eq(roleGroupParamDetailBO.getCreatedBy()));
 		}
-		if (ConstantValidator.isAvaluableId(roleGroupParamDetailBO.getLastModifiedBy())) {
+		if (ConstantValidator.isValuable(roleGroupParamDetailBO.getLastModifiedBy())) {
 			predicate = ExpressionUtils.and(predicate, _Q_RoleGroup.lastModifiedBy.eq(roleGroupParamDetailBO.getLastModifiedBy()));
 		}
 		return predicate;
 	}
 
 	private void orderBy(Pageable pageable, QRoleGroup _Q_RoleGroup, JPAQuery<RoleGroup> roleGroupJPAQuery) {
-		if (pageable.getSort() != null) {
+		if (ConstantValidator.isNotNull(pageable.getSort())) {
 			pageable.getSort().forEach(order -> {
-				if (order != null && StringUtils.isNotEmpty(order.getProperty())) {
+				if (ConstantValidator.isNotNull(order) && StringUtils.isNotEmpty(order.getProperty())) {
 					switch(order.getProperty()) {
 						case "name":
 							roleGroupJPAQuery.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_RoleGroup.name, queryDslTools.getNullHandling(order)));

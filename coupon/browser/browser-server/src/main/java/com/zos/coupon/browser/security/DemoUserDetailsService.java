@@ -33,7 +33,7 @@ public class DemoUserDetailsService implements UserDetailsService, SocialUserDet
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		log.info("表单登录用户名:" + username);
+//		log.info("表单登录账号:" + username);
 //		Admin admin = adminRepository.findByUsername(username);
 //		admin.getUrls();
 //		return admin;
@@ -47,7 +47,7 @@ public class DemoUserDetailsService implements UserDetailsService, SocialUserDet
 	}
 
 	private SocialUserDetails buildUser(String userId) {
-		// 根据用户名查找用户信息
+		// 根据账号查找用户信息
 		//根据查找到的用户信息判断用户是否被冻结
 		String password = passwordEncoder.encode("123456");
 		log.info("数据库密码是: "+password);

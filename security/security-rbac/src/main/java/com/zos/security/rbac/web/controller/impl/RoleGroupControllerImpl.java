@@ -53,7 +53,7 @@ public class RoleGroupControllerImpl implements RoleGroupController {
 	public ResponseDTO<RoleGroupBaseDTO> update(@ApiParam(value = "角色组主键") @PathVariable String id, @Valid @RequestBody RoleGroupBaseDTO roleGroupBaseDTO) throws Exception {
 		RoleGroupBaseDTO roleGroupBaseDTOResult = RoleGroupBaseMapper.INSTANCE.boToDTO(roleGroupService.update(id, RoleGroupBaseMapper.INSTANCE.dtoToBO(roleGroupBaseDTO)));
 		ResponseDTO<RoleGroupBaseDTO> responseDTO = new ResponseDTO<RoleGroupBaseDTO>();
-		if (ConstantValidator.isAvaluableId(roleGroupBaseDTOResult.getId())) {
+		if (ConstantValidator.isValuable(roleGroupBaseDTOResult.getId())) {
 			responseDTO.setCode(ResponseCode.SUCCESS);
 			responseDTO.setData(roleGroupBaseDTOResult);
 		} else {

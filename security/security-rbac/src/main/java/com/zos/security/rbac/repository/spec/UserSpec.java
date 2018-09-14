@@ -1,6 +1,6 @@
 package com.zos.security.rbac.repository.spec;
 
-import com.zos.security.rbac.bo.UserConditionBO;
+import com.zos.security.rbac.bo.param.base.UserParamBaseBO;
 import com.zos.security.rbac.domain.User;
 import com.zos.security.rbac.repository.support.ZosSpecification;
 import com.zos.security.rbac.repository.support.QueryWraper;
@@ -9,10 +9,10 @@ import com.zos.security.rbac.repository.support.QueryWraper;
  * @author 01Studio
  *
  */
-public class UserSpec extends ZosSpecification<User, UserConditionBO> {
+public class UserSpec extends ZosSpecification<User, UserParamBaseBO> {
 
-	public UserSpec(UserConditionBO userConditionBO) {
-		super(userConditionBO);
+	public UserSpec(UserParamBaseBO userParamBaseBO) {
+		super(userParamBaseBO);
 	}
 
 	@Override

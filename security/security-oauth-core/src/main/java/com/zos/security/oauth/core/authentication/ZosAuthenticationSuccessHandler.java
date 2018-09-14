@@ -62,7 +62,7 @@ public class ZosAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 
 		log.info("登录成功");
 
-		// 在授权服务器中改造用户名密码登录, 使其支持 Oauth2 授权
+		// 在授权服务器中改造账号密码登录, 使其支持 Oauth2 授权
 		String header = request.getHeader("Authorization");
 
 		if (header == null || !header.startsWith("Basic ")) {

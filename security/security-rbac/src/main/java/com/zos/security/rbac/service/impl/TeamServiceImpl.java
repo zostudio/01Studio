@@ -49,8 +49,8 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public TeamBaseBO update(String id, TeamBaseBO teamBaseBO) {
         QTeam _Q_Team = QTeam.team;
-        Team team = jpaQueryFactory.selectFrom(_Q_Team).where(_Q_Team.id.eq(id)).fetchOne();
-        if (ConstantValidator.isNull(team)) {
+        Long count = jpaQueryFactory.select(_Q_Team.id.count()).where(_Q_Team.id.eq(id)).fetchOne();
+        if (ConstantValidator.isValueless(count)) {
             throw new NotExistException("团队数据不存在");
         }
         jpaQueryFactory.update(_Q_Team).where(_Q_Team.id.eq(id))
@@ -167,31 +167,31 @@ public class TeamServiceImpl implements TeamService {
 
     private Predicate addDetailWhere(Predicate predicate, TeamParamDetailBO teamParamDetailBO, QTeam _Q_Team, JPAQuery<Team> teamJPAQuery) {
         predicate = addBaseWhere(predicate, teamParamDetailBO, _Q_Team, teamJPAQuery);
-        if (teamParamDetailBO.getCreatedDateStart() != null) {
+        if (ConstantValidator.isNotNull(teamParamDetailBO.getCreatedDateStart())) {
             predicate = ExpressionUtils.and(predicate, _Q_Team.createdDate.goe(teamParamDetailBO.getCreatedDateStart()));
         }
-        if (teamParamDetailBO.getCreatedDateEnd() != null) {
+        if (ConstantValidator.isNotNull(teamParamDetailBO.getCreatedDateEnd())) {
             predicate = ExpressionUtils.and(predicate, _Q_Team.createdDate.loe(teamParamDetailBO.getCreatedDateEnd()));
         }
-        if (teamParamDetailBO.getLastModifiedDateStart() != null) {
+        if (ConstantValidator.isNotNull(teamParamDetailBO.getLastModifiedDateStart())) {
             predicate = ExpressionUtils.and(predicate, _Q_Team.lastModifiedDate.goe(teamParamDetailBO.getLastModifiedDateStart()));
         }
-        if (teamParamDetailBO.getLastModifiedDateEnd() != null) {
+        if (ConstantValidator.isNotNull(teamParamDetailBO.getLastModifiedDateEnd())) {
             predicate = ExpressionUtils.and(predicate, _Q_Team.lastModifiedDate.loe(teamParamDetailBO.getLastModifiedDateEnd()));
         }
-        if (ConstantValidator.isAvaluableId(teamParamDetailBO.getCreatedBy())) {
+        if (ConstantValidator.isValuable(teamParamDetailBO.getCreatedBy())) {
             predicate = ExpressionUtils.and(predicate, _Q_Team.createdBy.eq(teamParamDetailBO.getCreatedBy()));
         }
-        if (ConstantValidator.isAvaluableId(teamParamDetailBO.getLastModifiedBy())) {
+        if (ConstantValidator.isValuable(teamParamDetailBO.getLastModifiedBy())) {
             predicate = ExpressionUtils.and(predicate, _Q_Team.lastModifiedBy.eq(teamParamDetailBO.getLastModifiedBy()));
         }
         return predicate;
     }
 
     private void orderBy(Pageable pageable, QTeam _Q_Team, JPAQuery<Team> teamJPAQuery) {
-        if (pageable.getSort() != null) {
+        if (ConstantValidator.isNotNull(pageable.getSort())) {
             pageable.getSort().forEach(order -> {
-                if (order != null && StringUtils.isNotEmpty(order.getProperty())) {
+                if (ConstantValidator.isNotNull(order) && StringUtils.isNotEmpty(order.getProperty())) {
                     switch(order.getProperty()) {
                         case "name":
                             teamJPAQuery.orderBy(new OrderSpecifier<String>(queryDslTools.getOrder(order), _Q_Team.name, queryDslTools.getNullHandling(order)));

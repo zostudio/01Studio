@@ -52,7 +52,7 @@ public class TeamControllerImpl implements TeamController {
 	public ResponseDTO<TeamBaseDTO> update(@ApiParam(value = "团队主键") @PathVariable String id, @Valid @RequestBody TeamBaseDTO teamBaseDTO) throws Exception {
 		TeamBaseDTO teamBaseDTOResult = TeamBaseMapper.INSTANCE.boToDTO(teamService.update(id, TeamBaseMapper.INSTANCE.dtoToBO(teamBaseDTO)));
 		ResponseDTO<TeamBaseDTO> responseDTO = new ResponseDTO<TeamBaseDTO>();
-		if (ConstantValidator.isAvaluableId(teamBaseDTOResult.getId())) {
+		if (ConstantValidator.isValuable(teamBaseDTOResult.getId())) {
 			responseDTO.setCode(ResponseCode.SUCCESS);
 			responseDTO.setData(teamBaseDTOResult);
 		} else {

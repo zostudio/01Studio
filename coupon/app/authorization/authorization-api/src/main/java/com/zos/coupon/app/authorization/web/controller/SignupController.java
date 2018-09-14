@@ -1,19 +1,19 @@
 package com.zos.coupon.app.authorization.web.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.zos.security.rbac.dto.common.ResponseDTO;
+import com.zos.security.rbac.dto.response.info.UserInfoDTO;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zos.security.rbac.dto.UserDTO;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/authentication")
 public interface SignupController {
 
 	@PostMapping("/signup")
-	public UserDTO signup(@RequestBody UserDTO user, HttpServletRequest request) throws Exception;
+	public ResponseDTO<UserInfoDTO> signup(@RequestBody UserInfoDTO userInfoDTO, HttpServletRequest request) throws Exception;
 	
 }

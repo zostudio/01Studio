@@ -46,6 +46,55 @@ public class User extends BaseEntity implements SocialUserDetails {
 	 */
 	@Column(nullable = false)
 	private String password;
+
+	/**
+	 * 姓名
+	 */
+	@Column(nullable = false)
+	private String nickName;
+
+	/**
+	 * 手机
+	 */
+	@Column(nullable = false)
+	private String phone;
+
+	/**
+	 * 邮箱
+	 */
+	@Column(nullable = false)
+	private String email;
+
+	/**
+	 * 头像
+	 */
+	@Column(nullable = true)
+	private String avatar;
+
+	/**
+	 * 生日
+	 */
+	@Column(nullable = false)
+	private String dateOfBirth;
+
+	/**
+	 * 地址
+	 */
+	@Column(nullable = false)
+	private String address;
+
+	/**
+	 * 身份
+	 */
+	@Column(nullable = false)
+	private String identity;
+
+	/**
+	 * 性别
+	 */
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Gender gender;
 	
 	/**
 	 * 是否过期
@@ -70,55 +119,6 @@ public class User extends BaseEntity implements SocialUserDetails {
 	 */
 	@Column(nullable = false)
 	private Boolean enabled = true;
-
-	/**
-	 * 姓名
-	 */
-	@Column(nullable = false)
-	private String nickName;
-
-	/**
-	 * 手机
-	 */
-	@Column(nullable = false)
-	private String phone;
-	
-	/**
-	 * 邮箱
-	 */
-	@Column(nullable = false)
-	private String email;
-	
-	/**
-	 * 头像
-	 */
-	@Column(nullable = true)
-	private String avatar;
-	
-	/**
-	 * 生日
-	 */
-	@Column(nullable = false)
-	private String dateOfBirth;
-	
-	/**
-	 * 地址
-	 */
-	@Column(nullable = false)
-	private String address;
-	
-	/**
-	 * 身份
-	 */
-	@Column(nullable = false)
-	private String identity;
-	
-	/**
-	 * 性别
-	 */
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Gender gender;
 	
 	/**
 	 * 用户有权访问的所有接口, 不持久化到 MySQL, 缓存到 Redis 中
