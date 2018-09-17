@@ -1,19 +1,13 @@
 package com.zos.security.core.validate.code.impl;
 
-import java.util.Map;
-
+import com.zos.security.core.validate.code.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import com.zos.security.core.validate.code.ValidateCode;
-import com.zos.security.core.validate.code.ValidateCodeException;
-import com.zos.security.core.validate.code.ValidateCodeGenerator;
-import com.zos.security.core.validate.code.ValidateCodeProcessor;
-import com.zos.security.core.validate.code.ValidateCodeRepository;
-import com.zos.security.core.validate.code.ValidateCodeType;
+import java.util.Map;
 
 /**
  * 抽象的图片验证码处理器

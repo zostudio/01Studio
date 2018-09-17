@@ -1,10 +1,10 @@
 package com.zos.security.session;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.zos.security.core.properties.SecurityConstants;
+import com.zos.security.core.properties.SecurityProperties;
+import com.zos.security.core.social.SocialController;
+import com.zos.security.core.social.support.SocialUserInfo;
+import com.zos.security.core.support.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +22,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import com.zos.security.core.properties.SecurityConstants;
-import com.zos.security.core.properties.SecurityProperties;
-import com.zos.security.core.social.SocialController;
-import com.zos.security.core.social.support.SocialUserInfo;
-import com.zos.security.core.support.SimpleResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Session 环境下与安全相关的服务
@@ -58,7 +56,7 @@ public class SessionSecurityController extends SocialController {
 	 */
 	@ResponseStatus(code = HttpStatus.UNAUTHORIZED)
 	@RequestMapping(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
-	public SimpleResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response)
+	public BaseResponse requireAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
 		SavedRequest savedRequest = requestCache.getRequest(request, response);
@@ -71,7 +69,7 @@ public class SessionSecurityController extends SocialController {
 			}
 		}
 
-		return new SimpleResponse("访问的服务需要身份认证, 请引导用户到登录页");
+		return new BaseResponse("访问的服务需要身份认证, 请引导用户到登录页");
 	}
 
 	/**

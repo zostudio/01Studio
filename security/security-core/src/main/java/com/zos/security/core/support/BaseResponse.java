@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class SimpleResponse {
+public class BaseResponse {
 
 	/**
 	 * 响应体

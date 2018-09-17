@@ -17,15 +17,15 @@ public class EnumConvertFactory implements ConverterFactory<String, BaseEnum> {
 
     private static class StringToEum<T extends BaseEnum> implements Converter<String, T> {
 
-        private  Class<T> targerType;
+        private  Class<T> targetType;
 
         /**
          * Instantiates a new String to enum.
          *
-         * @param targerType the targer type
+         * @param targetType the target type
          */
-        public StringToEum(Class<T> targerType) {
-            this.targerType = targerType;
+        public StringToEum(Class<T> targetType) {
+            this.targetType = targetType;
         }
 
         @Override
@@ -33,7 +33,7 @@ public class EnumConvertFactory implements ConverterFactory<String, BaseEnum> {
             if (StringUtils.isBlank(source)) {
                 return null;
             }
-            return (T) EnumTools.getEnum(this.targerType, source);
+            return (T) EnumTools.getEnum(this.targetType, source);
         }
     }
 }

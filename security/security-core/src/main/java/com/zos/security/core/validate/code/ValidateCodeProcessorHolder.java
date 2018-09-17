@@ -1,9 +1,9 @@
 package com.zos.security.core.validate.code;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * 校验码处理器管理器

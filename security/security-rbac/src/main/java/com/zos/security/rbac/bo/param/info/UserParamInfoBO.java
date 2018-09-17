@@ -20,7 +20,7 @@ public class UserParamInfoBO extends UserParamBaseBO {
     private String password;
 
     /**
-     * 身份
+     * 证件
      */
     private String identity;
 

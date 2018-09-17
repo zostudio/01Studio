@@ -108,7 +108,7 @@ public class UserController {
 	}
 
 	@GetMapping
-	@JsonView(User.UserSimpleView.class)
+	@JsonView(User.UserBaseView.class)
 	@ApiOperation(value = "用户查询服务")
 	public List<User> query(UserQueryCondition condition,
 			@PageableDefault(page = 2, size = 17, sort = "username,asc") Pageable pageable) {

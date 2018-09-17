@@ -17,8 +17,8 @@ import io.swagger.annotations.ApiModelProperty;
  */
 public class User {
 	
-	public interface UserSimpleView {};
-	public interface UserDetailView extends UserSimpleView {};
+	public interface UserBaseView {};
+	public interface UserDetailView extends UserBaseView {};
 	
 	private String id;
 	
@@ -32,7 +32,7 @@ public class User {
 	@Past(message = "生日必须是过去的时间")
 	private Date birthday;
 
-	@JsonView(UserSimpleView.class)
+	@JsonView(UserBaseView.class)
 	public String getUsername() {
 		return username;
 	}
@@ -50,7 +50,7 @@ public class User {
 		this.password = password;
 	}
 
-	@JsonView(UserSimpleView.class)
+	@JsonView(UserBaseView.class)
 	public String getId() {
 		return id;
 	}
@@ -59,7 +59,7 @@ public class User {
 		this.id = id;
 	}
 	
-	@JsonView(UserSimpleView.class)
+	@JsonView(UserBaseView.class)
 	public Date getBirthday() {
 		return birthday;
 	}

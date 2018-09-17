@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(uniqueConstraints={
-		   @UniqueConstraint(columnNames={"department_id", "user_id"})
+		   @UniqueConstraint(columnNames={"team_id", "user_id"})
 		})
 public class TeamUserRelation extends BaseEntity implements Serializable {
 	
@@ -29,7 +29,7 @@ public class TeamUserRelation extends BaseEntity implements Serializable {
 	 */
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Team department;
+	private Team team;
 	
 	/**
 	 * 用户

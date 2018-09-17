@@ -15,9 +15,9 @@ import java.util.Date;
 public class UserDetailDTO extends UserBaseDTO {
 
 	/**
-	 * 身份
+	 * 证件
 	 */
-	@ApiModelProperty(value = "身份")
+	@ApiModelProperty(value = "证件")
 	private String identity;
 
 	/**

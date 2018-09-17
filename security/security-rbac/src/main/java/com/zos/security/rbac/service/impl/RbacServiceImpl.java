@@ -62,7 +62,7 @@ public class RbacServiceImpl implements RbacService {
 			Set<User.RoleCache> userRoleCaches = null;
 			/**
 			 * 读取用户所拥有权限的所有角色和接口
-			 * 首先判断 Redis 中是否缓存接口权限信息, 如果有缓存数据则缓存中读取数据, 如果没有则从 MySQL获取, 并将接口权限数据缓存到 Redis
+			 * 首先判断 Redis 中是否缓存接口权限信息, 如果有缓存数据则缓存中读取数据, 如果没有则从 MySQL 获取, 并将接口权限数据缓存到 Redis
 			 * 若缓存中没有接口权限数据, 则先将缓存值设置为 null(防止其他服务重复缓存数据), 同时设置过期时间(防止出错), 相当于拿到更新缓存的钥匙
 			 * 若其他服务查找接口权限信息是 null, 则先直接从 MySQL 中取值
 			 * 拿到更新缓存钥匙的服务负责将数据缓存到 Redis

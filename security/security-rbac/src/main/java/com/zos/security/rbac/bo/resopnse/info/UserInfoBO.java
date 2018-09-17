@@ -10,7 +10,12 @@ import lombok.EqualsAndHashCode;
 public class UserInfoBO extends UserBaseBO {
 
 	/**
-	 * 身份
+	 * 密码
+	 */
+	private String password;
+
+	/**
+	 * 证件
 	 */
 	private String identity;
 

@@ -12,7 +12,7 @@ import java.util.Date;
 public class UserDetailBO extends UserBaseBO {
 
 	/**
-	 * 身份
+	 * 证件
 	 */
 	private String identity;
 

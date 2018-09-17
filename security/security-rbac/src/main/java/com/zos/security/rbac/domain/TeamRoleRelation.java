@@ -15,7 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(uniqueConstraints={
-   @UniqueConstraint(columnNames={"department_id", "role_id"})
+   @UniqueConstraint(columnNames={"team_id", "role_id"})
 })
 public class TeamRoleRelation extends BaseEntity implements Serializable {
 
@@ -29,7 +29,7 @@ public class TeamRoleRelation extends BaseEntity implements Serializable {
 	 */
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Team department;
+	private Team team;
 	
 	/**
 	 * 角色

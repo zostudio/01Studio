@@ -1,15 +1,27 @@
 package com.zos.security.rbac.web.controller.impl;
 
-import com.zos.security.rbac.bo.resopnse.detail.TeamDetailBO;
+import com.zos.security.rbac.bo.resopnse.base.RoleBaseBO;
+import com.zos.security.rbac.bo.resopnse.base.RoleGroupBaseBO;
 import com.zos.security.rbac.bo.resopnse.base.TeamBaseBO;
+import com.zos.security.rbac.bo.resopnse.base.UserBaseBO;
+import com.zos.security.rbac.bo.resopnse.detail.TeamDetailBO;
 import com.zos.security.rbac.dto.common.ResponseDTO;
-import com.zos.security.rbac.dto.param.detail.TeamParamDetailDTO;
 import com.zos.security.rbac.dto.param.base.TeamParamBaseDTO;
-import com.zos.security.rbac.dto.response.detail.TeamDetailDTO;
+import com.zos.security.rbac.dto.param.common.RelationsAddDTO;
+import com.zos.security.rbac.dto.param.common.RelationsRemoveDTO;
+import com.zos.security.rbac.dto.param.detail.TeamParamDetailDTO;
+import com.zos.security.rbac.dto.response.base.RoleBaseDTO;
+import com.zos.security.rbac.dto.response.base.RoleGroupBaseDTO;
 import com.zos.security.rbac.dto.response.base.TeamBaseDTO;
+import com.zos.security.rbac.dto.response.base.UserBaseDTO;
+import com.zos.security.rbac.dto.response.detail.TeamDetailDTO;
+import com.zos.security.rbac.mapper.base.RoleBaseMapper;
+import com.zos.security.rbac.mapper.base.RoleGroupBaseMapper;
+import com.zos.security.rbac.mapper.base.TeamBaseMapper;
+import com.zos.security.rbac.mapper.base.UserBaseMapper;
+import com.zos.security.rbac.mapper.common.RelationsMapper;
 import com.zos.security.rbac.mapper.detail.TeamDetailMapper;
 import com.zos.security.rbac.mapper.param.TeamParamMapper;
-import com.zos.security.rbac.mapper.base.TeamBaseMapper;
 import com.zos.security.rbac.repository.support.QueryResultConverter;
 import com.zos.security.rbac.service.TeamService;
 import com.zos.security.rbac.support.constance.ResponseCode;
@@ -85,12 +97,12 @@ public class TeamControllerImpl implements TeamController {
 
 	@Override
 	@ApiOperation(value = "查询团队基本信息")
-	public ResponseDTO<Page<TeamBaseDTO>> querySimple(TeamParamBaseDTO teamParamBaseDTO, @PageableDefault(direction = Direction.DESC, page = 0, size = 1024, sort = {"id"}) Pageable pageable) throws Exception {
-		Page<TeamBaseBO> teamSimpleBOPage = teamService.querySimple(TeamParamMapper.INSTANCE.dtoToBO(teamParamBaseDTO), pageable);
-		Page<TeamBaseDTO> teamSimpleDTOPage = QueryResultConverter.convert(TeamBaseMapper.INSTANCE.boToDTO(teamSimpleBOPage.getContent()), pageable, teamSimpleBOPage.getTotalElements());
+	public ResponseDTO<Page<TeamBaseDTO>> queryBase(TeamParamBaseDTO teamParamBaseDTO, @PageableDefault(direction = Direction.DESC, page = 0, size = 1024, sort = {"id"}) Pageable pageable) throws Exception {
+		Page<TeamBaseBO> teamBaseBOPage = teamService.queryBase(TeamParamMapper.INSTANCE.dtoToBO(teamParamBaseDTO), pageable);
+		Page<TeamBaseDTO> teamBaseDTOPage = QueryResultConverter.convert(TeamBaseMapper.INSTANCE.boToDTO(teamBaseBOPage.getContent()), pageable, teamBaseBOPage.getTotalElements());
 		ResponseDTO<Page<TeamBaseDTO>> responseDTO = new ResponseDTO<Page<TeamBaseDTO>>();
 		responseDTO.setCode(ResponseCode.SUCCESS);
-		responseDTO.setData(teamSimpleDTOPage);
+		responseDTO.setData(teamBaseDTOPage);
 		return responseDTO;
 	}
 
@@ -114,11 +126,11 @@ public class TeamControllerImpl implements TeamController {
 	@Override
     @ApiOperation(value = "查询子级团队")
 	public ResponseDTO<Page<TeamBaseDTO>> queryByParentId(@ApiParam(value = "父级团队主键") @PathVariable String parentId, @PageableDefault(direction = Direction.DESC, page = 0, size = 1024, sort = {"id"}) Pageable pageable) throws Exception {
-        Page<TeamBaseBO> teamSimpleBOPage = teamService.queryByParentId(parentId, pageable);
-        Page<TeamBaseDTO> teamSimpleDTOPage = QueryResultConverter.convert(TeamBaseMapper.INSTANCE.boToDTO(teamSimpleBOPage.getContent()), pageable, teamSimpleBOPage.getTotalElements());
+        Page<TeamBaseBO> teamBaseBOPage = teamService.queryByParentId(parentId, pageable);
+        Page<TeamBaseDTO> teamBaseDTOPage = QueryResultConverter.convert(TeamBaseMapper.INSTANCE.boToDTO(teamBaseBOPage.getContent()), pageable, teamBaseBOPage.getTotalElements());
         ResponseDTO<Page<TeamBaseDTO>> responseDTO = new ResponseDTO<Page<TeamBaseDTO>>();
         responseDTO.setCode(ResponseCode.SUCCESS);
-        responseDTO.setData(teamSimpleDTOPage);
+        responseDTO.setData(teamBaseDTOPage);
         return responseDTO;
 	}
 
@@ -136,6 +148,87 @@ public class TeamControllerImpl implements TeamController {
     @ApiOperation(value = "删除子级团队")
 	public void deleteByParentId(@ApiParam(value = "父级团队主键") @PathVariable String parentId) throws Exception {
         teamService.deleteByParentId(parentId);
+	}
+
+	@Override
+    @ApiOperation(value = "查询团队成员")
+	public ResponseDTO<Page<UserBaseDTO>> queryUser(@ApiParam(value = "团队主键") @PathVariable String id, @PageableDefault(direction = Direction.DESC, page = 0, size = 1024, sort = {"id"}) Pageable pageable) throws Exception {
+        Page<UserBaseBO> userBaseBOPage = teamService.queryUser(id, pageable);
+        Page<UserBaseDTO> userBaseDTOPage = QueryResultConverter.convert(UserBaseMapper.INSTANCE.boToDTO(userBaseBOPage.getContent()), pageable, userBaseBOPage.getTotalElements());
+        ResponseDTO<Page<UserBaseDTO>> responseDTO = new ResponseDTO<Page<UserBaseDTO>>();
+        responseDTO.setCode(ResponseCode.SUCCESS);
+        responseDTO.setData(userBaseDTOPage);
+        return responseDTO;
+	}
+
+	@Override
+    @ApiOperation(value = "批量添加团队成员")
+	public ResponseDTO<Long> batchAddUser(@ApiParam(value = "团队主键") @PathVariable String id, @Valid @RequestBody RelationsAddDTO relationsAddDTO) throws Exception {
+        Long result = teamService.batchAddUser(id, RelationsMapper.INSTANCE.dtoToBO(relationsAddDTO));
+        ResponseDTO<Long> responseDTO = new ResponseDTO<Long>();
+        responseDTO.setCode(ResponseCode.SUCCESS);
+        responseDTO.setData(result);
+        return responseDTO;
+	}
+
+	@Override
+    @ApiOperation(value = "批量移除团队成员")
+	public void batchRemoveUser(@ApiParam(value = "团队主键") @PathVariable String id, @RequestBody RelationsRemoveDTO relationsRemoveDTO) throws Exception {
+        teamService.batchRemoveUser(id, RelationsMapper.INSTANCE.dtoToBO(relationsRemoveDTO));
+	}
+
+    @Override
+    @ApiOperation(value = "查询团队角色")
+    public ResponseDTO<Page<RoleBaseDTO>> queryRole(@ApiParam(value = "团队主键") @PathVariable String id, @PageableDefault(direction = Direction.DESC, page = 0, size = 1024, sort = {"id"}) Pageable pageable) throws Exception {
+        Page<RoleBaseBO> roleBaseBOPage = teamService.queryRole(id, pageable);
+        Page<RoleBaseDTO> roleBaseDTOPage = QueryResultConverter.convert(RoleBaseMapper.INSTANCE.boToDTO(roleBaseBOPage.getContent()), pageable, roleBaseBOPage.getTotalElements());
+        ResponseDTO<Page<RoleBaseDTO>> responseDTO = new ResponseDTO<Page<RoleBaseDTO>>();
+        responseDTO.setCode(ResponseCode.SUCCESS);
+        responseDTO.setData(roleBaseDTOPage);
+        return responseDTO;
+    }
+
+	@Override
+    @ApiOperation(value = "批量添加团队角色")
+	public ResponseDTO<Long> batchAddRole(@ApiParam(value = "团队主键") @PathVariable String id, @Valid @RequestBody RelationsAddDTO relationsAddDTO) throws Exception {
+        Long result = teamService.batchAddRole(id, RelationsMapper.INSTANCE.dtoToBO(relationsAddDTO));
+        ResponseDTO<Long> responseDTO = new ResponseDTO<Long>();
+        responseDTO.setCode(ResponseCode.SUCCESS);
+        responseDTO.setData(result);
+        return responseDTO;
+	}
+
+	@Override
+    @ApiOperation(value = "批量移除团队角色")
+	public void batchRemoveRole(@ApiParam(value = "团队主键") @PathVariable String id, @RequestBody RelationsRemoveDTO relationsRemoveDTO) throws Exception {
+        teamService.batchRemoveRole(id, RelationsMapper.INSTANCE.dtoToBO(relationsRemoveDTO));
+	}
+
+    @Override
+    @ApiOperation(value = "查询团队角色组")
+    public ResponseDTO<Page<RoleGroupBaseDTO>> queryRoleGroup(@ApiParam(value = "团队主键") @PathVariable String id, @PageableDefault(direction = Direction.DESC, page = 0, size = 1024, sort = {"id"}) Pageable pageable) throws Exception {
+        Page<RoleGroupBaseBO> roleGroupBaseBOPage = teamService.queryRoleGroup(id, pageable);
+        Page<RoleGroupBaseDTO> roleGroupBaseDTOPage = QueryResultConverter.convert(RoleGroupBaseMapper.INSTANCE.boToDTO(roleGroupBaseBOPage.getContent()), pageable, roleGroupBaseBOPage.getTotalElements());
+        ResponseDTO<Page<RoleGroupBaseDTO>> responseDTO = new ResponseDTO<Page<RoleGroupBaseDTO>>();
+        responseDTO.setCode(ResponseCode.SUCCESS);
+        responseDTO.setData(roleGroupBaseDTOPage);
+        return responseDTO;
+    }
+
+	@Override
+    @ApiOperation(value = "批量添加团队角色组")
+	public ResponseDTO<Long> batchAddRoleGroup(@ApiParam(value = "团队主键") @PathVariable String id, @Valid @RequestBody RelationsAddDTO relationsAddDTO) throws Exception {
+        Long result = teamService.batchAddRoleGroup(id, RelationsMapper.INSTANCE.dtoToBO(relationsAddDTO));
+        ResponseDTO<Long> responseDTO = new ResponseDTO<Long>();
+        responseDTO.setCode(ResponseCode.SUCCESS);
+        responseDTO.setData(result);
+        return responseDTO;
+	}
+
+	@Override
+    @ApiOperation(value = "批量移除团队角色组")
+	public void batchRemoveRoleGroup(@ApiParam(value = "团队主键") @PathVariable String id, @RequestBody RelationsRemoveDTO relationsRemoveDTO) throws Exception {
+        teamService.batchRemoveRoleGroup(id, RelationsMapper.INSTANCE.dtoToBO(relationsRemoveDTO));
 	}
 
 }

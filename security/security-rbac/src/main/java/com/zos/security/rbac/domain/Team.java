@@ -50,19 +50,19 @@ public class Team extends BaseEntity implements Serializable {
 	/**
 	 * 团队的所有用户
 	 */
-	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
-	private Set<TeamUserRelation> departmentUserRelations = new HashSet<TeamUserRelation>();
+	@OneToMany(mappedBy="team", cascade = CascadeType.REMOVE)
+	private Set<TeamUserRelation> teamUserRelations = new HashSet<TeamUserRelation>();
 	
 	/**
 	 * 团队的所有角色
 	 */
-	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
-	private Set<TeamRoleRelation> departmentRoleRelations = new HashSet<TeamRoleRelation>();
+	@OneToMany(mappedBy="team", cascade = CascadeType.REMOVE)
+	private Set<TeamRoleRelation> teamRoleRelations = new HashSet<TeamRoleRelation>();
 	
 	/**
 	 * 团队的所有角色组
 	 */
-	@OneToMany(mappedBy="department", cascade = CascadeType.REMOVE)
-	private Set<TeamRoleGroupRelation> departmentRoleGroupRelations = new HashSet<TeamRoleGroupRelation>();
+	@OneToMany(mappedBy="team", cascade = CascadeType.REMOVE)
+	private Set<TeamRoleGroupRelation> teamRoleGroupRelations = new HashSet<TeamRoleGroupRelation>();
 	
 }
