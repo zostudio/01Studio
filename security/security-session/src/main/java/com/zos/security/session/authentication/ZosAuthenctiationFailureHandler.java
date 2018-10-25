@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zos.security.core.properties.SignInResponseType;
 import com.zos.security.core.properties.SecurityProperties;
-import com.zos.security.core.support.SimpleResponse;
+import com.zos.security.core.support.BaseResponse;
 
 /**
  * 浏览器环境下登录失败的处理器
@@ -46,7 +46,7 @@ public class ZosAuthenctiationFailureHandler extends SimpleUrlAuthenticationFail
 		if (SignInResponseType.JSON.equals(securityProperties.getBrowser().getSignInResponseType())) {
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
 			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(exception.getMessage())));
+			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(exception.getMessage())));
 		}else{
 			super.onAuthenticationFailure(request, response, exception);
 		}

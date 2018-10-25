@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.zos.security.core.support.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,6 @@ import org.springframework.util.Assert;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zos.security.core.properties.SecurityProperties;
-import com.zos.security.core.support.SimpleResponse;
 
 /**
  * 抽象的 Session 失效处理器
@@ -99,7 +99,7 @@ public class AbstractSessionStrategy {
 		if (isConcurrency()) {
 			message = message + ", 可能是并发登录导致";
 		}
-		return new SimpleResponse(message);
+		return new BaseResponse(message);
 	}
 
 	/**

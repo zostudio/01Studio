@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zos.security.core.properties.SignInResponseType;
 import com.zos.security.core.properties.SecurityProperties;
-import com.zos.security.core.support.SimpleResponse;
+import com.zos.security.core.support.BaseResponse;
 
 /**
  * 浏览器环境下登录成功的处理器
@@ -55,7 +55,7 @@ public class ZosAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
 		if (SignInResponseType.JSON.equals(securityProperties.getBrowser().getSignInResponseType())) {
 			response.setContentType("application/json;charset=UTF-8");
 			String type = authentication.getClass().getSimpleName();
-			response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse(type)));
+			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse(type)));
 		} else {
 			// 如果设置了zos.security.browser.singInSuccessUrl, 总是跳到设置的地址上
 			// 如果没设置, 则尝试跳转到登录之前访问的地址上, 如果登录前访问地址为空, 则跳到网站根路径上

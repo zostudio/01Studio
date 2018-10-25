@@ -12,7 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zos.security.core.support.SimpleResponse;
+import com.zos.security.core.support.BaseResponse;
 
 /**
  * 默认的退出成功处理器, 如果设置了zos.security.browser.signOutUrl, 则跳到配置的地址上,
@@ -48,7 +48,7 @@ public class ZosLogoutSuccessHandler implements LogoutSuccessHandler {
 
 		if (StringUtils.isBlank(signOutSuccessUrl)) {
 			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().write(objectMapper.writeValueAsString(new SimpleResponse("退出成功")));
+			response.getWriter().write(objectMapper.writeValueAsString(new BaseResponse("退出成功")));
 		} else {
 			response.sendRedirect(signOutSuccessUrl);
 		}
